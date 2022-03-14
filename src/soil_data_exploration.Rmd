@@ -1,0 +1,44 @@
+---
+title: "Soil Data Exploration"
+author: "German Silva"
+date: "3/4/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(here)
+library(tidyverse)
+```
+
+```{r}
+soils <- read_csv(here("data", "shift_soil_data.csv")) %>% 
+  mutate(date = lubridate::mdy(date))
+
+soils_ex <- read_csv(here('data', 'soil_experiments.csv')) %>% 
+  janitor::clean_names()
+```
+
+```{r}
+ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect, shape = sampling_method)) +
+  geom_point()+
+  ggtitle("Soil Electro Conductivity All Sites")
+
+soils %>% 
+  group_by(transect, meter_location) %>% 
+  summarize(mean = mean(electro_cond_mS_per_cm),
+            dev = sd(electro_cond_mS_per_cm),
+            variance = var(electro_cond_mS_per_cm)) %>% 
+  kableExtra::kable() %>% 
+  kableExtra::kable_classic(lightable_options = "striped")
+
+```
+
+
+```{r}
+ggplot(soils_ex, aes(x = electro_cond_m_s_per_cm, y = ec_probe_measurement))+
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
