@@ -5,8 +5,8 @@ date: "3/4/2022"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, message=FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
 
 library(here)
 library(tidyverse)
@@ -21,7 +21,7 @@ soils_ex <- read_csv(here('data', 'soil_experiments.csv')) %>%
 ```
 
 ```{r}
-ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect, shape = sampling_method)) +
+ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect)) +
   geom_point()+
   ggtitle("Soil Electro Conductivity All Sites")
 
