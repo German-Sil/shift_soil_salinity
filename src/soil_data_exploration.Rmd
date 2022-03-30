@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
 
 library(here)
 library(tidyverse)
+library(sf)
 ```
 
 ```{r}
@@ -18,6 +19,8 @@ soils <- read_csv(here("data", "shift_soil_data.csv")) %>%
 
 soils_ex <- read_csv(here('data', 'soil_experiments.csv')) %>% 
   janitor::clean_names()
+
+samples <- read_sf(here("data", "sampling_points.shp"))
 ```
 
 ```{r}

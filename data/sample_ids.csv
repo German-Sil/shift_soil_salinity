@@ -1,6 +1,6 @@
 ﻿sample_id,species,common_name,site,transect,meter_location,latitude,longitude
 92,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,,
-93,,spiky cow's tongue,NCOS,NCOS_1_NS,4,,
+93,Picris echioides,bristly ox-tongue,NCOS,NCOS_1_NS,4,,
 94,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,,
 95,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,,
 96,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,28,,
@@ -10,7 +10,7 @@
 100,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,28,,
 101,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,4,,
 401,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,,
-402,,spiky cow's tongue,NCOS,NCOS_1_NS,4,,
+402,Picris echioides,bristly ox-tongue,NCOS,NCOS_1_NS,4,,
 403,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,,
 404,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,,
 405,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,28,,
@@ -20,19 +20,19 @@
 409,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,12,,
 410,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,20,,
 411,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,28,,
-412,Frankenia sp.,,COPR,COPR_1_EW,4,,
-413,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,4,,
-414,Distichlis spicata,salt grass,COPR,COPR_1_EW,4,,
-415,Distichlis spicata,salt grass,COPR,COPR_1_EW,12,,
-416,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,12,,
-417,Distichlis spicata,salt grass,COPR,COPR_1_EW,20,,
-418,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,20,,
-419,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,28,,
-420,Salicornia pacifica,pickleweed,COPR,COPR_2_EW,28,,
-421,Salicornia pacifica,pickleweed,COPR,COPR_2_EW,4,,
-422,Salicornia pacifica,pickleweed,COPR,COPR_2_NS,4,,
-423,Salicornia pacifica,pickleweed,COPR,COPR_2_NS,12,,
-424,,spiky cow's tongue,NCOS,NCOS_1_NS,4,,
+412,Frankenia sp.,,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+413,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+414,Distichlis spicata,salt grass,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+415,Distichlis spicata,salt grass,COPR,COPR_1_EW,12,34.41197406,-119.8757513
+416,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,12,34.41197406,-119.8757513
+417,Distichlis spicata,salt grass,COPR,COPR_1_EW,20,34.41202918,-119.8758077
+418,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,20,34.41202918,-119.8758077
+419,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,28,34.41208235,-119.8758625
+420,Salicornia pacifica,pickleweed,COPR,COPR_2_EW,28,34.41601242,-119.8739768
+421,Salicornia pacifica,pickleweed,COPR,COPR_2_EW,4,34.41601662,-119.8737188
+422,Salicornia pacifica,pickleweed,COPR,COPR_2_NS,4,34.41600461,-119.8738069
+423,Salicornia pacifica,pickleweed,COPR,COPR_2_NS,12,34.41607591,-119.8737994
+424,Picris echioides,bristly ox-tongue,NCOS,NCOS_1_NS,4,,
 425,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,,
 426,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,,
 427,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,,

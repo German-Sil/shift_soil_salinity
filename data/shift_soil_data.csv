@@ -1,5 +1,5 @@
 date,transect,direction,meter_location,wet_mass_g,dried_mass_g,electro_cond_mS_per_cm,water_content_percent,corresponding_plant_sample,sampling_method
-2/25/2022,NCOS_1_NS,NS,4,261.43,202.157,0.71,22.67,92,single
+2/25/2022,NCOS_1_NS,NS,4,261.43,202.157,0.71,22.67,92-93,single
 2/25/2022,NCOS_1_NS,NS,12,106.288,80.37,2.34,24.38,94,single
 2/25/2022,NCOS_1_NS,NS,20,161.991,137.549,3.12,15.09,95,single
 2/25/2022,NCOS_1_NS,NS,28,164.636,135.715,5.2,17.57,96,single
@@ -11,7 +11,7 @@ date,transect,direction,meter_location,wet_mass_g,dried_mass_g,electro_cond_mS_p
 2/25/2022,NCOS_2_EW,EW,12,151.423,117.465,0.78,22.43,98,single
 2/25/2022,NCOS_2_EW,EW,20,225.442,170.889,4.45,24.2,99,single
 2/25/2022,NCOS_2_EW,EW,28,117.311,87.19,5.22,25.68,100,single
-3/2/2022,NCOS_1_NS,NS,4,60.47,47.19,0.47,21.96,401,single
+3/2/2022,NCOS_1_NS,NS,4,60.47,47.19,0.47,21.96,401-402,single
 3/2/2022,NCOS_1_NS,NS,12,77.008,57.966,1.04,24.73,403,single
 3/2/2022,NCOS_1_NS,NS,20,80.768,68.061,3.46,15.73,404,single
 3/2/2022,NCOS_1_NS,NS,28,118.108,99.87,6.22,15.44,405,single
