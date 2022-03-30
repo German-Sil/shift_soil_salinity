@@ -1,54 +1,46 @@
-﻿sample_id,species,common name
-92,Salicornia pacifica,pickleweed
-93,,spiky cow's tongue
-94,Salicornia pacifica,pickleweed
-95,Salicornia pacifica,pickleweed
-96,Salicornia pacifica,pickleweed
-97,Salicornia pacifica,pickleweed
-98,Salicornia pacifica,pickleweed
-99,Salicornia pacifica,pickleweed
-100,Salicornia pacifica,pickleweed
-101,Salicornia pacifica,pickleweed
-401,Salicornia pacifica,pickleweed
-402,,spiky cow's tongue
-403,Salicornia pacifica,pickleweed
-404,Salicornia pacifica,pickleweed
-405,Salicornia pacifica,pickleweed
-406,Salicornia pacifica,pickleweed
-407,Salicornia pacifica,pickleweed
-408,Salicornia pacifica,pickleweed
-409,Salicornia pacifica,pickleweed
-410,Salicornia pacifica,pickleweed
-411,Salicornia pacifica,pickleweed
-412,Frankenia sp.,
-413,Salicornia pacifica,pickleweed
-414,Distichlis spicata,salt grass
-415,Distichlis spicata,salt grass
-416,Salicornia pacifica,pickleweed
-417,Distichlis spicata,salt grass
-418,Salicornia pacifica,pickleweed
-419,Salicornia pacifica,pickleweed
-420,Salicornia pacifica,pickleweed
-421,Salicornia pacifica,pickleweed
-422,Salicornia pacifica,pickleweed
-423,Salicornia pacifica,pickleweed
-424,,spiky cow's tongue
-425,Salicornia pacifica,pickleweed
-426,Salicornia pacifica,pickleweed
-427,Salicornia pacifica,pickleweed
-428,Salicornia pacifica,pickleweed
-429,Salicornia pacifica,pickleweed
-430,Salicornia pacifica,pickleweed
-431,Salicornia pacifica,pickleweed
-432,Salicornia pacifica,pickleweed
-433,Salicornia pacifica,pickleweed
-434,Salicornia pacifica,pickleweed
-435,Salicornia pacifica,pickleweed
-436,,
-437,,
-438,,
-439,,
-440,,
-441,,
-442,,
-443,,
+﻿sample_id,species,common_name,site,transect,meter_location,latitude,longitude
+92,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,,
+93,,spiky cow's tongue,NCOS,NCOS_1_NS,4,,
+94,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,,
+95,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,,
+96,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,28,,
+97,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,4,,
+98,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,12,,
+99,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,20,,
+100,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,28,,
+101,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,4,,
+401,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,,
+402,,spiky cow's tongue,NCOS,NCOS_1_NS,4,,
+403,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,,
+404,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,,
+405,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,28,,
+406,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,4,,
+407,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,20,,
+408,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,4,,
+409,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,12,,
+410,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,20,,
+411,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,28,,
+412,Frankenia sp.,,COPR,COPR_1_EW,4,,
+413,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,4,,
+414,Distichlis spicata,salt grass,COPR,COPR_1_EW,4,,
+415,Distichlis spicata,salt grass,COPR,COPR_1_EW,12,,
+416,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,12,,
+417,Distichlis spicata,salt grass,COPR,COPR_1_EW,20,,
+418,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,20,,
+419,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,28,,
+420,Salicornia pacifica,pickleweed,COPR,COPR_2_EW,28,,
+421,Salicornia pacifica,pickleweed,COPR,COPR_2_EW,4,,
+422,Salicornia pacifica,pickleweed,COPR,COPR_2_NS,4,,
+423,Salicornia pacifica,pickleweed,COPR,COPR_2_NS,12,,
+424,,spiky cow's tongue,NCOS,NCOS_1_NS,4,,
+425,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,,
+426,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,,
+427,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,,
+428,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,28,,
+429,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,4,,
+430,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,12,,
+431,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,20,,
+432,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,28,,
+433,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,4,,
+434,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,12,,
+435,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,20,,
