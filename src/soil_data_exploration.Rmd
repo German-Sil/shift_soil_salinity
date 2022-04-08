@@ -21,7 +21,16 @@ soils_ex <- read_csv(here('data', 'soil_experiments.csv')) %>%
   janitor::clean_names()
 
 samples <- read_sf(here("data", "sampling_points.shp"))
+
+sample_ids <- read_csv(here("data", "sample_ids.csv"))
 ```
+
+```{r}
+ggplot()+
+  geom_sf(data = samples)+
+  geom_point(data = sample_ids, aes(x = longitude, y = latitude), color = "red")
+```
+
 
 ```{r}
 ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect)) +

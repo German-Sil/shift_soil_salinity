@@ -1,46 +1,46 @@
-﻿sample_id,species,common_name,site,transect,meter_location,latitude,longitude
-92,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
-93,Picris echioides,bristly ox-tongue,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
-94,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
-95,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
-96,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
-97,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
-98,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
-99,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
-100,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
-101,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
-401,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
-402,Picris echioides,bristly ox-tongue,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
-403,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
-404,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
-405,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
-406,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
-407,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
-408,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
-409,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
-410,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
-411,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
-412,Frankenia sp.,,COPR,COPR_1_EW,4,34.41191815,-119.8756959
-413,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,4,34.41191815,-119.8756959
-414,Distichlis spicata,salt grass,COPR,COPR_1_EW,4,34.41191815,-119.8756959
-415,Distichlis spicata,salt grass,COPR,COPR_1_EW,12,34.41197406,-119.8757513
-416,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,12,34.41197406,-119.8757513
-417,Distichlis spicata,salt grass,COPR,COPR_1_EW,20,34.41202918,-119.8758077
-418,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,20,34.41202918,-119.8758077
-419,Salicornia pacifica,pickleweed,COPR,COPR_1_EW,28,34.41208235,-119.8758625
-420,Salicornia pacifica,pickleweed,COPR,COPR_2_EW,28,34.41601242,-119.8739768
-421,Salicornia pacifica,pickleweed,COPR,COPR_2_EW,4,34.41601662,-119.8737188
-422,Salicornia pacifica,pickleweed,COPR,COPR_2_NS,4,34.41600461,-119.8738069
-423,Salicornia pacifica,pickleweed,COPR,COPR_2_NS,12,34.41607591,-119.8737994
-424,Picris echioides,bristly ox-tongue,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
-425,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
-426,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
-427,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
-428,Salicornia pacifica,pickleweed,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
-429,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
-430,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
-431,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
-432,Salicornia pacifica,pickleweed,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
-433,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
-434,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,12,34.41898871,-119.8759144
-435,Salicornia pacifica,pickleweed,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
+﻿sample_id,species,common_name,date,site,transect,meter_location,latitude,longitude
+92,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+93,Picris echioides,bristly ox-tongue,2/25/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+94,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
+95,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
+96,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
+97,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
+98,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
+99,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
+100,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
+101,Salicornia pacifica,pickleweed,2/25/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
+401,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+402,Picris echioides,bristly ox-tongue,3/2/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+403,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
+404,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
+405,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
+406,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
+407,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
+408,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
+409,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
+410,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
+411,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
+412,Frankenia sp.,,3/23/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+413,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+414,Distichlis spicata,salt grass,3/23/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+415,Distichlis spicata,salt grass,3/23/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
+416,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
+417,Distichlis spicata,salt grass,3/23/2022,COPR,COPR_1_EW,20,34.41202918,-119.8758077
+418,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_1_EW,20,34.41202918,-119.8758077
+419,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_1_EW,28,34.41208235,-119.8758625
+420,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_2_EW,28,34.41601242,-119.8739768
+421,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_2_EW,4,34.41601662,-119.8737188
+422,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_2_NS,4,34.41600461,-119.8738069
+423,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_2_NS,12,34.41607591,-119.8737994
+424,Picris echioides,bristly ox-tongue,3/24/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+425,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+426,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
+427,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
+428,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
+429,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
+430,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
+431,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
+432,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
+433,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
+434,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_NS,12,34.41898871,-119.8759144
+435,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
