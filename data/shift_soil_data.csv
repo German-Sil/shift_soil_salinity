@@ -62,7 +62,7 @@ date,transect,direction,meter_location,wet_mass_g,dried_mass_g,electro_cond_mS_p
 4/6/2022,NCOS_1_NS,NS,12,22.891,18.501,1.2,19.18,438,average
 4/6/2022,NCOS_1_NS,NS,20,65.771,55.765,2.47,15.21,439,average
 4/6/2022,NCOS_1_NS,NS,28,42.813,34.923,3.16,18.43,440,average
-4/7/2022,NCOS_2_NS,NS,4,114.386,,,,445,average
+4/7/2022,NCOS_2_NS,NS,4,114.386,86.436,4.02,24.43,445,average
 4/6/2022,NCOS_2_NS,NS,12,NA,NA,10.14,NA,443,average
 4/6/2022,NCOS_2_NS,NS,20,49.156,39.207,6.4,20.24,446,average
 4/6/2022,NCOS_2_NS,NS,28,107.87,83.314,5.61,22.76,NA,average
