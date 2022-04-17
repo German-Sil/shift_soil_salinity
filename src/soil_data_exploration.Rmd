@@ -15,7 +15,8 @@ library(sf)
 
 ```{r}
 soils <- read_csv(here("data", "shift_soil_data.csv")) %>% 
-  mutate(date = lubridate::mdy(date))
+  mutate(date = lubridate::mdy(date)) %>% 
+  drop_na()
 
 soils_ex <- read_csv(here('data', 'soil_experiments.csv')) %>% 
   janitor::clean_names()
@@ -35,6 +36,12 @@ ggplot()+
 ```{r}
 ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect)) +
   geom_point()+
+  facet_wrap(~transect)+
+  theme(legend.position = "none")+
+  ggtitle("Soil Electro Conductivity All Sites")
+
+ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect)) +
+  geom_point()+
   ggtitle("Soil Electro Conductivity All Sites")
 
 soils %>% 
@@ -52,5 +59,11 @@ soils %>%
 ggplot(soils_ex, aes(x = electro_cond_m_s_per_cm, y = ec_probe_measurement))+
   geom_point() +
   geom_smooth(method = "lm")
+```
+
+```{r}
+ggplot(soils, aes(x = water_content_percent, y = electro_cond_mS_per_cm, color = transect)) +
+  geom_point()+
+  ggtitle("Soil Electro Conductivity All Sites")
 ```
 
