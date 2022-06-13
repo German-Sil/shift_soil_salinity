@@ -20,7 +20,7 @@
 409,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
 410,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
 411,Salicornia pacifica,pickleweed,3/2/2022,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
-412,Frankenia sp.,,3/23/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+412,Frankenia salina,alkali heath,3/23/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
 413,Salicornia pacifica,pickleweed,3/23/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
 414,Distichlis spicata,salt grass,3/23/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
 415,Distichlis spicata,salt grass,3/23/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
@@ -44,19 +44,19 @@
 433,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
 434,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_NS,12,34.41898871,-119.8759144
 435,Salicornia pacifica,pickleweed,3/24/2022,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
-436,,,,,,,,
-437,,,,,,,,
-438,,,,,,,,
-439,,,,,,,,
-440,,,,,,,,
-441,,,,,,,,
-442,,,,,,,,
-443,,,,,,,,
-444,,,,,,,,
-445,,,,,,,,
-446,,,,,,,,
+436,,,4/6/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+437,,,4/6/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+438,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
+439,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
+440,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
+441,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
+442,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
+443,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
+444,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
+445,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
+446,Salicornia pacifica,pickleweed,4/6/2022,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
 447,Salicornia pacifica,pickleweed,4/15/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
-448,Frankenia sp.,,4/15/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+448,Frankenia salina,alkali heath,4/15/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
 449,Distichlis spicata,salt grass,4/15/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
 450,Salicornia pacifica,pickleweed,4/15/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
 451,Distichlis spicata,salt grass,4/15/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
@@ -67,37 +67,72 @@
 456,Salicornia pacifica,pickleweed,4/15/2022,COPR,COPR_2_EW,28,34.41601662,-119.8737188
 457,Salicornia pacifica,pickleweed,4/15/2022,COPR,COPR_2_NS,4,34.41600461,-119.8738069
 458,Salicornia pacifica,pickleweed,4/15/2022,COPR,COPR_2_NS,12,34.41607591,-119.8737994
-459,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_1_NS,4,,
-460,Meliotus indicus,small melilot,4/20/2022,NCOS,NCOS_1_NS,4,,
-461,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_1_NS,12,,
-462,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_1_NS,20,,
-463,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_1_NS,28,,
-464,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_NS,4,,
-465,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_EW,20,,
-466,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_NS,20,,
-467,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_EW,4,,
-468,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_EW,12,,
-469,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_EW,28,,
-470,Frankenia sp.,,4/21/2022,COPR,COPR_1_EW,4,,
-471,Frankenia sp.,alkali heath,4/21/2022,COPR,COPR_1_EW,4,,
-472,Taraxacum californicum,dandelion,4/21/2022,COPR,COPR_1_EW,4,,
-473,Distichlis spicata,salt grass,4/21/2022,COPR,COPR_1_EW,12,,
-474,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_1_EW,12,,
-475,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_1_EW,20,,
-476,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_1_EW,28,,
-477,Distichlis spicata,salt grass,4/21/2022,COPR,COPR_1_EW,20,,
-478,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_2_EW,4,,
-479,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_2_EW,28,,
-480,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_2_EW,4,,
-481,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_2_EW,12,,
-482,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_1_NS,4,,
-483,Meliotus indicus,small melilot,5/4/2022,NCOS,NCOS_1_NS,4,,
-484,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_1_NS,12,,
-485,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_1_NS,20,,
-486,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_1_NS,28,,
-487,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_NS,4,,
-488,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_NS,20,,
-489,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_EW,4,,
-490,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_EW,12,,
-491,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_EW,20,,
-492,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_EW,28,,
+459,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+460,Meliotus indicus,small melilot,4/20/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+461,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
+462,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
+463,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
+464,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
+465,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
+466,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
+467,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
+468,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
+469,Salicornia pacifica,pickleweed,4/20/2022,NCOS,NCOS_2_EW,28,34.41897751,-119.8759183
+470,Frankenia salina,alkali heath,4/21/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+471,Cressa truxillensis,alkali weed,4/21/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+472,Taraxacum californicum,dandelion,4/21/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+473,Distichlis spicata,salt grass,4/21/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
+474,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
+475,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_1_EW,20,34.41202918,-119.8758077
+476,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_1_EW,28,34.41208235,-119.8758625
+477,Distichlis spicata,salt grass,4/21/2022,COPR,COPR_1_EW,20,34.41202918,-119.8758077
+478,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_2_EW,4,34.41601242,-119.8739768
+479,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_2_EW,28,34.41601662,-119.8737188
+480,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_2_NS,4,34.41600461,-119.8738069
+481,Salicornia pacifica,pickleweed,4/21/2022,COPR,COPR_2_NS,12,34.41607591,-119.8737994
+482,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+483,Meliotus indicus,small melilot,5/4/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+484,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
+485,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
+486,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
+487,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
+488,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
+489,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
+490,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
+491,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
+492,Salicornia pacifica,pickleweed,5/4/2022,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
+493,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+494,Meliotus indicus,small melilot,5/9/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+495,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
+496,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
+497,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
+498,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
+499,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
+500,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
+1200,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
+1201,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
+1202,Salicornia pacifica,pickleweed,5/9/2022,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
+1203,N/A,N/A,N/A,N/A,N/A,N/A,,
+1204,Cressa truxillensis,alkali weed,5/10/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+1205,Taraxacum californicum,dandelion,5/10/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+1206,Frankenia salina,alkali heath,5/10/2022,COPR,COPR_1_EW,4,34.41191815,-119.8756959
+1207,Salicornia pacifica,pickleweed,5/10/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
+1208,Distichlis spicata,salt grass,5/10/2022,COPR,COPR_1_EW,12,34.41197406,-119.8757513
+1209,Distichlis spicata,salt grass,5/10/2022,COPR,COPR_1_EW,20,34.41202918,-119.8758077
+1210,Salicornia pacifica,pickleweed,5/10/2022,COPR,COPR_1_EW,20,34.41202918,-119.8758077
+1211,Salicornia pacifica,pickleweed,5/10/2022,COPR,COPR_1_EW,28,34.41208235,-119.8758625
+1212,Salicornia pacifica,pickleweed,5/10/2022,COPR,COPR_2_NS,4,34.41600461,-119.8738069
+1213,Salicornia pacifica,pickleweed,5/10/2022,COPR,COPR_2_NS,12,34.41607591,-119.8737994
+1214,Salicornia pacifica,pickleweed,5/10/2022,COPR,COPR_2_EW,4,34.41601242,-119.8739768
+1215,Salicornia pacifica,pickleweed,5/10/2022,COPR,COPR_2_EW,28,34.41601662,-119.8737188
+1216,Meliotus indicus,small melilot,5/27/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+1217,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_1_NS,4,34.42097283,-119.8749907
+1218,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_1_NS,12,34.42092564,-119.8749717
+1219,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_1_NS,20,34.42083872,-119.8749289
+1220,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_1_NS,28,34.42077106,-119.874899
+1221,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_2_NS,4,34.41891616,-119.8759174
+1222,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_2_NS,20,34.41906098,-119.8759127
+1223,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_2_EW,4,34.4190296,-119.8760796
+1224,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_2_EW,12,34.41900372,-119.8760001
+1225,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_2_EW,20,34.41897751,-119.8759183
+1226,Salicornia pacifica,pickleweed,5/27/2022,NCOS,NCOS_2_EW,28,34.4189515,-119.8758376
