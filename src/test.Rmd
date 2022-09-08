@@ -1,0 +1,33 @@
+---
+title: "Test"
+author: "Germán Silva"
+date: "3/8/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+```
+
+```{r}
+soils <- read_csv(here("data", "shift_soil_data.csv"))
+
+ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect)) +
+  geom_point()+
+  labs(x = "Location Along Transect",
+       y = "Electroconductivity (mS/cm)")+
+  theme(plot.title = element_text(color = "#5b4f41", hjust = 0.5),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41"))
+
+
+```
+
