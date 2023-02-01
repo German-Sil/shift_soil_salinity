@@ -8,32 +8,45 @@ output: html_document
 ```{r setup, include=FALSE, message=FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
 
-library(here)
+# significance tests and data exploration
 library(tidyverse)
+library(here)
+library(kableExtra)
+library(ggbeeswarm)
+
+
+# spatial analysis
 library(sf)
 library(tmap)
 library(maptools)
+library(gstat)
+library(stars)
+library(SpatialKDE)
 ```
 
 ```{r}
-soils <- read_csv(here("data", "shift_soil_data.csv")) %>% 
-  mutate(date = lubridate::mdy(date)) %>% 
-  select(date:water_content_percent) %>% 
+soils <- read_sf(here("data", "soil_w_elevation.shp")) %>% 
+  mutate(date = lubridate::ymd(date),
+         electro_co = as.numeric(electro_co)) %>%
+  select(date:transect, meter_loca, electro_co, dem) %>% 
   drop_na()
+  
 
-soils_ex <- read_csv(here('data', 'soil_experiments.csv')) %>% 
-  janitor::clean_names()
+dem <- read_stars(here("data", "dem.tif")) %>% 
+  st_extract(soils$geometry)
+
 
 samples <- read_sf(here("data", "sampling_points.shp"))
 
 sample_ids <- read_csv(here("data", "sample_ids.csv"))
+
 ```
 
 
 ```{r}
-ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect)) +
+ggplot(soils, aes(x = dem, y = electro_co, color = transect)) +
   geom_point()+
-  facet_wrap(~transect)+
+  scale_x_continuous(breaks = seq(2,2.7, 0.05))+
   theme(legend.position = "none")+
   ggtitle("Soil Electro Conductivity All Sites")
 
@@ -51,12 +64,6 @@ soils %>%
 
 ```
 
-
-```{r}
-ggplot(soils_ex, aes(x = electro_cond_m_s_per_cm, y = ec_probe_measurement))+
-  geom_point() +
-  geom_smooth(method = "lm")
-```
 
 ```{r}
 ggplot(soils, aes(x = water_content_percent, y = electro_cond_mS_per_cm, color = transect)) +
@@ -89,16 +96,16 @@ strip_labels <- c("COPR_1_EW" = "COPR 1 EW",
                   "NCOS_2_NS" = "NCOS 2 NS")
 soils <- soils %>% 
   mutate(date = lubridate::ymd(date),
-         month = lubridate::month(date)) 
+         week = lubridate::week(date)) 
   
 
-ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect)) +
+ggplot(soils, aes(x = dem, y = electro_co, color = transect)) +
   geom_point()+
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+
   theme(legend.position = "none")+
-  labs(x = "Location Along Transect (m)",
-       y = "Electroconductivity (mS/cm)")+
+  labs(x = "Elevation (m)",
+       y = "Electrical conductivity (mS/cm)")+
   ggtitle("Soil Electroconductivity All Sites")+
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
         plot.background = element_rect("white"),
