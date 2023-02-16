@@ -13,7 +13,9 @@ library(tidyverse)
 library(here)
 library(kableExtra)
 library(ggbeeswarm)
-
+library(broom)
+library(randomForest)
+library(caret)
 
 # spatial analysis
 library(sf)
@@ -25,16 +27,24 @@ library(SpatialKDE)
 ```
 
 ```{r}
-soils <- read_sf(here("data", "soil_w_elevation.shp")) %>% 
-  mutate(date = lubridate::ymd(date),
-         electro_co = as.numeric(electro_co)) %>%
-  select(date:transect, meter_loca, electro_co, dem) %>% 
+soils <- read_csv(here("data", "shift_soil_data.csv")) %>% 
+  mutate(date = lubridate::mdy(date)) %>%
+  select(soil_id:transect, meter_location, electro_cond_mS_per_cm, water_content_percent, season, latitude, longitude) %>% 
   drop_na()
-  
+
+soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% 
+  select(electro_co, water_cont) %>% 
+  mutate(electro_co = as.numeric(electro_co),
+         water_cont = as.numeric(water_cont)) %>% 
+  drop_na()
+
+bbox <- read_sf(here("data", "bounding_box.shp"))  
 
 dem <- read_stars(here("data", "dem.tif")) %>% 
-  st_extract(soils$geometry)
+  st_extract(soils_sf$geometry)
 
+dem_soils <- dem %>% 
+  cbind(soils)
 
 samples <- read_sf(here("data", "sampling_points.shp"))
 
@@ -44,18 +54,8 @@ sample_ids <- read_csv(here("data", "sample_ids.csv"))
 
 
 ```{r}
-ggplot(soils, aes(x = dem, y = electro_co, color = transect)) +
-  geom_point()+
-  scale_x_continuous(breaks = seq(2,2.7, 0.05))+
-  theme(legend.position = "none")+
-  ggtitle("Soil Electro Conductivity All Sites")
-
-ggplot(soils, aes(x = meter_location, y = electro_cond_mS_per_cm, color = transect)) +
-  geom_point()+
-  ggtitle("Soil Electro Conductivity All Sites")
-
 soils %>% 
-  group_by(transect, meter_location) %>% 
+  group_by(transect) %>% 
   summarize(mean = mean(electro_cond_mS_per_cm),
             dev = sd(electro_cond_mS_per_cm),
             variance = var(electro_cond_mS_per_cm)) %>% 
@@ -63,28 +63,6 @@ soils %>%
   kableExtra::kable_classic(lightable_options = "striped")
 
 ```
-
-
-```{r}
-ggplot(soils, aes(x = water_content_percent, y = electro_cond_mS_per_cm, color = transect)) +
-  geom_point()+
-  ggtitle("Soil Electro Conductivity All Sites")
-```
-
-```{r}
-samples_sf <- sample_ids %>% 
-  drop_na() %>% 
-  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
-
-tmap_mode("view")
-
-tm_shape(samples) +
-  tm_dots()+
-  tm_shape(samples_sf) +
-  tm_dots(col = "red") 
-  
-```
-
 
 
 ```{r}
@@ -99,14 +77,14 @@ soils <- soils %>%
          week = lubridate::week(date)) 
   
 
-ggplot(soils, aes(x = dem, y = electro_co, color = transect)) +
+ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect, shape = season)) +
   geom_point()+
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+
-  facet_wrap(~transect, labeller = as_labeller(strip_labels))+
-  theme(legend.position = "none")+
+  #facet_wrap(~transect, labeller = as_labeller(strip_labels))+
+  #theme(legend.position = "none")+
   labs(x = "Elevation (m)",
        y = "Electrical conductivity (mS/cm)")+
-  ggtitle("Soil Electroconductivity All Sites")+
+  ggtitle("Soil Electrical Conductivity Across Elevations")+
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -126,6 +104,78 @@ soil_stats <- soils %>%
             max = max(electro_cond_mS_per_cm),
             min = min(electro_cond_mS_per_cm),
             range = max - min)
+```
+
+```{r}
+
+fit_ele <- randomForest(electro_cond_mS_per_cm ~ dem.tif, data = dem_soils, importance = TRUE)
+
+ggplot()+
+  geom_point(aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color = "#E69512")+
+  geom_smooth(method = "lm", aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color =  "#3A5D3D")+
+  labs(x = "Actual Electrical Conductivity (mS/cm)",
+       y = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Soil Electrical Conductivity Predictions by Elevation")+
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+elevation_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted)
+elevation_cor
+
+fit_ele_water <- randomForest(electro_cond_mS_per_cm ~ dem.tif + water_content_percent, data = dem_soils, importance = TRUE)
+
+ggplot()+
+  geom_point(aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele_water$predicted), color = "#E69512")+
+  geom_smooth(method = "lm", aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele_water$predicted), color =  "#3A5D3D")+
+  labs(x = "Actual Electrical Conductivity (mS/cm)",
+       y = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Soil Electrical Conductivity Predictions by Elevation and Water Content")+
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+ele_water_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele_water$predicted)
+ele_water_cor
+```
+ 
+```{r}
+sal_pred <- terra::predict(object = read_stars(here("data", "dem.tif")), model = fit_ele)
+```
+ 
+```{r}
+sal_pred_w_e <- terra::predict(object = read_stars(here("data", "dem.tif")), model = fit_ele_water)
+```
+ 
+ 
+```{r}
+ggplot()+
+  geom_stars(data = sal_pred) +
+  coord_cartesian(ylim = c(34.409, 34.422), xlim = c(-119.882, -119.873))+
+  labs(x = "Longitude",
+       y = "Latitude")+
+  ggtitle("Soil Electrical Conductivity Predictions by Elevation")+
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
 ```
  
  
