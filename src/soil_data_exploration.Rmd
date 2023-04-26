@@ -4,7 +4,7 @@ author: "German Silva"
 date: "3/4/2022"
 output: html_document
 ---
-
+#Opening packages:
 ```{r setup, include=FALSE, message=FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
 
@@ -26,45 +26,54 @@ library(stars)
 library(SpatialKDE)
 ```
 
+#Opening and exploring data
+
+Open soil and elevation data:
 ```{r}
 soils <- read_csv(here("data", "shift_soil_data.csv")) %>% 
-  mutate(date = lubridate::mdy(date)) %>%
-  select(soil_id:transect, meter_location, electro_cond_mS_per_cm, water_content_percent, season, latitude, longitude) %>% 
+  mutate(date = lubridate::mdy(date),
+         week = lubridate::week(date)) %>%
+  select(soil_id:transect, meter_location, electro_cond_mS_per_cm, season, latitude, longitude)%>% 
   drop_na()
 
 soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% 
-  select(electro_co, water_cont) %>% 
-  mutate(electro_co = as.numeric(electro_co),
-         water_cont = as.numeric(water_cont)) %>% 
+  mutate(date = lubridate::ymd(date)) %>% 
+  select(electro_co, date, transect, meter_loca) %>% 
+  mutate(electro_co = as.numeric(electro_co)) %>% 
   drop_na()
-
-bbox <- read_sf(here("data", "bounding_box.shp"))  
 
 dem <- read_stars(here("data", "dem.tif")) %>% 
   st_extract(soils_sf$geometry)
-
-dem_soils <- dem %>% 
-  cbind(soils)
-
-samples <- read_sf(here("data", "sampling_points.shp"))
-
-sample_ids <- read_csv(here("data", "sample_ids.csv"))
-
 ```
 
+Join soil and elevation data:
+```{r}
+dem_soils <- dem %>% 
+  cbind(soils)
+```
 
+Descriptive statistics:
 ```{r}
 soils %>% 
   group_by(transect) %>% 
-  summarize(mean = mean(electro_cond_mS_per_cm),
+  summarize(min = min(electro_cond_mS_per_cm),
+            max = max(electro_cond_mS_per_cm),
+            mean = mean(electro_cond_mS_per_cm),
             dev = sd(electro_cond_mS_per_cm),
             variance = var(electro_cond_mS_per_cm)) %>% 
   kableExtra::kable() %>% 
   kableExtra::kable_classic(lightable_options = "striped")
 
+
+soil_stats <- soils %>% 
+  group_by(transect) %>% 
+  summarize(mean = mean(electro_cond_mS_per_cm),
+            max = max(electro_cond_mS_per_cm),
+            min = min(electro_cond_mS_per_cm),
+            range = max - min)
 ```
 
-
+Plot salinity v elevation
 ```{r}
 strip_labels <- c("COPR_1_EW" = "COPR 1 EW",
                   "COPR_2_EW" = "COPR 2 EW",
@@ -72,18 +81,47 @@ strip_labels <- c("COPR_1_EW" = "COPR 1 EW",
                   "NCOS_1_NS" = "NCOS 1 NS",
                   "NCOS_2_EW" = "NCOS 2 EW",
                   "NCOS_2_NS" = "NCOS 2 NS")
-soils <- soils %>% 
-  mutate(date = lubridate::ymd(date),
-         week = lubridate::week(date)) 
   
 
-ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect, shape = season)) +
+ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +
   geom_point()+
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+
-  #facet_wrap(~transect, labeller = as_labeller(strip_labels))+
-  #theme(legend.position = "none")+
   labs(x = "Elevation (m)",
        y = "Electrical conductivity (mS/cm)")+
+  theme(legend.position = "none")+
+  guides(color = guide_legend(title = "Transect ID"))+
+  ggtitle("Soil Electrical Conductivity Across Elevations")+
+  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 14),
+        axis.title = element_text(color = "#5b4f41", size = 16),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"))
+```
+
+
+Salinity v elevation, facet wrapped
+```{r}
+strip_labels <- c("COPR_1_EW" = "COPR 1 EW",
+                  "COPR_2_EW" = "COPR 2 EW",
+                  "COPR_2_NS" = "COPR 2 NS",
+                  "NCOS_1_NS" = "NCOS 1 NS",
+                  "NCOS_2_EW" = "NCOS 2 EW",
+                  "NCOS_2_NS" = "NCOS 2 NS")
+
+ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +
+  geom_point()+
+  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+
+  facet_wrap(~transect, labeller = as_labeller(strip_labels))+
+  theme(legend.position = "none")+
+  labs(x = "Elevation (m)",
+       y = "Electrical conductivity (mS/cm)")+
+  guides(color = guide_legend(title = "Transect ID"))+
   ggtitle("Soil Electrical Conductivity Across Elevations")+
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
         plot.background = element_rect("white"),
@@ -93,21 +131,13 @@ ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect,
         axis.title = element_text(color = "#5b4f41"),
         strip.background = element_rect("#f8f8f8"),
         strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-  
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"))
 ```
 
+Random Forest regression of Soil salinity and elevation
 ```{r}
-soil_stats <- soils %>% 
-  group_by(transect) %>% 
-  summarize(mean = mean(electro_cond_mS_per_cm),
-            max = max(electro_cond_mS_per_cm),
-            min = min(electro_cond_mS_per_cm),
-            range = max - min)
-```
-
-```{r}
-
 fit_ele <- randomForest(electro_cond_mS_per_cm ~ dem.tif, data = dem_soils, importance = TRUE)
 
 ggplot()+
@@ -126,56 +156,67 @@ ggplot()+
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
+ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500)
 elevation_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted)
 elevation_cor
+```
 
-fit_ele_water <- randomForest(electro_cond_mS_per_cm ~ dem.tif + water_content_percent, data = dem_soils, importance = TRUE)
+#Options for extracting pixel values:
 
-ggplot()+
-  geom_point(aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele_water$predicted), color = "#E69512")+
-  geom_smooth(method = "lm", aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele_water$predicted), color =  "#3A5D3D")+
-  labs(x = "Actual Electrical Conductivity (mS/cm)",
-       y = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Soil Electrical Conductivity Predictions by Elevation and Water Content")+
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
+Option 1:
+```{r}
+# Assume `soil_raster` is a raster object containing soil data and `soil_pts` is a data frame containing point locations
+# We will extract soil values for each week, where each week is defined by unique values in `soil_pts$week` column
+# We will also take a subset of points for each week, where each subset contains points corresponding to the current week
 
-ele_water_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele_water$predicted)
-ele_water_cor
+# Get unique weeks from `soil_pts` data frame
+weeks <- unique(soil_pts$week)
+
+# Create an empty list to store extracted values
+extracted_values <- list()
+
+# Loop over each week
+for (i in seq_along(weeks)) {
+  # Get current week value
+  current_week <- weeks[i]
+  
+  # Subset points for the current week
+  current_pts <- soil_pts[soil_pts$week == current_week, ]
+  
+  # Extract soil values for current week
+  current_values <- extract(soil_raster, current_pts)
+  
+  # Store extracted values in list
+  extracted_values[[i]] <- current_values
+}
+
+# `extracted_values` now contains a list of extracted values for each week
 ```
- 
+
+Option 2:
 ```{r}
-sal_pred <- terra::predict(object = read_stars(here("data", "dem.tif")), model = fit_ele)
+# load weekly raster images
+rasters <- list.files(here("data"), pattern = "*.tif", full.names = TRUE)
+rasters <- stack(rasters)
+
+# load weekly point data
+points <- soils_sf %>% 
+  mutate(week = lubridate::week(date))
+
+# extract pixel values for each week
+for (week in unique(points$week)) {
+  # subset points for the current week
+  week_points <- points[points$week == week, ]
+  
+  # extract pixel values for each point
+  values <- extract(rasters[[week]], week_points[, c("x", "y")])
+  
+  # combine point data with extracted values
+  week_points <- rbind(week_points, values)
+}
 ```
+
  
-```{r}
-sal_pred_w_e <- terra::predict(object = read_stars(here("data", "dem.tif")), model = fit_ele_water)
-```
- 
- 
-```{r}
-ggplot()+
-  geom_stars(data = sal_pred) +
-  coord_cartesian(ylim = c(34.409, 34.422), xlim = c(-119.882, -119.873))+
-  labs(x = "Longitude",
-       y = "Latitude")+
-  ggtitle("Soil Electrical Conductivity Predictions by Elevation")+
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-```
+
  
  
