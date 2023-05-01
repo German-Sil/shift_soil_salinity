@@ -23,6 +23,7 @@ library(tmap)
 library(maptools)
 library(gstat)
 library(stars)
+library(terra)
 library(SpatialKDE)
 ```
 
@@ -36,14 +37,19 @@ soils <- read_csv(here("data", "shift_soil_data.csv")) %>%
   select(soil_id:transect, meter_location, electro_cond_mS_per_cm, season, latitude, longitude)%>% 
   drop_na()
 
+# Open spatial Data
 soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% 
-  mutate(date = lubridate::ymd(date)) %>% 
+  mutate(date = lubridate::ymd(date),
+         week = lubridate::week(date)) %>% 
   select(electro_co, date, transect, meter_loca) %>% 
   mutate(electro_co = as.numeric(electro_co)) %>% 
   drop_na()
 
+bbox <- read_sf(here("data", "boundary.shp"))
+
 dem <- read_stars(here("data", "dem.tif")) %>% 
   st_extract(soils_sf$geometry)
+
 ```
 
 Join soil and elevation data:
@@ -75,14 +81,6 @@ soil_stats <- soils %>%
 
 Plot salinity v elevation
 ```{r}
-strip_labels <- c("COPR_1_EW" = "COPR 1 EW",
-                  "COPR_2_EW" = "COPR 2 EW",
-                  "COPR_2_NS" = "COPR 2 NS",
-                  "NCOS_1_NS" = "NCOS 1 NS",
-                  "NCOS_2_EW" = "NCOS 2 EW",
-                  "NCOS_2_NS" = "NCOS 2 NS")
-  
-
 ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +
   geom_point()+
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+
@@ -103,7 +101,6 @@ ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)
         legend.text = element_text(color = "#5b4f41"),
         legend.title = element_text(color = "#5b4f41"))
 ```
-
 
 Salinity v elevation, facet wrapped
 ```{r}
@@ -161,60 +158,12 @@ elevation_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted)
 elevation_cor
 ```
 
-#Options for extracting pixel values:
+#Open Raster Files
 
-Option 1:
 ```{r}
-# Assume `soil_raster` is a raster object containing soil data and `soil_pts` is a data frame containing point locations
-# We will extract soil values for each week, where each week is defined by unique values in `soil_pts$week` column
-# We will also take a subset of points for each week, where each subset contains points corresponding to the current week
 
-# Get unique weeks from `soil_pts` data frame
-weeks <- unique(soil_pts$week)
-
-# Create an empty list to store extracted values
-extracted_values <- list()
-
-# Loop over each week
-for (i in seq_along(weeks)) {
-  # Get current week value
-  current_week <- weeks[i]
-  
-  # Subset points for the current week
-  current_pts <- soil_pts[soil_pts$week == current_week, ]
-  
-  # Extract soil values for current week
-  current_values <- extract(soil_raster, current_pts)
-  
-  # Store extracted values in list
-  extracted_values[[i]] <- current_values
-}
-
-# `extracted_values` now contains a list of extracted values for each week
 ```
 
-Option 2:
-```{r}
-# load weekly raster images
-rasters <- list.files(here("data"), pattern = "*.tif", full.names = TRUE)
-rasters <- stack(rasters)
-
-# load weekly point data
-points <- soils_sf %>% 
-  mutate(week = lubridate::week(date))
-
-# extract pixel values for each week
-for (week in unique(points$week)) {
-  # subset points for the current week
-  week_points <- points[points$week == week, ]
-  
-  # extract pixel values for each point
-  values <- extract(rasters[[week]], week_points[, c("x", "y")])
-  
-  # combine point data with extracted values
-  week_points <- rbind(week_points, values)
-}
-```
 
  
 
