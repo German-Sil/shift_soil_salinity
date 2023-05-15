@@ -31,49 +31,54 @@ library(SpatialKDE)
 
 Open soil and elevation data:
 ```{r}
-soils <- read_csv(here("data", "shift_soil_data.csv")) %>% 
-  mutate(date = lubridate::mdy(date),
-         week = lubridate::week(date)) %>%
-  select(soil_id:transect, meter_location, electro_cond_mS_per_cm, season, latitude, longitude)%>% 
-  drop_na()
+#opening csv
+soils <- read_csv(here("data", "shift_soil_data.csv")) %>% # read in soil csv
+  mutate(date = lubridate::mdy(date), # change to date class
+         week = lubridate::week(date)) %>% # create a week column
+  select(soil_id:transect, meter_location, electro_cond_mS_per_cm, season, latitude, longitude)%>% #select certain column to work with
+  drop_na() #drop any NA rows
 
 # Open spatial Data
-soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% 
-  mutate(date = lubridate::ymd(date),
-         week = lubridate::week(date)) %>% 
-  select(electro_co, date, transect, meter_loca) %>% 
-  mutate(electro_co = as.numeric(electro_co)) %>% 
-  drop_na()
+soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% # read in sf file
+  mutate(date = lubridate::ymd(date), #change date to date class
+         week = lubridate::week(date)) %>% #create week
+  select(electro_co, date, transect, meter_loca) %>% # select certain columns
+  mutate(electro_co = as.numeric(electro_co)) %>% #change to numeric class
+  drop_na() #drop NAs
 
-bbox <- read_sf(here("data", "boundary.shp"))
+bbox <- read_sf(here("data", "bbox.shp")) #read in bounding box file
 
-dem <- read_stars(here("data", "dem.tif")) %>% 
-  st_extract(soils_sf$geometry)
+dem <- read_stars(here("data", "dem.tif")) %>% # read in dem 
+  st_crop(y = st_bbox(bbox)) #crop to bounding box
+
+dem_extract <- dem %>% # call dem
+  st_extract(soils_sf$geometry) # extract elevation to point layer
 
 ```
 
 Join soil and elevation data:
 ```{r}
-dem_soils <- dem %>% 
-  cbind(soils)
+dem_soils <- dem_extract %>% # call extracted values
+  cbind(soils) #bind extracted values to the soil data
 ```
 
 Descriptive statistics:
 ```{r}
-soils %>% 
-  group_by(transect) %>% 
-  summarize(min = min(electro_cond_mS_per_cm),
-            max = max(electro_cond_mS_per_cm),
-            mean = mean(electro_cond_mS_per_cm),
-            dev = sd(electro_cond_mS_per_cm),
-            variance = var(electro_cond_mS_per_cm)) %>% 
-  kableExtra::kable() %>% 
-  kableExtra::kable_classic(lightable_options = "striped")
+#make descriptive stat table
+soils %>% # to soils
+  group_by(transect) %>%# group by transect  
+  summarize(min = min(electro_cond_mS_per_cm),#calculate mins
+            max = max(electro_cond_mS_per_cm),#calculate max
+            mean = mean(electro_cond_mS_per_cm),#calculate mean
+            dev = sd(electro_cond_mS_per_cm),#obtain standard dev
+            variance = var(electro_cond_mS_per_cm)) %>% # calculate variance
+  kableExtra::kable() %>% # create a table format
+  kableExtra::kable_classic(lightable_options = "striped")#theme the table
 
-
-soil_stats <- soils %>% 
-  group_by(transect) %>% 
-  summarize(mean = mean(electro_cond_mS_per_cm),
+# make descriptive stat dataframe
+soil_stats <- soils %>% #call soils
+  group_by(transect) %>% #group by transects
+  summarize(mean = mean(electro_cond_mS_per_cm),# create dataframe with these stats
             max = max(electro_cond_mS_per_cm),
             min = min(electro_cond_mS_per_cm),
             range = max - min)
@@ -81,15 +86,15 @@ soil_stats <- soils %>%
 
 Plot salinity v elevation
 ```{r}
-ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +
-  geom_point()+
-  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+
-  labs(x = "Elevation (m)",
+ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +#ggplot of soils/dem data
+  geom_point()+#geometry of the plot
+  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+# colors to use
+  labs(x = "Elevation (m)",#labels
        y = "Electrical conductivity (mS/cm)")+
-  theme(legend.position = "none")+
-  guides(color = guide_legend(title = "Transect ID"))+
-  ggtitle("Soil Electrical Conductivity Across Elevations")+
-  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+  theme(legend.position = "none")+#no legend theme
+  guides(color = guide_legend(title = "Transect ID"))+#changing legend title
+  ggtitle("Soil Electrical Conductivity Across Elevations")+# title of plot
+  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
@@ -104,23 +109,23 @@ ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)
 
 Salinity v elevation, facet wrapped
 ```{r}
-strip_labels <- c("COPR_1_EW" = "COPR 1 EW",
+strip_labels <- c("COPR_1_EW" = "COPR 1 EW",#create better formated labels for facet wrap strips
                   "COPR_2_EW" = "COPR 2 EW",
                   "COPR_2_NS" = "COPR 2 NS",
                   "NCOS_1_NS" = "NCOS 1 NS",
                   "NCOS_2_EW" = "NCOS 2 EW",
                   "NCOS_2_NS" = "NCOS 2 NS")
 
-ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +
-  geom_point()+
-  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+
-  facet_wrap(~transect, labeller = as_labeller(strip_labels))+
-  theme(legend.position = "none")+
-  labs(x = "Elevation (m)",
+ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +#start ggplot
+  geom_point()+# point geometry
+  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
+  theme(legend.position = "none")+# legend theme
+  labs(x = "Elevation (m)",#labels
        y = "Electrical conductivity (mS/cm)")+
-  guides(color = guide_legend(title = "Transect ID"))+
-  ggtitle("Soil Electrical Conductivity Across Elevations")+
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
+  guides(color = guide_legend(title = "Transect ID"))+#legend title
+  ggtitle("Soil Electrical Conductivity Across Elevations")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
@@ -135,15 +140,15 @@ ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)
 
 Random Forest regression of Soil salinity and elevation
 ```{r}
-fit_ele <- randomForest(electro_cond_mS_per_cm ~ dem.tif, data = dem_soils, importance = TRUE)
+fit_ele <- randomForest(electro_cond_mS_per_cm ~ dem.tif, data = dem_soils, importance = TRUE)#random forest fitting of the data with stated equation
 
-ggplot()+
-  geom_point(aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color = "#E69512")+
-  geom_smooth(method = "lm", aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color =  "#3A5D3D")+
-  labs(x = "Actual Electrical Conductivity (mS/cm)",
+ggplot()+#ggplot object
+  geom_point(aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color =  "#3A5D3D")+#smooth line data
+  labs(x = "Actual Electrical Conductivity (mS/cm)",#labels
        y = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Soil Electrical Conductivity Predictions by Elevation")+
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),
+  ggtitle("Soil Electrical Conductivity Predictions by Elevation")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
@@ -153,9 +158,9 @@ ggplot()+
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500)
-elevation_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted)
-elevation_cor
+#ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+elevation_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted)#calculate correlation coefficient
+elevation_cor#call/print correlation value
 ```
 
 #Open Raster Files
