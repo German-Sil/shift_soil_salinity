@@ -4,7 +4,7 @@ author: "German Silva"
 date: "3/4/2022"
 output: html_document
 ---
-#Opening packages:
+
 ```{r setup, include=FALSE, message=FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
 
@@ -27,9 +27,9 @@ library(terra)
 library(SpatialKDE)
 ```
 
-#Opening and exploring data
+# Opening and exploring data
 
-Open soil and elevation data:
+## Open soil and elevation data:
 ```{r}
 #opening csv
 soils <- read_csv(here("data", "shift_soil_data.csv")) %>% # read in soil csv
@@ -56,13 +56,13 @@ dem_extract <- dem %>% # call dem
 
 ```
 
-Join soil and elevation data:
+## Join soil and elevation data:
 ```{r}
 dem_soils <- dem_extract %>% # call extracted values
   cbind(soils) #bind extracted values to the soil data
 ```
 
-Descriptive statistics:
+## Descriptive statistics:
 ```{r}
 #make descriptive stat table
 soils %>% # to soils
@@ -84,7 +84,7 @@ soil_stats <- soils %>% #call soils
             range = max - min)
 ```
 
-Plot salinity v elevation
+## Plot salinity v elevation
 ```{r}
 ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +#ggplot of soils/dem data
   geom_point()+#geometry of the plot
@@ -107,7 +107,7 @@ ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)
         legend.title = element_text(color = "#5b4f41"))
 ```
 
-Salinity v elevation, facet wrapped
+## Salinity vs. elevation, facet wrapped
 ```{r}
 strip_labels <- c("COPR_1_EW" = "COPR 1 EW",#create better formated labels for facet wrap strips
                   "COPR_2_EW" = "COPR 2 EW",
@@ -138,7 +138,9 @@ ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)
         legend.title = element_text(color = "#5b4f41"))
 ```
 
-Random Forest regression of Soil salinity and elevation
+# Test of Concept: Random Forest Model
+ 
+## Random Forest regression of Soil salinity and elevation
 ```{r}
 fit_ele <- randomForest(electro_cond_mS_per_cm ~ dem.tif, data = dem_soils, importance = TRUE)#random forest fitting of the data with stated equation
 
@@ -165,7 +167,7 @@ elevation_cor#call/print correlation value
 
 # Open Raster Files:
 
-Opening and Compiling NDVI:
+## Opening and Compiling NDVI:
 
 ```{r}
 ndvi_1 <- read_stars(here("imagery", "NDVI", "2022_02_24_ndvi.tif")) %>% 
@@ -202,7 +204,7 @@ ndvi_all <- c(ndvi_1, ndvi_2, ndvi_3, ndvi_4, ndvi_5, ndvi_6, ndvi_7, ndvi_8, nd
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
-Opening and Compiling VSSI:
+## Opening and Compiling VSSI:
 
 ```{r}
 vssi_1 <- read_stars(here("imagery", "VSSI", "02_24_vssi.tif")) %>% 
@@ -238,7 +240,7 @@ vssi_all <- c(vssi_1, vssi_2, vssi_3, vssi_4, vssi_5, vssi_6, vssi_7, vssi_8, vs
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
-Opening and Compiling mARI:
+## Opening and Compiling mARI:
 
 ```{r}
 mari_1 <- read_stars(here("imagery", "mARI", "02_24_mari_avg.tif")) %>% 
@@ -274,7 +276,7 @@ mari_all <- c(mari_1, mari_2, mari_3, mari_4, mari_5, mari_6, mari_7, mari_8, ma
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
-Opening and Compiling CRSI:
+## Opening and Compiling CRSI:
 
 ```{r}
 crsi_1 <- read_stars(here("imagery", "CRSI", "02_24_crsi.tif")) %>% 
