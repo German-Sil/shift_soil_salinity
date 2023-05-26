@@ -163,15 +163,152 @@ elevation_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted)
 elevation_cor#call/print correlation value
 ```
 
-#Open Raster Files
+# Open Raster Files:
+
+Opening and Compiling NDVI:
 
 ```{r}
+ndvi_1 <- read_stars(here("imagery", "NDVI", "2022_02_24_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_2 <- read_stars(here("imagery", "NDVI", "2022_02_28_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_3 <- read_stars(here("imagery", "NDVI", "2022_03_08_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_4 <- read_stars(here("imagery", "NDVI", "2022_03_16_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_5 <- read_stars(here("imagery", "NDVI", "2022_03_22_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_6 <- read_stars(here("imagery", "NDVI", "2022_04_05_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_7 <- read_stars(here("imagery", "NDVI", "2022_04_12_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_8 <- read_stars(here("imagery", "NDVI", "2022_04_20_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_9 <- read_stars(here("imagery", "NDVI", "2022_04_29_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_10 <- read_stars(here("imagery", "NDVI", "2022_05_03_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_11 <- read_stars(here("imagery", "NDVI", "2022_05_11_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_12 <- read_stars(here("imagery", "NDVI", "2022_05_12_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_13 <- read_stars(here("imagery", "NDVI", "2022_05_17_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_14 <- read_stars(here("imagery", "NDVI", "2022_05_29_ndvi.tif")) %>% 
+  setNames("ndvi")
 
+
+ndvi_all <- c(ndvi_1, ndvi_2, ndvi_3, ndvi_4, ndvi_5, ndvi_6, ndvi_7, ndvi_8, ndvi_9, ndvi_10, ndvi_11, ndvi_12, ndvi_13, ndvi_14, along = 3) %>% 
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
+Opening and Compiling VSSI:
 
+```{r}
+vssi_1 <- read_stars(here("imagery", "VSSI", "02_24_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_2 <- read_stars(here("imagery", "VSSI", "02_28_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_3 <- read_stars(here("imagery", "VSSI", "03_08_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_4 <- read_stars(here("imagery", "VSSI", "03_16_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_5 <- read_stars(here("imagery", "VSSI", "03_22_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_6 <- read_stars(here("imagery", "VSSI", "04_05_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_7 <- read_stars(here("imagery", "VSSI", "04_12_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_8 <- read_stars(here("imagery", "VSSI", "04_20_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_9 <- read_stars(here("imagery", "VSSI", "04_29_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_10 <- read_stars(here("imagery", "VSSI", "05_03_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_11 <- read_stars(here("imagery", "VSSI", "05_11_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_12 <- read_stars(here("imagery", "VSSI", "05_12_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_13 <- read_stars(here("imagery", "VSSI", "05_17_vssi.tif")) %>% 
+  setNames("vssi")
+vssi_14 <- read_stars(here("imagery", "VSSI", "05_29_vssi")) %>% 
+  setNames("vssi")
 
+vssi_all <- c(vssi_1, vssi_2, vssi_3, vssi_4, vssi_5, vssi_6, vssi_7, vssi_8, vssi_9, vssi_10, vssi_11, vssi_12, vssi_13, vssi_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
+```
 
+Opening and Compiling mARI:
+
+```{r}
+mari_1 <- read_stars(here("imagery", "mARI", "02_24_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_2 <- read_stars(here("imagery", "mARI", "02_28_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_3 <- read_stars(here("imagery", "mARI", "03_08_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_4 <- read_stars(here("imagery", "mARI", "03_16_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_5 <- read_stars(here("imagery", "mARI", "03_22_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_6 <- read_stars(here("imagery", "mARI", "04_05_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_7 <- read_stars(here("imagery", "mARI", "04_12_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_8 <- read_stars(here("imagery", "mARI", "04_20_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_9 <- read_stars(here("imagery", "mARI", "04_29_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_10 <- read_stars(here("imagery", "mARI", "05_03_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_11 <- read_stars(here("imagery", "mARI", "05_11_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_12 <- read_stars(here("imagery", "mARI", "05_12_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_13 <- read_stars(here("imagery", "mARI", "05_17_mari_avg.tif")) %>% 
+  setNames("mari")
+mari_14 <- read_stars(here("imagery", "mARI", "05_29_mari_avg.tif")) %>% 
+  setNames("mari")
+
+mari_all <- c(mari_1, mari_2, mari_3, mari_4, mari_5, mari_6, mari_7, mari_8, mari_9, mari_10, mari_11, mari_12, mari_13, mari_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
+```
+
+Opening and Compiling CRSI:
+
+```{r}
+crsi_1 <- read_stars(here("imagery", "CRSI", "02_24_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_2 <- read_stars(here("imagery", "CRSI", "02_28_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_3 <- read_stars(here("imagery", "CRSI", "03_08_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_4 <- read_stars(here("imagery", "CRSI", "03_16_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_5 <- read_stars(here("imagery", "CRSI", "03_22_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_6 <- read_stars(here("imagery", "CRSI", "04_05_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_7 <- read_stars(here("imagery", "CRSI", "04_12_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_8 <- read_stars(here("imagery", "CRSI", "04_20_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_9 <- read_stars(here("imagery", "CRSI", "04_29_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_10 <- read_stars(here("imagery", "CRSI", "05_03_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_11 <- read_stars(here("imagery", "CRSI", "05_11_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_12 <- read_stars(here("imagery", "CRSI", "05_12_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_13 <- read_stars(here("imagery", "CRSI", "05_17_crsi.tif")) %>% 
+  setNames("crsi")
+crsi_14 <- read_stars(here("imagery", "CRSI", "05_29_crsi.tif")) %>% 
+  setNames("crsi")
+
+crsi_all <- c(crsi_1, crsi_2, crsi_3, crsi_4, crsi_5, crsi_6, crsi_7, crsi_8, crsi_9, crsi_10, crsi_11, crsi_12, crsi_13, crsi_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
+```
 
  
 
