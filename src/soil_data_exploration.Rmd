@@ -25,6 +25,8 @@ library(gstat)
 library(stars)
 library(terra)
 library(SpatialKDE)
+
+set.seed(1234)
 ```
 
 # Opening and exploring data
@@ -64,8 +66,8 @@ dem_extract <- dem %>% # call dem
 
 ## Join soil and elevation data:
 ```{r}
-dem_soils <- dem_extract %>% # call extracted values
-  cbind(soils) %>% #bind extracted values to the soil data
+soils <- cbind(soils, dem_extract$dem.tif) %>% #bind extracted values to the soil data
+  rename("elevation" = "dem_extract.dem.tif") %>% 
   st_transform(crs = 32611)
 ```
 
@@ -93,7 +95,7 @@ soil_stats <- soils %>% #call soils
 
 ## Plot salinity v elevation
 ```{r}
-ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +#ggplot of soils/dem data
+ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) +#ggplot of soils/dem data
   geom_point()+#geometry of the plot
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+# colors to use
   labs(x = "Elevation (m)",#labels
@@ -123,7 +125,7 @@ strip_labels <- c("COPR_1_EW" = "COPR 1 EW",#create better formated labels for f
                   "NCOS_2_EW" = "NCOS 2 EW",
                   "NCOS_2_NS" = "NCOS 2 NS")
 
-ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)) +#start ggplot
+ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) +#start ggplot
   geom_point()+# point geometry
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
@@ -149,11 +151,11 @@ ggplot(dem_soils, aes(x = dem.tif, y = electro_cond_mS_per_cm, color = transect)
  
 ## Random Forest regression of Soil salinity and elevation
 ```{r}
-fit_ele <- randomForest(electro_cond_mS_per_cm ~ dem.tif, data = dem_soils, importance = TRUE)#random forest fitting of the data with stated equation
+fit_ele <- randomForest(electro_cond_mS_per_cm ~ elevation, data = soils, importance = TRUE)#random forest fitting of the data with stated equation
 
 ggplot()+#ggplot object
-  geom_point(aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color =  "#3A5D3D")+#smooth line data
+  geom_point(aes(x= soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(x= soils$electro_cond_mS_per_cm, y = fit_ele$predicted), color =  "#3A5D3D")+#smooth line data
   labs(x = "Actual Electrical Conductivity (mS/cm)",#labels
        y = "Predicted Electrical conductivity (mS/cm)")+
   ggtitle("Soil Electrical Conductivity Predictions by Elevation")+#plot title
@@ -168,7 +170,7 @@ ggplot()+#ggplot object
         axis.line = element_line(color = "#5b4f41"))
 
 #ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-elevation_cor <- cor(x= dem_soils$electro_cond_mS_per_cm, y = fit_ele$predicted)#calculate correlation coefficient
+elevation_cor <- cor(x= soils$electro_cond_mS_per_cm, y = fit_ele$predicted)#calculate correlation coefficient
 elevation_cor#call/print correlation value
 ```
 
@@ -236,15 +238,15 @@ vssi_10 <- read_stars(here("imagery", "VSSI", "05_03_vssi.tif")) %>%
   setNames("vssi")
 vssi_11 <- read_stars(here("imagery", "VSSI", "05_11_vssi.tif")) %>% 
   setNames("vssi")
-vssi_12 <- read_stars(here("imagery", "VSSI", "05_12_vssi.tif")) %>% 
-  setNames("vssi")
+#vssi_12 <- read_stars(here("imagery", "VSSI", "05_12_vssi.tif")) %>% 
+ # setNames("vssi")
 vssi_13 <- read_stars(here("imagery", "VSSI", "05_17_vssi.tif")) %>% 
   setNames("vssi")
 vssi_14 <- read_stars(here("imagery", "VSSI", "05_29_vssi")) %>% 
   setNames("vssi")
 
-vssi_all <- c(vssi_1, vssi_2, vssi_3, vssi_4, vssi_5, vssi_6, vssi_7, vssi_8, vssi_9, vssi_10, vssi_11, vssi_12, vssi_13, vssi_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
+vssi_all <- c(vssi_1, vssi_2, vssi_3, vssi_4, vssi_5, vssi_6, vssi_7, vssi_8, vssi_9, vssi_10, vssi_11, vssi_13, vssi_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
 ## Opening and Compiling mARI:
@@ -272,15 +274,15 @@ mari_10 <- read_stars(here("imagery", "mARI", "05_03_mari_avg.tif")) %>%
   setNames("mari")
 mari_11 <- read_stars(here("imagery", "mARI", "05_11_mari_avg.tif")) %>% 
   setNames("mari")
-mari_12 <- read_stars(here("imagery", "mARI", "05_12_mari_avg.tif")) %>% 
-  setNames("mari")
+#mari_12 <- read_stars(here("imagery", "mARI", "05_12_mari_avg.tif")) %>% 
+ # setNames("mari")
 mari_13 <- read_stars(here("imagery", "mARI", "05_17_mari_avg.tif")) %>% 
   setNames("mari")
 mari_14 <- read_stars(here("imagery", "mARI", "05_29_mari_avg.tif")) %>% 
   setNames("mari")
 
-mari_all <- c(mari_1, mari_2, mari_3, mari_4, mari_5, mari_6, mari_7, mari_8, mari_9, mari_10, mari_11, mari_12, mari_13, mari_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
+mari_all <- c(mari_1, mari_2, mari_3, mari_4, mari_5, mari_6, mari_7, mari_8, mari_9, mari_10, mari_11, mari_13, mari_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
 ## Opening and Compiling CRSI:
@@ -308,25 +310,34 @@ crsi_10 <- read_stars(here("imagery", "CRSI", "05_03_crsi.tif")) %>%
   setNames("crsi")
 crsi_11 <- read_stars(here("imagery", "CRSI", "05_11_crsi.tif")) %>% 
   setNames("crsi")
-crsi_12 <- read_stars(here("imagery", "CRSI", "05_12_crsi.tif")) %>% 
-  setNames("crsi")
+#crsi_12 <- read_stars(here("imagery", "CRSI", "05_12_crsi.tif")) %>% 
+ # setNames("crsi")
 crsi_13 <- read_stars(here("imagery", "CRSI", "05_17_crsi.tif")) %>% 
   setNames("crsi")
 crsi_14 <- read_stars(here("imagery", "CRSI", "05_29_crsi.tif")) %>% 
   setNames("crsi")
 
-crsi_all <- c(crsi_1, crsi_2, crsi_3, crsi_4, crsi_5, crsi_6, crsi_7, crsi_8, crsi_9, crsi_10, crsi_11, crsi_12, crsi_13, crsi_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
+crsi_all <- c(crsi_1, crsi_2, crsi_3, crsi_4, crsi_5, crsi_6, crsi_7, crsi_8, crsi_9, crsi_10, crsi_11, crsi_13, crsi_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
 # Extracting Values based on week
 
 ```{r}
 
-soils_ndvi <- data.frame()
+soils_si <- data.frame()
 
 for (i in unique(lubridate::week(soils$paired_flight))){
   ndvi_week <- ndvi_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  mari_week <- mari_all %>% 
+    filter(lubridate::week(date) == i)
+
+  vssi_week <- vssi_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  crsi_week <- crsi_all %>% 
     filter(lubridate::week(date) == i)
   
   soil_week <- soils %>% 
@@ -336,22 +347,68 @@ for (i in unique(lubridate::week(soils$paired_flight))){
   ndvi_extract <- ndvi_week %>% 
     st_extract(soil_week)
   
-  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi) %>% 
-    rename("ndvi" = "...10")
+  mari_extract <- mari_week %>% 
+    st_extract(soil_week)
+  
+  vssi_extract <- vssi_week %>% 
+    st_extract(soil_week)
+  
+  crsi_extract <- crsi_week %>% 
+    st_extract(soil_week)
+  
+  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi, mari_extract$mari, vssi_extract$vssi, crsi_extract$crsi) %>% 
+    rename("ndvi" = "...11",
+           "mari" = "...12",
+           "vssi" = "...13",
+           "crsi" = "...14")
     
-  soils_ndvi <- rbind(soils_ndvi, soils_week)
+  soils_si <- rbind(soils_si, soils_week)
 }
 
-  
 ```
+
+# Fitting model with all variables currently available
+
+## Fitting the Model
+
+```{r}
+
+fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, data = soils_si, method = "rf", trControl = trainControl(method = "cv", number = 10)) #random forest fitting of the data with
+
+```
+
+## Evaluating Model
+
+```{r}
+varImp(fit_all)
+
+cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
+
+```
+ 
 
 
 ```{r}
-ggplot(soils_ndvi) +
-  geom_stars(data = ndvi_all)+
-  geom_sf(aes(color = ndvi))+
-  scale_color_viridis_b()
+ggplot()+#ggplot object
+  geom_point(aes(x= fit_all$finalModel$y, y = fit_all$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(x= fit_all$finalModel$y, y = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  labs(x = "Actual Electrical Conductivity (mS/cm)",#labels
+       y = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Soil Electrical Conductivity Predictions (Elevation and Indices)")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+all_corr <- cor(x= fit_all$finalModel$y, y = fit_all$finalModel$predicted)
+all_corr
 ```
+
 
  
  
