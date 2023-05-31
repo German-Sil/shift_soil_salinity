@@ -36,13 +36,19 @@ soils <- read_csv(here("data", "shift_soil_data.csv")) %>% # read in soil csv
   mutate(date = lubridate::mdy(date), # change to date class
          week = lubridate::week(date)) %>% # create a week column
   select(soil_id:transect, meter_location, electro_cond_mS_per_cm, season, latitude, longitude)%>% #select certain column to work with
-  drop_na() #drop any NA rows
+  mutate(paired_flight = lubridate::ymd(paired_flight)) %>% 
+  drop_na() %>%  #drop any NA rows
+  st_as_sf(coords = c("longitude", "latitude")) %>% 
+  st_set_crs(value = 4326) %>% 
+  st_transform(crs = 32611)
+
 
 # Open spatial Data
 soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% # read in sf file
   mutate(date = lubridate::ymd(date), #change date to date class
          week = lubridate::week(date)) %>% #create week
   select(electro_co, date, transect, meter_loca) %>% # select certain columns
+  filter(date != "2022-09-12") %>% 
   mutate(electro_co = as.numeric(electro_co)) %>% #change to numeric class
   drop_na() #drop NAs
 
@@ -59,7 +65,8 @@ dem_extract <- dem %>% # call dem
 ## Join soil and elevation data:
 ```{r}
 dem_soils <- dem_extract %>% # call extracted values
-  cbind(soils) #bind extracted values to the soil data
+  cbind(soils) %>% #bind extracted values to the soil data
+  st_transform(crs = 32611)
 ```
 
 ## Descriptive statistics:
@@ -192,16 +199,16 @@ ndvi_10 <- read_stars(here("imagery", "NDVI", "2022_05_03_ndvi.tif")) %>%
   setNames("ndvi")
 ndvi_11 <- read_stars(here("imagery", "NDVI", "2022_05_11_ndvi.tif")) %>% 
   setNames("ndvi")
-ndvi_12 <- read_stars(here("imagery", "NDVI", "2022_05_12_ndvi.tif")) %>% 
-  setNames("ndvi")
+#ndvi_12 <- read_stars(here("imagery", "NDVI", "2022_05_12_ndvi.tif")) %>% 
+ # setNames("ndvi")
 ndvi_13 <- read_stars(here("imagery", "NDVI", "2022_05_17_ndvi.tif")) %>% 
   setNames("ndvi")
 ndvi_14 <- read_stars(here("imagery", "NDVI", "2022_05_29_ndvi.tif")) %>% 
   setNames("ndvi")
 
 
-ndvi_all <- c(ndvi_1, ndvi_2, ndvi_3, ndvi_4, ndvi_5, ndvi_6, ndvi_7, ndvi_8, ndvi_9, ndvi_10, ndvi_11, ndvi_12, ndvi_13, ndvi_14, along = 3) %>% 
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
+ndvi_all <- c(ndvi_1, ndvi_2, ndvi_3, ndvi_4, ndvi_5, ndvi_6, ndvi_7, ndvi_8, ndvi_9, ndvi_10, ndvi_11, ndvi_13, ndvi_14, along = 3) %>% 
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
 ## Opening and Compiling VSSI:
@@ -312,7 +319,39 @@ crsi_all <- c(crsi_1, crsi_2, crsi_3, crsi_4, crsi_5, crsi_6, crsi_7, crsi_8, cr
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_12", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
- 
+# Extracting Values based on week
+
+```{r}
+
+soils_ndvi <- data.frame()
+
+for (i in unique(lubridate::week(soils$paired_flight))){
+  ndvi_week <- ndvi_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  soil_week <- soils %>% 
+    mutate(week = lubridate::week(paired_flight)) %>% 
+    filter(week == i)
+  
+  ndvi_extract <- ndvi_week %>% 
+    st_extract(soil_week)
+  
+  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi) %>% 
+    rename("ndvi" = "...10")
+    
+  soils_ndvi <- rbind(soils_ndvi, soils_week)
+}
+
+  
+```
+
+
+```{r}
+ggplot(soils_ndvi) +
+  geom_stars(data = ndvi_all)+
+  geom_sf(aes(color = ndvi))+
+  scale_color_viridis_b()
+```
 
  
  
