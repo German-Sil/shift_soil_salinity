@@ -15,6 +15,7 @@ library(kableExtra)
 library(ggbeeswarm)
 library(broom)
 library(randomForest)
+library(randomForestExplainer)
 library(caret)
 
 # spatial analysis
@@ -375,21 +376,41 @@ for (i in unique(lubridate::week(soils$paired_flight))){
 
 fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, data = soils_si, method = "rf", trControl = trainControl(method = "cv", number = 10)) #random forest fitting of the data with
 
-fit_all_2 <- randomForest(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, data = soils_si, importance = T)
+fit_all
+
+trainx <- soils_si %>% 
+  as.data.frame() %>% 
+  select(elevation, ndvi:crsi)
+
+fit_all_1 <- randomForest(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, data = soils_si, importance = T)
+
+fit_all_1
+
+importance(fit_all_1)
+
+fit_all_1_cv <- rfcv(trainx = trainx, trainy = soils_si$electro_cond_mS_per_cm, cv.fold = 10, scale = "log")
+
+fit_all_1_cv
 ```
 
 ## Evaluating Model
 
 ```{r}
-
+# using caret
 varImp(fit_all)
 
 plot(varImp(fit_all))
 
 cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
+```
 
-fit_all$finalModel$importance
+```{r}
+#using randomForest
 
+rf_imp <- importance(fit_all_1)
+rf_imp_scaled <- predict(preProcess(as.data.frame(rf_imp), method = c("range")), as.data.frame(rf_imp))
+
+plot(rf_imp_scaled)
 ```
  
 
@@ -400,7 +421,7 @@ ggplot()+#ggplot object
   geom_smooth(method = "lm", aes(x= fit_all$finalModel$y, y = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
   labs(x = "Actual Electrical Conductivity (mS/cm)",#labels
        y = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices")+#plot title
+  ggtitle("Elevation and Indices (caret method)")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -411,9 +432,33 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "all_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 all_corr <- cor(x= fit_all$finalModel$y, y = fit_all$finalModel$predicted)
+all_corr
+```
+
+
+```{r}
+ggplot()+#ggplot object
+  geom_point(aes(x= fit_all_1$y, y = fit_all_1$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(x= fit_all_1$y, y = fit_all_1$predicted), color =  "#3A5D3D")+#smooth line data
+  labs(x = "Actual Electrical Conductivity (mS/cm)",#labels
+       y = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices (randomForest method)")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+ggsave(filename = "all_plot_rf.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+all_corr <- cor(x= fit_all_1$y, y = fit_all_1$predicted)
 all_corr
 ```
 
@@ -438,7 +483,6 @@ cor(fit_si$finalModel$y, fit_si$finalModel$predicted)
 
 ```
  
-
 
 ```{r}
 ggplot()+#ggplot object
