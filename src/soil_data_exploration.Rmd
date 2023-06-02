@@ -170,7 +170,7 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 elevation_cor <- cor(x= soils$electro_cond_mS_per_cm, y = fit_ele$predicted)#calculate correlation coefficient
 elevation_cor#call/print correlation value
 ```
@@ -376,21 +376,16 @@ for (i in unique(lubridate::week(soils$paired_flight))){
 
 fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, data = soils_si, method = "rf", trControl = trainControl(method = "cv", number = 10)) #random forest fitting of the data with
 
-fit_all
-
 trainx <- soils_si %>% 
   as.data.frame() %>% 
   select(elevation, ndvi:crsi)
 
 fit_all_1 <- randomForest(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, data = soils_si, importance = T)
 
-fit_all_1
-
 importance(fit_all_1)
 
 fit_all_1_cv <- rfcv(trainx = trainx, trainy = soils_si$electro_cond_mS_per_cm, cv.fold = 10, scale = "log")
 
-fit_all_1_cv
 ```
 
 ## Evaluating Model
@@ -432,7 +427,7 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 all_corr <- cor(x= fit_all$finalModel$y, y = fit_all$finalModel$predicted)
 all_corr
@@ -456,7 +451,7 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "all_plot_rf.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "all_plot_rf.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 all_corr <- cor(x= fit_all_1$y, y = fit_all_1$predicted)
 all_corr
