@@ -561,7 +561,7 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 elevation_cor <- cor(y = fit_ele$finalModel$y, x = fit_ele$finalModel$predicted)#calculate correlation coefficient
 elevation_cor#call/print correlation value
