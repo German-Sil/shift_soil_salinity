@@ -613,6 +613,9 @@ dem &lt;- read_stars(here(&quot;data&quot;, &quot;dem.tif&quot;)) %&gt;% # read 
 
 mllw &lt;- dem + 0.042
 
+mllw_all &lt;- c(mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, along = 3) %&gt;%
+  st_set_dimensions(3, values = lubridate::ymd(c(&quot;2022_02_24&quot;, &quot;2022_02_28&quot;, &quot;2022_03_08&quot;, &quot;2022_03_16&quot;, &quot;2022_03_22&quot;, &quot;2022_04_05&quot;, &quot;2022_04_12&quot;, &quot;2022_04_20&quot;, &quot;2022_04_29&quot;, &quot;2022_05_03&quot;, &quot;2022_05_11&quot;, &quot;2022_05_17&quot;, &quot;2022_05_29&quot;)), names = &quot;date&quot;)
+
 mllw_extract &lt;- mllw %&gt;% # call dem
   st_extract(soils$geometry) # extract elevation to point layer</code></pre>
 </div>
@@ -1258,7 +1261,12 @@ elevation_cor#call/print correlation value</code></pre>
 </div>
 <div id="compiling-all-raster-data" class="section level1">
 <h1>Compiling all raster data</h1>
-<pre class="r"><code>raster_all &lt;- c(crsi_all, ndvi_all, vssi_all, mari_all)</code></pre>
+<pre class="r"><code>mllw_all &lt;- mllw_all %&gt;% 
+  st_warp(dest = crsi_all)
+
+raster_all &lt;- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all)
+
+#fit_pred &lt;- </code></pre>
 </div>
 
 

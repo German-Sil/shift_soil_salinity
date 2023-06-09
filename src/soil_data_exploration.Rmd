@@ -63,6 +63,9 @@ dem <- read_stars(here("data", "dem.tif")) %>% # read in dem
 
 mllw <- dem + 0.042
 
+mllw_all <- c(mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, mllw, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
+
 mllw_extract <- mllw %>% # call dem
   st_extract(soils$geometry) # extract elevation to point layer
 
@@ -578,9 +581,21 @@ ggplot()+#ggplot object
 #ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
  
+ 
 # Compiling all raster data
  
 ```{r}
-raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all)
+mllw_all <- mllw_all %>% 
+  st_warp(dest = crsi_all) %>% 
+  setNames("elevation")
+
+raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all) 
 
 ``` 
+
+# Predicting values
+
+```{r}
+
+```
+
