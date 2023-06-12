@@ -596,6 +596,38 @@ raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all)
 # Predicting values
 
 ```{r}
+all_pred <- predict(raster_all, fit_all, drop_dimensions = F) 
+```
 
+# Making a Map
+
+```{r}
+all_pred_feb <- all_pred %>% 
+  filter(date == "2022-02-24")
+
+ggplot()+
+  geom_stars(data = all_pred_feb, aes(x, y, fill = prediction)) +
+  scale_fill_viridis_c()+
+  labs(y = "Northing",#labels
+       x = "Easting",
+       fill = "Electrical 
+Conductivity 
+(mS/cm)")+
+  ggtitle("Soil Salinity")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"))
+```
+
+```{r}
+mapview::mapview(all_pred_feb)
 ```
 
