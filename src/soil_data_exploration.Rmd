@@ -33,6 +33,7 @@ set.seed(1234)
 # Opening and exploring data
 
 ## Open soil and elevation data:
+
 ```{r}
 #opening csv
 soils <- read_csv(here("data", "shift_soil_data.csv")) %>% # read in soil csv
@@ -56,6 +57,9 @@ soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% # read in sf file
   drop_na() #drop NAs
 
 bbox <- read_sf(here("data", "bbox.shp")) #read in bounding box file
+
+boundary <- read_sf(here("data", "boundary.shp")) %>% 
+  st_transform(crs = 32611)
 
 dem <- read_stars(here("data", "dem.tif")) %>% # read in dem 
   st_crop(y = st_bbox(bbox)) %>%  #crop to bounding box
@@ -390,7 +394,7 @@ nir_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
 
 nir_all <- c(nir_1, nir_2, nir_3, nir_4, nir_5, nir_6, nir_7, nir_8, nir_9, nir_10, nir_11, nir_13, nir_14, along = 3) %>%
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date") %>% 
-  st_warp(dest = crsi_all)
+  st_warp(dest = crsi_all) 
 ```
 
 ## Adjusting elevation data
@@ -471,17 +475,6 @@ fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi,
 
 ```
 
-## NIR Version Needs Debugging/Parameterization
-
-```{r}
-
-fit_all_nir <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `76` + `77` + `78` + `79` + `80` + `81` + `82` + `83` + `84` + `85` + `86` + `87` + `88` + `89` + `90` + `91` + `92` + `93` + `94` + `95` + `96` + `97` + `98` + `99` + `100` + `101` + `102` + `103` + `104` + `105` + `106` + `107` + `108` + `109` + `110` + `111` + `112` + `113` + `114` + `115` + `116` + `117` + `118` + `119` + `120` + `121` + `122` + `123` + `124` + `125` + `126`, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
 
 ## Evaluating Model
 
@@ -539,6 +532,75 @@ ggplot()+#ggplot object
 
 all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
 all_corr
+```
+## NIR Version Needs Debugging/Parameterization
+
+```{r}
+
+fit_nir <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `76` + `77` + `78` + `79` + `80` + `81` + `82` + `83` + `84` + `85` + `86` + `87` + `88` + `89` + `90` + `91` + `92` + `93` + `94` + `95` + `96` + `97` + `98` + `99` + `100` + `101` + `102` + `103` + `104` + `105` + `106` + `107` + `108` + `109` + `110` + `111` + `112` + `113` + `114` + `115` + `116` + `117` + `118` + `119` + `120` + `121` + `122` + `123` + `124` + `125` + `126`, 
+                 data = soils_extract, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+```
+
+## Testing NIR fit
+
+```{r}
+# using caret
+fit_nir_imp <- as.data.frame(fit_nir$finalModel$importance)
+fit_nir_imp_scaled <- predict(preProcess(fit_nir_imp, method = c("range")), fit_nir_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_nir_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_nir_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_nir_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+  
+
+cor(fit_nir$finalModel$y, fit_nir$finalModel$predicted)
+```
+
+## Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_nir$finalModel$y, x = fit_nir$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_nir$finalModel$y, x = fit_nir$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 14)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices (caret method)")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+nir_corr <- cor(y= fit_nir$finalModel$y, x = fit_nir$finalModel$predicted)
+nir_corr
 ```
 
 ## Fitting the model to spectral Indices
@@ -653,7 +715,8 @@ ggplot()+#ggplot object
 ```{r}
 raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all)
 
-raster_all_nir <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, nir_all) 
+raster_all_nir <- c(raster_all, nir_all, along = "date") %>% 
+  merge()
 
 ``` 
 
@@ -668,11 +731,13 @@ all_pred <- predict(raster_all, fit_all, drop_dimensions = F)
 
 ```{r}
 all_pred_feb <- all_pred %>% 
-  filter(date == "2022-02-24")
+  filter(date == "2022-02-24") %>% 
+  st_crop(y = boundary, crop = TRUE, as_points = FALSE)
+
 
 ggplot()+
   geom_stars(data = all_pred_feb, aes(x, y, fill = prediction)) +
-  scale_fill_viridis_c()+
+  scale_fill_gradientn(colors = rev(calecopal::cal_palette(name = "desert", n = 2, type = "continuous")))+
   labs(y = "Northing",#labels
        x = "Easting",
        fill = "Electrical 
@@ -696,3 +761,41 @@ Conductivity
 mapview::mapview(all_pred_feb)
 ```
 
+# Predicting values (NIR)
+
+```{r}
+nir_pred <- predict(raster_all_nir, fit_nir)
+
+```
+
+# Making a Map
+
+```{r}
+nir_pred_feb <- nir_pred %>% 
+  filter(date == "2022-02-24")
+
+ggplot()+
+  geom_stars(data = nir_pred_feb, aes(x, y, fill = na.omit(prediction))) +
+  scale_fill_viridis_c()+
+  labs(y = "Northing",#labels
+       x = "Easting",
+       fill = "Electrical 
+Conductivity 
+(mS/cm)")+
+  ggtitle("Soil Salinity")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"))
+```
+
+```{r}
+mapview::mapview(nir_pred_feb)
+```
