@@ -17,6 +17,7 @@ library(broom)
 library(randomForest)
 library(randomForestExplainer)
 library(caret)
+library(ggfortify)
 
 # spatial analysis
 library(sf)
@@ -461,6 +462,75 @@ for (i in unique(lubridate::week(soils$paired_flight))){
 
 ```
 
+# PCA 
+
+## PCA Object
+```{r}
+# Read in the data
+nir_pcd <- soils_extract %>% # call object
+  as.data.frame() %>% 
+  select(electro_cond_mS_per_cm,
+         `76`:`126`) %>% # select the variables we want to explore
+  drop_na()  # drops columns with NAs as PCA only works with numeric values
+```
+
+## Perform the PCA
+
+```{r}
+# Performing the PCA
+nir_pca <- nir_pcd %>% # pipe in the data
+  prcomp(scale. = TRUE) # rescaling of data is performed
+```
+
+## Generate Biplot
+
+```{r}
+#Creating the biplot via autoplot()
+
+autoplot(nir_pca, # pca data
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 1 and 2 Biplot (SILVA)") + # title
+  labs(x = "Principle Component 1", 
+       y= "Principle Component 2")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+```
+
+```{r}
+# Creating screeplot
+sd_vec <- nir_pca$sdev # standard deviation
+var_vec <- sd_vec^2 # variance
+
+pc_names <- colnames(nir_pca$rotation) # names of PCs
+
+pct_expl_df <- data.frame(v = var_vec, # new data frame for screeplot; variance
+                          pct_v = var_vec / sum(var_vec), # percent of variance
+                          pc = fct_inorder(pc_names)) %>%  # orders rows
+  mutate(pct_label = paste0(round(pct_v * 100, 1), "%")) # adds character %
+
+ggplot(pct_expl_df, aes(x = pc, y = v))+ # graphs via PC and variance
+  geom_col()+
+  geom_text(aes(label = pct_label), vjust = 0, nudge_y = 0.008)+
+  labs(x = "Principle Components",
+       y = "Variances") +
+  ggtitle("PCA Screeplot")+
+  theme(plot.title = element_text(hjust = .5))
+```
+
+
+
 # Fitting model with all variables currently available
 
 ## Fitting the model to all variables
@@ -532,75 +602,6 @@ ggplot()+#ggplot object
 
 all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
 all_corr
-```
-## NIR Version Needs Debugging/Parameterization
-
-```{r}
-
-fit_nir <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `76` + `77` + `78` + `79` + `80` + `81` + `82` + `83` + `84` + `85` + `86` + `87` + `88` + `89` + `90` + `91` + `92` + `93` + `94` + `95` + `96` + `97` + `98` + `99` + `100` + `101` + `102` + `103` + `104` + `105` + `106` + `107` + `108` + `109` + `110` + `111` + `112` + `113` + `114` + `115` + `116` + `117` + `118` + `119` + `120` + `121` + `122` + `123` + `124` + `125` + `126`, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
-
-## Testing NIR fit
-
-```{r}
-# using caret
-fit_nir_imp <- as.data.frame(fit_nir$finalModel$importance)
-fit_nir_imp_scaled <- predict(preProcess(fit_nir_imp, method = c("range")), fit_nir_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_nir_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_nir_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_nir_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-  
-
-cor(fit_nir$finalModel$y, fit_nir$finalModel$predicted)
-```
-
-## Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_nir$finalModel$y, x = fit_nir$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_nir$finalModel$y, x = fit_nir$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 14)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices (caret method)")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-nir_corr <- cor(y= fit_nir$finalModel$y, x = fit_nir$finalModel$predicted)
-nir_corr
 ```
 
 ## Fitting the model to spectral Indices
@@ -715,9 +716,6 @@ ggplot()+#ggplot object
 ```{r}
 raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all)
 
-raster_all_nir <- c(raster_all, nir_all, along = "date") %>% 
-  merge()
-
 ``` 
 
 # Predicting values
@@ -737,7 +735,7 @@ all_pred_feb <- all_pred %>%
 
 ggplot()+
   geom_stars(data = all_pred_feb, aes(x, y, fill = prediction)) +
-  scale_fill_gradientn(colors = rev(calecopal::cal_palette(name = "desert", n = 2, type = "continuous")))+
+  scale_fill_gradientn(colors = rev(calecopal::cal_palette("desert", 2, "continuous")))+
   labs(y = "Northing",#labels
        x = "Easting",
        fill = "Electrical 
@@ -757,26 +755,76 @@ Conductivity
         legend.text = element_text(color = "#5b4f41"))
 ```
 
+
+# TESTING OF PLSR INSTEAD!
+
+## Fitting the model to all variables
+
 ```{r}
-mapview::mapview(all_pred_feb)
+
+fit_all_pls <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
+                 data = soils_extract, 
+                 method = "pls", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
 ```
 
-# Predicting values (NIR)
+## Evaluating Model
 
 ```{r}
-nir_pred <- predict(raster_all_nir, fit_nir)
+# using caret
+
+predicted_values <- as.data.frame(fit_all_pls$finalModel$fitted.values) %>% 
+  select(`.outcome.3 comps`)
+
+training_data <- as.data.frame(fit_all_pls$trainingData$.outcome)
+
+train_pred <- c(predicted_values, training_data) %>% 
+  as.data.frame()
+
+cor(training_data, predicted_values)
+```
+
+## Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(data = train_pred, aes(y = fit_all_pls.trainingData..outcome, x = `.outcome.3.comps`), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", data = train_pred, aes(y = fit_all_pls.trainingData..outcome, x = `.outcome.3.comps`), color =  "#3A5D3D")+#smooth line data
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices (PLSR)")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 ```
 
-# Making a Map
 
 ```{r}
-nir_pred_feb <- nir_pred %>% 
-  filter(date == "2022-02-24")
+all_pred_pls <- predict(raster_all, fit_all_pls, drop_dimensions = F)
+```
+
+
+```{r}
+all_pred_feb_pls <- all_pred_pls %>% 
+  filter(date == "2022-02-24") %>% 
+  st_crop(y = boundary, crop = TRUE, as_points = FALSE)
+
 
 ggplot()+
-  geom_stars(data = nir_pred_feb, aes(x, y, fill = na.omit(prediction))) +
-  scale_fill_viridis_c()+
+  geom_stars(data = all_pred_feb_pls, aes(x, y, fill = prediction)) +
+  scale_fill_gradientn(colors = rev(calecopal::cal_palette("desert", 2, "continuous")))+
   labs(y = "Northing",#labels
        x = "Easting",
        fill = "Electrical 
@@ -796,6 +844,15 @@ Conductivity
         legend.text = element_text(color = "#5b4f41"))
 ```
 
+
+# Interactive Maps
+
 ```{r}
-mapview::mapview(nir_pred_feb)
+
+mapview::mapview(all_pred_feb)
+
+mapview::mapview(all_pred_feb_pls)
 ```
+
+
+
