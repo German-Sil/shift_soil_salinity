@@ -470,6 +470,8 @@ for (i in unique(lubridate::week(soils$paired_flight))){
 nir_pcd <- soils_extract %>% # call object
   as.data.frame() %>% 
   select(electro_cond_mS_per_cm,
+         elevation,
+         ndvi:crsi,
          `76`:`126`) %>% # select the variables we want to explore
   drop_na()  # drops columns with NAs as PCA only works with numeric values
 ```
@@ -482,21 +484,139 @@ nir_pca <- nir_pcd %>% # pipe in the data
   prcomp(scale. = TRUE) # rescaling of data is performed
 ```
 
+# Summarize
+
+```{r}
+summary(nir_pca)
+```
+
 ## Generate Biplot
 
 ```{r}
 #Creating the biplot via autoplot()
 
 autoplot(nir_pca, # pca data
+         x = 1,
+         y = 2,
          data = nir_pcd, # original data
          loadings = TRUE, # show loadings
          loadings.label = TRUE, # label loadings
          loadings.colour = "black", # loading color
          loadings.label.colour = "black", # loading label color
          loadings.label.vjust = -.5) + # vertical justification
-  ggtitle("Principle Component 1 and 2 Biplot (SILVA)") + # title
+  ggtitle("Principle Component 1 and 2 Biplot") + # title
   labs(x = "Principle Component 1", 
        y= "Principle Component 2")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 1,
+         y = 3,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 1 and 3 Biplot") + # title
+  labs(x = "Principle Component 1", 
+       y= "Principle Component 3")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 1,
+         y = 4,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 1 and 4 Biplot") + # title
+  labs(x = "Principle Component 1", 
+       y= "Principle Component 4")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 2,
+         y = 3,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 2 and 3 Biplot") + # title
+  labs(x = "Principle Component 2", 
+       y= "Principle Component 3")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 2,
+         y = 4,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 2 and 4 Biplot") + # title
+  labs(x = "Principle Component 2", 
+       y= "Principle Component 4")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 3,
+         y = 4,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 3 and 4 Biplot") + # title
+  labs(x = "Principle Component 3", 
+       y= "Principle Component 4")+ # axis labels 
    theme(plot.title = element_text(color = "#5b4f41", size = 16),
             plot.background = element_rect("white"),
             panel.background = element_rect("#faf7f2"),
@@ -754,6 +874,11 @@ Conductivity
         legend.title = element_text(color = "#5b4f41"),
         legend.text = element_text(color = "#5b4f41"))
 ```
+# Interactive Map
+
+```{r}
+mapview::mapview(all_pred_feb)
+```
 
 
 # TESTING OF PLSR INSTEAD!
@@ -845,12 +970,9 @@ Conductivity
 ```
 
 
-# Interactive Maps
+# Interactive Map
 
 ```{r}
-
-mapview::mapview(all_pred_feb)
-
 mapview::mapview(all_pred_feb_pls)
 ```
 
