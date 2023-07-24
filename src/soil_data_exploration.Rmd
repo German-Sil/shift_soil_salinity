@@ -8,6 +8,10 @@ output: html_document
 ```{r setup, include=FALSE, message=FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
 
+# visualization
+library(mapview)
+library(calecopal)
+
 # significance tests and data exploration
 library(tidyverse)
 library(here)
@@ -17,6 +21,7 @@ library(broom)
 library(randomForest)
 library(randomForestExplainer)
 library(caret)
+library(ggfortify)
 
 # spatial analysis
 library(sf)
@@ -33,6 +38,7 @@ set.seed(1234)
 # Opening and exploring data
 
 ## Open soil and elevation data:
+
 ```{r}
 #opening csv
 soils <- read_csv(here("data", "shift_soil_data.csv")) %>% # read in soil csv
@@ -56,6 +62,9 @@ soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% # read in sf file
   drop_na() #drop NAs
 
 bbox <- read_sf(here("data", "bbox.shp")) #read in bounding box file
+
+boundary <- read_sf(here("data", "boundary.shp")) %>% 
+  st_transform(crs = 32611)
 
 dem <- read_stars(here("data", "dem.tif")) %>% # read in dem 
   st_crop(y = st_bbox(bbox)) %>%  #crop to bounding box
@@ -390,7 +399,241 @@ nir_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
 
 nir_all <- c(nir_1, nir_2, nir_3, nir_4, nir_5, nir_6, nir_7, nir_8, nir_9, nir_10, nir_11, nir_13, nir_14, along = 3) %>%
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date") %>% 
-  st_warp(dest = crsi_all)
+  st_warp(dest = crsi_all) 
+```
+
+
+# Principle Component Genertation
+
+## Calculating PCs
+
+```{r}
+nir_pc_1 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_24.tif")) %>% 
+  st_set_dimensions(3, values = seq(1:425)) %>% 
+  filter(band %in% c(76:126)) %>% 
+  split(3) %>% 
+  setNames(c(76:126)) %>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_2 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_28.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_3 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_08.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_4 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_16.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_5 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_22.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_6 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_05.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_7 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_12.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_9 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_29.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_10 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_03.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_11 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_11.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+#nir_12 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_12.tif")) %>%
+#  st_set_dimensions(3, values = seq(1:425)) %>%
+#  filter(band %in% c(76:126)) %>%
+#  split(3) %>%
+#  setNames(c(76:126))
+
+nir_pc_13 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_17.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+```
+
+
+## Applying PCs
+
+```{r}
+pc_1 <- predict(nir_1, nir_pc_1)
+
+pc_2 <- predict(nir_2, nir_pc_2)
+
+pc_3 <- predict(nir_3, nir_pc_3)
+
+pc_4 <- predict(nir_4, nir_pc_4)
+
+pc_5 <- predict(nir_5, nir_pc_5)
+
+pc_6 <- predict(nir_6, nir_pc_6)
+
+pc_7 <- predict(nir_7, nir_pc_7)
+
+pc_8 <- predict(nir_8, nir_pc_8)
+
+pc_9 <- predict(nir_9, nir_pc_9)
+
+pc_10 <- predict(nir_10, nir_pc_10)
+
+pc_11 <- predict(nir_11, nir_pc_11)
+
+pc_13 <- predict(nir_13, nir_pc_13)
+
+pc_14 <- predict(nir_14, nir_pc_14)
+```
+
+## Compling PCs
+
+```{r}
+merged_pc_1 <- merge(pc_1) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_2 <- merge(pc_2) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_3 <- merge(pc_3) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_4 <- merge(pc_4) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_5 <- merge(pc_5) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_6 <- merge(pc_6) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_7 <- merge(pc_7) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_8 <- merge(pc_8) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_9 <- merge(pc_9) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_10 <- merge(pc_10) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_11 <- merge(pc_11) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_13 <- merge(pc_13) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_14 <- merge(pc_14) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+pc_all <- c(merged_pc_1, merged_pc_2, merged_pc_3, merged_pc_4, merged_pc_5, merged_pc_6, merged_pc_7, merged_pc_8, merged_pc_9, merged_pc_10, merged_pc_11, merged_pc_13, merged_pc_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
 ## Adjusting elevation data
@@ -425,6 +668,10 @@ for (i in unique(lubridate::week(soils$paired_flight))){
     filter(lubridate::week(date) == i) %>% 
     st_as_sf
   
+  pc_week <- pc_all %>% 
+    filter(lubridate::week(date) == i) %>% 
+    st_as_sf()
+  
   soil_week <- soils %>% 
     mutate(week = lubridate::week(paired_flight)) %>% 
     filter(week == i)
@@ -446,7 +693,12 @@ for (i in unique(lubridate::week(soils$paired_flight))){
     select("76":"126") %>% 
     st_drop_geometry()
   
-  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi, mari_extract$mari, vssi_extract$vssi, crsi_extract$crsi, nir_extract) %>% 
+  pc_extract <- soil_week %>% 
+    st_join(pc_week) %>% 
+    select("PC3":"PC14") %>% 
+    st_drop_geometry()
+  
+  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi, mari_extract$mari, vssi_extract$vssi, crsi_extract$crsi, nir_extract, pc_extract) %>% 
     rename("ndvi" = "...11",
            "mari" = "...12",
            "vssi" = "...13",
@@ -456,6 +708,195 @@ for (i in unique(lubridate::week(soils$paired_flight))){
 }
 
 ```
+
+# PCA 
+
+## PCA Object
+```{r}
+# Read in the data
+nir_pcd <- soils_extract %>% # call object
+  as.data.frame() %>% 
+  select(electro_cond_mS_per_cm,
+         elevation,
+         ndvi:crsi,
+         `76`:`126`) %>% # select the variables we want to explore
+  drop_na()  # drops columns with NAs as PCA only works with numeric values
+```
+
+## Perform the PCA
+
+```{r}
+# Performing the PCA
+nir_pca <- nir_pcd %>% # pipe in the data
+  prcomp(scale. = TRUE) # rescaling of data is performed
+```
+
+# Summarize
+
+```{r}
+summary(nir_pca)
+```
+
+## Generate Biplot
+
+```{r}
+#Creating the biplot via autoplot()
+
+autoplot(nir_pca, # pca data
+         x = 1,
+         y = 2,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 1 and 2 Biplot") + # title
+  labs(x = "Principle Component 1", 
+       y= "Principle Component 2")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 1,
+         y = 3,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 1 and 3 Biplot") + # title
+  labs(x = "Principle Component 1", 
+       y= "Principle Component 3")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 1,
+         y = 4,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 1 and 4 Biplot") + # title
+  labs(x = "Principle Component 1", 
+       y= "Principle Component 4")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 2,
+         y = 3,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 2 and 3 Biplot") + # title
+  labs(x = "Principle Component 2", 
+       y= "Principle Component 3")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 2,
+         y = 4,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 2 and 4 Biplot") + # title
+  labs(x = "Principle Component 2", 
+       y= "Principle Component 4")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+
+autoplot(nir_pca, # pca data
+         x = 3,
+         y = 4,
+         data = nir_pcd, # original data
+         loadings = TRUE, # show loadings
+         loadings.label = TRUE, # label loadings
+         loadings.colour = "black", # loading color
+         loadings.label.colour = "black", # loading label color
+         loadings.label.vjust = -.5) + # vertical justification
+  ggtitle("Principle Component 3 and 4 Biplot") + # title
+  labs(x = "Principle Component 3", 
+       y= "Principle Component 4")+ # axis labels 
+   theme(plot.title = element_text(color = "#5b4f41", size = 16),
+            plot.background = element_rect("white"),
+            panel.background = element_rect("#faf7f2"),
+            panel.grid = element_line(linetype= "longdash",
+                                      color = "#f0ece1"),
+            axis.text = element_text(color = "#5b4f41"),
+            axis.title = element_text(color = "#5b4f41"),
+            strip.background = element_rect("white"),
+            axis.line = element_line(color = "#5b4f41")) # change themes
+```
+
+```{r}
+# Creating screeplot
+sd_vec <- nir_pca$sdev # standard deviation
+var_vec <- sd_vec^2 # variance
+
+pc_names <- colnames(nir_pca$rotation) # names of PCs
+
+pct_expl_df <- data.frame(v = var_vec, # new data frame for screeplot; variance
+                          pct_v = var_vec / sum(var_vec), # percent of variance
+                          pc = fct_inorder(pc_names)) %>%  # orders rows
+  mutate(pct_label = paste0(round(pct_v * 100, 1), "%")) # adds character %
+
+ggplot(pct_expl_df, aes(x = pc, y = v))+ # graphs via PC and variance
+  geom_col()+
+  geom_text(aes(label = pct_label), vjust = 0, nudge_y = 0.008)+
+  labs(x = "Principle Components",
+       y = "Variances") +
+  ggtitle("PCA Screeplot")+
+  theme(plot.title = element_text(hjust = .5))
+```
+
+
 
 # Fitting model with all variables currently available
 
@@ -471,17 +912,6 @@ fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi,
 
 ```
 
-## NIR Version Needs Debugging/Parameterization
-
-```{r}
-
-fit_all_nir <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `76` + `77` + `78` + `79` + `80` + `81` + `82` + `83` + `84` + `85` + `86` + `87` + `88` + `89` + `90` + `91` + `92` + `93` + `94` + `95` + `96` + `97` + `98` + `99` + `100` + `101` + `102` + `103` + `104` + `105` + `106` + `107` + `108` + `109` + `110` + `111` + `112` + `113` + `114` + `115` + `116` + `117` + `118` + `119` + `120` + `121` + `122` + `123` + `124` + `125` + `126`, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
 
 ## Evaluating Model
 
@@ -520,11 +950,11 @@ ggplot()+#ggplot object
   geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
   geom_point(aes(y = fit_all$finalModel$y, x = fit_all$finalModel$predicted), color = "#E69512")+#data to make points from
   geom_smooth(method = "lm", aes(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 14)) +
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
   labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
        x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices (caret method)")+#plot title
+  ggtitle("Elevation and Indices")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -541,11 +971,78 @@ all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
 all_corr
 ```
 
+# Including PCs
+
+```{r}
+
+fit_pc <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `PC4` + `PC6`, 
+                 data = soils_extract, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+```
+
+## Evaluating Model
+
+```{r}
+# using caret
+fit_pc_imp <- as.data.frame(fit_pc$finalModel$importance)
+fit_pc_imp_scaled <- predict(preProcess(fit_pc_imp, method = c("range")), fit_pc_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_pc_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_pc_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_pc_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+  
+
+cor(fit_pc$finalModel$y, fit_pc$finalModel$predicted)
+```
+
+## Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_pc$finalModel$y, x = fit_pc$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_pc$finalModel$y, x = fit_pc$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation, Indices, and PCs")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
+
 ## Fitting the model to spectral Indices
 
 ```{r}
 
-fit_si <- train(electro_cond_mS_per_cm ~ ndvi + mari + vssi + crsi + `76` + `77` + `78` + `79` + `80` + `81` + `82` + `83` + `84` + `85` + `86` + `87` + `88` + `89` + `90` + `91` + `92` + `93` + `94` + `95` + `96` + `97` + `98` + `99` + `100` + `101` + `102` + `103` + `104` + `105` + `106` + `107` + `108` + `109` + `110` + `111` + `112` + `113` + `114` + `115` + `116` + `117` + `118` + `119` + `120` + `121` + `122` + `123` + `124` + `125` + `126`, 
+fit_si <- train(electro_cond_mS_per_cm ~ ndvi + mari + vssi + crsi + `PC3` + `PC4` + `PC5` + `PC6` + `PC7` + `PC8` + `PC9` + `PC10` + `PC11` + `PC12` + `PC13` + `PC14`, 
                  data = soils_extract, 
                  method = "rf", 
                  trControl = trainControl(method = "cv", number = 10), 
@@ -653,8 +1150,6 @@ ggplot()+#ggplot object
 ```{r}
 raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all)
 
-raster_all_nir <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, nir_all) 
-
 ``` 
 
 # Predicting values
@@ -668,11 +1163,198 @@ all_pred <- predict(raster_all, fit_all, drop_dimensions = F)
 
 ```{r}
 all_pred_feb <- all_pred %>% 
-  filter(date == "2022-02-24")
+  filter(date == "2022-02-24") %>% 
+  st_crop(y = boundary, crop = TRUE, as_points = FALSE)
+
 
 ggplot()+
   geom_stars(data = all_pred_feb, aes(x, y, fill = prediction)) +
-  scale_fill_viridis_c()+
+  scale_fill_gradientn(colors = rev(calecopal::cal_palette("desert", 2, "continuous")))+
+  labs(y = "Northing",#labels
+       x = "Easting",
+       fill = "Electrical 
+Conductivity 
+(mS/cm)")+
+  ggtitle("Soil Salinity")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"))
+```
+# Interactive Map
+
+```{r}
+mapview::mapview(all_pred_feb)
+```
+
+
+
+# NIR FIT
+
+## Fitting Model
+
+```{r}
+
+fit_nir <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `76` + `77` + `78` + `79` + `80` + `81` + `82` + `83` + `84` + `85` + `86` + `87` + `88` + `89` + `90` + `91` + `92` + `93` + `94` + `95` + `96` + `97` + `98` + `99` + `100` + `101` + `102` + `103` + `104` + `105` + `106` + `107` + `108` + `109` + `110` + `111` + `112` + `113` + `114` + `115` + `116` + `117` + `118` + `119` + `120` + `121` + `122` + `123` + `124` + `125` + `126`, 
+                 data = soils_extract, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+```
+
+
+## Evaluating Model
+
+```{r}
+# using caret
+fit_nir_imp <- as.data.frame(fit_nir$finalModel$importance)
+fit_nir_imp_scaled <- predict(preProcess(fit_nir_imp, method = c("range")), fit_nir_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_nir_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_nir_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_nir_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+  
+
+cor(fit_nir$finalModel$y, fit_nir$finalModel$predicted)
+```
+
+
+## Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_nir$finalModel$y, x = fit_nir$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_nir$finalModel$y, x = fit_nir$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 14)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation, Indices, and NIR")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# TESTING OF PLSR INSTEAD!
+
+## Fitting the model to all variables
+
+```{r}
+
+fit_all_pls <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
+                 data = soils_extract, 
+                 method = "pls", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+```
+
+## Evaluating Model
+
+```{r}
+# using caret
+
+predicted_values <- as.data.frame(fit_all_pls$finalModel$fitted.values) %>% 
+  select(`.outcome.3 comps`)
+
+training_data <- as.data.frame(fit_all_pls$trainingData$.outcome)
+
+train_pred <- c(predicted_values, training_data) %>% 
+  as.data.frame()
+
+cor(training_data, predicted_values)
+```
+
+## Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(data = train_pred, aes(y = fit_all_pls.trainingData..outcome, x = `.outcome.3.comps`), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", data = train_pred, aes(y = fit_all_pls.trainingData..outcome, x = `.outcome.3.comps`), color =  "#3A5D3D")+#smooth line data
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices (PLSR)")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+```
+
+
+```{r}
+all_pred_pls <- predict(raster_all, fit_all_pls, drop_dimensions = F)
+```
+
+
+```{r}
+all_pred_feb_pls <- all_pred_pls %>% 
+  filter(date == "2022-02-24") %>% 
+  st_crop(y = boundary, crop = TRUE, as_points = FALSE)
+
+
+ggplot()+
+  geom_stars(data = all_pred_feb_pls, aes(x, y, fill = prediction)) +
+  scale_fill_gradientn(colors = rev(calecopal::cal_palette("desert", 2, "continuous")))+
   labs(y = "Northing",#labels
        x = "Easting",
        fill = "Electrical 
@@ -692,7 +1374,12 @@ Conductivity
         legend.text = element_text(color = "#5b4f41"))
 ```
 
+
+# Interactive Map
+
 ```{r}
-mapview::mapview(all_pred_feb)
+mapview::mapview(all_pred_feb_pls)
 ```
+
+
 
