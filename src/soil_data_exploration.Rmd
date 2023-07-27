@@ -95,6 +95,7 @@ soils %>% # to soils
   summarize(min = min(electro_cond_mS_per_cm),#calculate mins
             max = max(electro_cond_mS_per_cm),#calculate max
             mean = mean(electro_cond_mS_per_cm),#calculate mean
+            median = median(electro_cond_mS_per_cm),
             dev = sd(electro_cond_mS_per_cm),#obtain standard dev
             variance = var(electro_cond_mS_per_cm)) %>% # calculate variance
   kableExtra::kable() %>% # create a table format
