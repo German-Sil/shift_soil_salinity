@@ -850,6 +850,9 @@ ggplot()+#ggplot object
 #ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
 
+
+# Spectral Indices & PCs Only
+
 ## Fitting the model to spectral Indices
 
 ```{r}
@@ -918,6 +921,7 @@ ggplot()+#ggplot object
 #ggsave(filename = "si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
 
+# Elevation prediction
  
 ## Random Forest regression of Soil salinity and elevation
 ```{r}
@@ -1078,120 +1082,6 @@ ggplot()+#ggplot object
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# TESTING OF PLSR INSTEAD!
-
-## Fitting the model to all variables
-
-```{r}
-
-fit_all_pls <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
-                 data = soils_extract, 
-                 method = "pls", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
-
-## Evaluating Model
-
-```{r}
-# using caret
-
-predicted_values <- as.data.frame(fit_all_pls$finalModel$fitted.values) %>% 
-  select(`.outcome.3 comps`)
-
-training_data <- as.data.frame(fit_all_pls$trainingData$.outcome)
-
-train_pred <- c(predicted_values, training_data) %>% 
-  as.data.frame()
-
-cor(training_data, predicted_values)
-```
-
-## Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(data = train_pred, aes(y = fit_all_pls.trainingData..outcome, x = `.outcome.3.comps`), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", data = train_pred, aes(y = fit_all_pls.trainingData..outcome, x = `.outcome.3.comps`), color =  "#3A5D3D")+#smooth line data
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices (PLSR)")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-```
-
-
-```{r}
-all_pred_pls <- predict(raster_all, fit_all_pls, drop_dimensions = F)
-```
-
-
-```{r}
-all_pred_feb_pls <- all_pred_pls %>% 
-  filter(date == "2022-02-24") %>% 
-  st_crop(y = boundary, crop = TRUE, as_points = FALSE)
-
-
-ggplot()+
-  geom_stars(data = all_pred_feb_pls, aes(x, y, fill = prediction)) +
-  scale_fill_gradientn(colors = rev(calecopal::cal_palette("desert", 2, "continuous")))+
-  labs(y = "Northing",#labels
-       x = "Easting",
-       fill = "Electrical 
-Conductivity 
-(mS/cm)")+
-  ggtitle("Soil Salinity")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"))
-```
-
-
-# Interactive Map
-
-```{r}
-mapview::mapview(all_pred_feb_pls)
-```
 
 
 
