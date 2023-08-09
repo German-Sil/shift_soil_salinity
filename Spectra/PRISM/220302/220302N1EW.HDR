@@ -1,0 +1,15 @@
+ENVI
+description = {
+  File Imported into ENVI.}
+samples = 32
+lines   = 1
+bands   = 425
+header offset = 0
+file type = ENVI Spectral Library
+data type = 1
+interleave = bsq
+sensor type = Unknown
+byte order = 0
+wavelength units = Unknown
+spectra names = {
+ spectrum #1}
