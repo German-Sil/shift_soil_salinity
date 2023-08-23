@@ -1,0 +1,13 @@
+Name,Meta1,Meta2,Meta3,brightness
+Algae/Water [Yellow] 19 points,Pervious,Water,Algae/Water,0.109981
+Bare Soil [Green] 17 points,Pervious,Bare Soil,Bare Soil,0.318495
+Beach Sand [Cyan] 12 points,Pervious,Bare Soil,Beach Sand,0.306001
+Grasslands [Maroon] 17 points,Pervious,Plants,Grasslands,0.195825
+High Marsh [Orchid] 8 points,Pervious,Plants,High Marsh,0.162720
+Marsh Sand [Red] 8 points,Pervious,Bare Soil,Marsh Sand,0.420278
+Mud [Coral] 5 points,Pervious,Bare Soil,Mud,0.133239
+Pickleweed [Sienna] 8 points,Pervious,Plants,Pickleweed,0.132555
+Trees [Sea Green] 5 points,Pervious,Plants,Trees,0.130832
+Uplands [Purple] 8 points,Pervious,Plants,Uplands,0.204493
+Water [Aquamarine] 24 points,Pervious,Water,Water,0.0456051
+Wet Sand [Magenta] 9 points,Pervious,Bare Soil,Wet Sand,0.152843

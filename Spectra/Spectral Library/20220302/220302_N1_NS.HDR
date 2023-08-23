@@ -1,12 +1,11 @@
 ENVI
 description = {
-  ENVI spectral library created by convert_specprtoenvi.pro. Input SPECPR =
-  C:\Users\gsilva\Documents\UCSB
-  code\shift_soil_salinity\Spectra\PRISM\220302\220302N1NS. Wavelength record
-  = 7, title=Wavelengths DEFAULT for ASD 18461-1. Bandpass (FWHM) record = 13,
-  title=FWHM DEFAULT for ASD 18461-1. Deleted point/missing data/data_ignore
-  value = -1.230000e+34 Reflectance scale factor = 1.000000e+00 [Mon Jul 31
-  15:13:19 2023]}
+  ENVI spectral library created by convert_specprtoenvi.pro. Input SPECPR
+  =C:\Users\gsilva\Documents\UCSBcode\shift_soil_salinity\Spectra\PRISM\220302\220302N1NS.
+  Wavelength record= 7, title=Wavelengths DEFAULT for ASD 18461-1. Bandpass
+  (FWHM) record = 13, title=FWHM DEFAULT for ASD 18461-1. Deleted
+  point/missing data/data_ignorevalue = -1.230000e+34 Reflectance scale factor
+  = 1.000000e+00 [Mon Jul 3115:13:19 2023]}
 samples = 2151
 lines   = 33
 bands   = 1
@@ -16,43 +15,43 @@ data type = 4
 interleave = bsq
 sensor type = Unknown
 byte order = 0
-wavelength units = Nanometers
+wavelength units = Micrometers
 reflectance scale factor = 1.000000
 z plot range = {0.00, 1.00}
 data ignore value = -1.23000002e+34
 spectra names = {
- 220302b.0m.asd                 No-OAR   , 
- 220302b.1m.asd                 No-OAR   , 
- 220302b.2m.asd                 No-OAR   , 
- 220302b.3m.asd                 No-OAR   , 
- 220302b.4m.asd                 No-OAR   , 
- 220302b.5m.asd                 No-OAR   , 
- 220302b.6m.asd                 No-OAR   , 
+ 220302b.0m.asd                 No-OAR, 
+ 220302b.1m.asd                 No-OAR, 
+ 220302b.2m.asd                 No-OAR, 
+ 220302b.3m.asd                 No-OAR, 
+ 220302b.4m.asd                 No-OAR, 
+ 220302b.5m.asd                 No-OAR, 
+ 220302b.6m.asd                 No-OAR, 
  220302b.00050.asd                 No-OAR, 
- 220302b.8m.asd                 No-OAR   , 
- 220302b.9m.asd                 No-OAR   , 
- 220302b.10m.asd                 No-OAR  , 
- 220302b.11m.asd                 No-OAR  , 
- 220302b.12m.asd                 No-OAR  , 
- 220302b.13m.asd                 No-OAR  , 
- 220302b.14m.asd                 No-OAR  , 
- 220302b.15m.asd                 No-OAR  , 
- 220302b.16m.asd                 No-OAR  , 
- 220302b.17m.asd                 No-OAR  , 
- 220302b.18m.asd                 No-OAR  , 
- 220302b.19m.asd                 No-OAR  , 
- 220302b.20m.asd                 No-OAR  , 
- 220302b.21m.asd                 No-OAR  , 
- 220302b.22m.asd                 No-OAR  , 
- 220302b.23m.asd                 No-OAR  , 
- 220302b.24m.asd                 No-OAR  , 
- 220302b.25m.asd                 No-OAR  , 
- 220302b.26m.asd                 No-OAR  , 
- 220302b.27m.asd                 No-OAR  , 
- 220302b.28m.asd                 No-OAR  , 
- 220302b.29m.asd                 No-OAR  , 
- 220302b.30m.asd                 No-OAR  , 
- 220302b.31m.asd                 No-OAR  , 
+ 220302b.8m.asd                 No-OAR, 
+ 220302b.9m.asd                 No-OAR, 
+ 220302b.10m.asd                 No-OAR, 
+ 220302b.11m.asd                 No-OAR, 
+ 220302b.12m.asd                 No-OAR, 
+ 220302b.13m.asd                 No-OAR, 
+ 220302b.14m.asd                 No-OAR, 
+ 220302b.15m.asd                 No-OAR, 
+ 220302b.16m.asd                 No-OAR, 
+ 220302b.17m.asd                 No-OAR, 
+ 220302b.18m.asd                 No-OAR, 
+ 220302b.19m.asd                 No-OAR, 
+ 220302b.20m.asd                 No-OAR, 
+ 220302b.21m.asd                 No-OAR, 
+ 220302b.22m.asd                 No-OAR, 
+ 220302b.23m.asd                 No-OAR, 
+ 220302b.24m.asd                 No-OAR, 
+ 220302b.25m.asd                 No-OAR, 
+ 220302b.26m.asd                 No-OAR, 
+ 220302b.27m.asd                 No-OAR, 
+ 220302b.28m.asd                 No-OAR, 
+ 220302b.29m.asd                 No-OAR, 
+ 220302b.30m.asd                 No-OAR, 
+ 220302b.31m.asd                 No-OAR, 
  220302b.32m.asd                 No-OAR  }
 wavelength = {
  0.350000, 0.351000, 0.352000, 0.353000, 0.354000, 0.355000, 0.356000,

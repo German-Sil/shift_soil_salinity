@@ -5,10 +5,10 @@ description = {
   code\shift_soil_salinity\Spectra\PRISM\220504\NCOS_1_NS. Wavelength record =
   7, title=Wavelengths DEFAULT for ASD 18461-1. Bandpass (FWHM) record = 13,
   title=FWHM DEFAULT for ASD 18461-1. Deleted point/missing data/data_ignore
-  value = -1.230000e+34 Reflectance scale factor = 1.000000e+00 [Mon Jul 31
-  14:28:05 2023]}
+  value = -1.230000e+34 Reflectance scale factor = 1.000000e+00 [Wed Aug 23
+  11:33:23 2023]}
 samples = 2151
-lines   = 97
+lines   = 33
 bands   = 1
 header offset = 0
 file type = ENVI Spectral Library
@@ -16,107 +16,43 @@ data type = 4
 interleave = bsq
 sensor type = Unknown
 byte order = 0
-wavelength units = Nanometers
+wavelength units = Micrometers
 reflectance scale factor = 1.000000
 z plot range = {0.00, 1.00}
 data ignore value = -1.23000002e+34
 spectra names = {
  220504b.0m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.1m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.2m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.3m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.4m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.5m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.6m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.7m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.8m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.9m.asd                 No-OAR   , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.10m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.11m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.12m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.13m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.14m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.15m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.16m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.17m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.18m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.19m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.20m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.21m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.22m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.23m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.24m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.25m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.26m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.27m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.28m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.29m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.30m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.31m.asd                 No-OAR  , 
-   errorbars to prev. rec(stddev of mean), 
-   std. dev. to previous data record     , 
  220504b.32m.asd                 No-OAR  }
 wavelength = {
  0.350000, 0.351000, 0.352000, 0.353000, 0.354000, 0.355000, 0.356000,

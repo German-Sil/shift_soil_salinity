@@ -1,0 +1,89 @@
+ENVI
+description = {
+  Viper 2 Square Array [Mon Aug 21 15:31:46 2023]}
+samples = 81
+lines   = 81
+bands   = 5
+header offset = 0
+file type = ENVI Standard
+data type = 4
+interleave = bil
+sensor type = Unknown
+byte order = 0
+wavelength units = Unknown
+band names = {
+ RMSE, Spectral Angle, EM Fraction, Shade Fraction, Constrained}
+spectra names = {
+ 220302a.0m.asd                 No-OAR, 
+ 220302a.10m.asd                 No-OAR, 
+ 220302a.11m.asd                 No-OAR, 
+ 220302a.12m.asd                 No-OAR, 
+ 220302a.13m.asd                 No-OAR, 
+ 220302a.14m.asd                 No-OAR, 
+ 220302a.15m.asd                 No-OAR, 
+ 220302a.16m.asd                 No-OAR, 
+ 220302a.17m.asd                 No-OAR, 
+ 220302a.18m.asd                 No-OAR, 
+ 220302a.19m.asd                 No-OAR, 
+ 220302a.1m.asd                 No-OAR, 
+ 220302a.20m.asd                 No-OAR, 
+ 220302a.21m.asd                 No-OAR, 
+ 220302a.22m.asd                 No-OAR, 
+ 220302a.23m.asd                 No-OAR, 
+ 220302a.24m.asd                 No-OAR, 
+ 220302a.25m.asd                 No-OAR, 
+ 220302a.26m.asd                 No-OAR, 
+ 220302a.27m.asd                 No-OAR, 
+ 220302a.28m.asd                 No-OAR, 
+ 220302a.29m.asd                 No-OAR, 
+ 220302a.2m.asd                 No-OAR, 
+ 220302a.30m.asd                 No-OAR, 
+ 220302a.31m.asd                 No-OAR, 
+ 220302a.32m.asd                 No-OAR, 
+ 220302a.3m.asd                 No-OAR, 
+ 220302a.4m.asd                 No-OAR, 
+ 220302a.5m.asd                 No-OAR, 
+ 220302a.6m.asd                 No-OAR, 
+ 220302a.7m.asd                 No-OAR, 
+ 220302a.8m.asd                 No-OAR, 
+ 220302a.9m.asd                 No-OAR, 
+ 220302b.00050.asd                 No-OAR, 
+ 220302b.0m.asd                 No-OAR, 
+ 220302b.10m.asd                 No-OAR, 
+ 220302b.11m.asd                 No-OAR, 
+ 220302b.12m.asd                 No-OAR, 
+ 220302b.13m.asd                 No-OAR, 
+ 220302b.14m.asd                 No-OAR, 
+ 220302b.15m.asd                 No-OAR, 
+ 220302b.16m.asd                 No-OAR, 
+ 220302b.17m.asd                 No-OAR, 
+ 220302b.18m.asd                 No-OAR, 
+ 220302b.19m.asd                 No-OAR, 
+ 220302b.1m.asd                 No-OAR, 
+ 220302b.20m.asd                 No-OAR, 
+ 220302b.21m.asd                 No-OAR, 
+ 220302b.22m.asd                 No-OAR, 
+ 220302b.23m.asd                 No-OAR, 
+ 220302b.24m.asd                 No-OAR, 
+ 220302b.25m.asd                 No-OAR, 
+ 220302b.26m.asd                 No-OAR, 
+ 220302b.27m.asd                 No-OAR, 
+ 220302b.28m.asd                 No-OAR, 
+ 220302b.29m.asd                 No-OAR, 
+ 220302b.2m.asd                 No-OAR, 
+ 220302b.30m.asd                 No-OAR, 
+ 220302b.31m.asd                 No-OAR, 
+ 220302b.32m.asd                 No-OAR, 
+ 220302b.3m.asd                 No-OAR, 
+ 220302b.4m.asd                 No-OAR, 
+ 220302b.5m.asd                 No-OAR, 
+ 220302b.6m.asd                 No-OAR, 
+ 220302b.8m.asd                 No-OAR, 
+ 220302b.9m.asd                 No-OAR, Algae/Water [Maroon] 6 points, 
+ Bare Soil [Green] 25 points, Beach Sand [Blue] 10 points, 
+ Grasslands [Sea Green] 12 points, High Marsh [Sienna] 5 points, 
+ Marsh Sand [Red] 9 points, Mixed Marsh [Chartreuse] 2 points, 
+ Mud [Aquamarine] 3 points, NPV [Thistle] 2 points, 
+ Pickleweed [Orchid] 27 points, Shallow Water [Magenta] 9 points, 
+ Trees [Purple] 2 points, Uplands [Coral] 7 points, Water [Cyan] 14 points, 
+ Wet Sand [Yellow] 8 points}
