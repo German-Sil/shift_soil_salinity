@@ -1,0 +1,22 @@
+ENVI
+description = {
+  Viper 2 Square Array [Thu Aug 24 14:39:04 2023]}
+samples = 12
+lines   = 12
+bands   = 5
+header offset = 0
+file type = ENVI Standard
+data type = 4
+interleave = bil
+sensor type = Unknown
+byte order = 0
+wavelength units = Unknown
+band names = {
+ RMSE, Spectral Angle, EM Fraction, Shade Fraction, Constrained}
+spectra names = {
+ Algae [Sienna] 9 points, Bare Soil [Green] 31 points, 
+ Beach Sand [Blue] 10 points, High Marsh [Maroon] 3 points, 
+ Marsh Sand [Red] 9 points, Mud [Aquamarine] 2 points, 
+ NPV [Sea Green] 22 points, Pickleweed [Orchid] 18 points, 
+ Shallow Water [Magenta] 5 points, Trees [Purple] 6 points, 
+ Water [Cyan] 18 points, Wet Sand [Yellow] 4 points}

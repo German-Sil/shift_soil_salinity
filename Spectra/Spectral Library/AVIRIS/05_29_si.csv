@@ -1,0 +1,13 @@
+Name,Meta1,Meta2,Meta3
+Marsh Sand [Red] 9 points,Pervious,Bare Soil,Marsh Sand
+Bare Soil [Green] 31 points,Pervious,Bare Soil,Bare Soil
+Beach Sand [Blue] 10 points,Pervious,Bare Soil,Beach Sand
+Wet Sand [Yellow] 4 points,Pervious,Bare Soil,Wet Sand
+Water [Cyan] 18 points,Pervious,Water,Water
+Shallow Water [Magenta] 5 points,Pervious,Water,Shallow Water
+NPV [Sea Green] 22 points,Pervious,NPV,NPV
+Trees [Purple] 6 points,Pervious,Plants,Trees
+Mud [Aquamarine] 2 points,Pervious,Bare Soil,Mud
+Pickleweed [Orchid] 18 points,Pervious,Plants,Pickleweed
+Algae [Sienna] 9 points,Pervious,Water,Algae
+High Marsh [Maroon] 3 points,Pervious,Plants,High Marsh
