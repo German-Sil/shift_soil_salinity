@@ -1,16 +1,131 @@
 Name,Meta1,Meta2,Meta3,brightness
-Algae/Water [Maroon] 6 points,Pervious,Water,Algae/Water,0.0325518
-Bare Soil [Green] 25 points,Pervious,Bare Soil,Bare Soil,0.269891
-Beach Sand [Blue] 10 points,Pervious,Bare Soil,Beach Sand,0.341728
-Grasslands [Sea Green] 12 points,Pervious,Plants,Grasslands,0.197046
-High Marsh [Sienna] 5 points,Pervious,Plants,High Marsh,0.154980
-Marsh Sand [Red] 9 points,Pervious,Bare Soil,Marsh Sand,0.425204
-Mixed Marsh [Chartreuse] 2 points,Pervious,Plants,Mixed Marsh,0.151904
-Mud [Aquamarine] 3 points,Pervious,Bare Soil,Mud,0.134492
-NPV [Thistle] 2 points,Pervious,NPV,NPV,0.143783
-Pickleweed [Orchid] 27 points,Pervious,Plants,Pickleweed,0.141042
-Shallow Water [Magenta] 9 points,Pervious,Water,Shallow Water,0.0420089
-Trees [Purple] 2 points,Pervious,Plants,Trees,0.140191
-Uplands [Coral] 7 points,Pervious,Plants,Uplands,0.201491
-Water [Cyan] 14 points,Pervious,Water,Water,0.0327194
-Wet Sand [Yellow] 8 points,Pervious,Bare Soil,Wet Sand,0.120850
+Algae/Water_X170_Y224,Pervious,Water,Algae/Water,0.0321673
+Algae/Water_X171_Y224,Pervious,Water,Algae/Water,0.0316466
+Algae/Water_X172_Y224,Pervious,Water,Algae/Water,0.0324778
+Algae/Water_X175_Y217,Pervious,Water,Algae/Water,0.134148
+Algae/Water_X176_Y217,Pervious,Water,Algae/Water,0.0325661
+Algae/Water_X177_Y217,Pervious,Water,Algae/Water,0.0325936
+BareSoil_X178_Y152,Pervious,Bare Soil,Bare Soil,0.144701
+BareSoil_X178_Y153,Pervious,Bare Soil,Bare Soil,0.149902
+BareSoil_X178_Y89,Pervious,Bare Soil,Bare Soil,0.139275
+BareSoil_X178_Y90,Pervious,Bare Soil,Bare Soil,0.147236
+BareSoil_X179_Y153,Pervious,Bare Soil,Bare Soil,0.152853
+BareSoil_X202_Y140,Pervious,Bare Soil,Bare Soil,0.12225
+BareSoil_X203_Y140,Pervious,Bare Soil,Bare Soil,0.124471
+BareSoil_X204_Y140,Pervious,Bare Soil,Bare Soil,0.125095
+BareSoil_X218_Y155,Pervious,Bare Soil,Bare Soil,0.183408
+BareSoil_X218_Y156,Pervious,Bare Soil,Bare Soil,0.195133
+BareSoil_X219_Y155,Pervious,Bare Soil,Bare Soil,0.195712
+BareSoil_X220_Y155,Pervious,Bare Soil,Bare Soil,0.195133
+BeachSand_X134_Y363,Pervious,Bare Soil,Beach Sand,0.142232
+BeachSand_X135_Y363,Pervious,Bare Soil,Beach Sand,0.425103
+BeachSand_X70_Y303,Pervious,Bare Soil,Beach Sand,0.177866
+BeachSand_X71_Y303,Pervious,Bare Soil,Beach Sand,0.189947
+BeachSand_X71_Y305,Pervious,Bare Soil,Beach Sand,0.420473
+BeachSand_X72_Y303,Pervious,Bare Soil,Beach Sand,0.170659
+BeachSand_X72_Y305,Pervious,Bare Soil,Beach Sand,0.417446
+BeachSand_X73_Y305,Pervious,Bare Soil,Beach Sand,0.43062
+HighMarsh_X178_Y257,Pervious,Plants,High Marsh,0.125498
+HighMarsh_X179_Y256,Pervious,Plants,High Marsh,0.132223
+HighMarsh_X179_Y257,Pervious,Plants,High Marsh,0.133231
+HighMarsh_X194_Y48,Pervious,Plants,High Marsh,0.031434
+HighMarsh_X197_Y47,Pervious,Plants,High Marsh,0.0303873
+HighMarsh_X198_Y47,Pervious,Plants,High Marsh,0.0300103
+MarshSand_X178_Y111,Pervious,Bare Soil,Marsh Sand,0.122587
+MarshSand_X178_Y119,Pervious,Bare Soil,Marsh Sand,0.129152
+MarshSand_X179_Y111,Pervious,Bare Soil,Marsh Sand,0.126029
+MarshSand_X179_Y120,Pervious,Bare Soil,Marsh Sand,0.12961
+MarshSand_X186_Y114,Pervious,Bare Soil,Marsh Sand,0.130063
+Mud_X178_Y87,Pervious,Bare Soil,Mud,0.0330536
+Mud_X179_Y88,Pervious,Bare Soil,Mud,0.0322908
+Pickleweed_X174_Y253,Pervious,Plants,Pickleweed,0.18648
+Pickleweed_X175_Y253,Pervious,Plants,Pickleweed,0.165068
+Pickleweed_X175_Y92,Pervious,Plants,Pickleweed,0.196445
+Pickleweed_X176_Y252,Pervious,Plants,Pickleweed,0.142373
+Pickleweed_X176_Y92,Pervious,Plants,Pickleweed,0.197389
+Pickleweed_X176_Y93,Pervious,Plants,Pickleweed,0.195402
+Pickleweed_X177_Y251,Pervious,Plants,Pickleweed,0.140939
+Pickleweed_X177_Y93,Pervious,Plants,Pickleweed,0.215739
+Pickleweed_X178_Y250,Pervious,Plants,Pickleweed,0.13751
+Pickleweed_X178_Y251,Pervious,Plants,Pickleweed,0.136799
+Pickleweed_X178_Y93,Pervious,Plants,Pickleweed,0.203151
+Pickleweed_X178_Y94,Pervious,Plants,Pickleweed,0.201968
+Pickleweed_X179_Y94,Pervious,Plants,Pickleweed,0.197169
+Pickleweed_X180_Y94,Pervious,Plants,Pickleweed,0.139337
+Pickleweed_X195_Y52,Pervious,Plants,Pickleweed,0.156548
+Pickleweed_X196_Y51,Pervious,Plants,Pickleweed,0.142762
+Pickleweed_X196_Y52,Pervious,Plants,Pickleweed,0.157837
+Pickleweed_X197_Y51,Pervious,Plants,Pickleweed,0.117952
+Pickleweed_X198_Y50,Pervious,Plants,Pickleweed,0.141045
+Pickleweed_X198_Y51,Pervious,Plants,Pickleweed,0.151176
+Pickleweed_X199_Y50,Pervious,Plants,Pickleweed,0.193605
+Pickleweed_X200_Y50,Pervious,Plants,Pickleweed,0.197977
+Pickleweed_X201_Y50,Pervious,Plants,Pickleweed,0.195768
+Pickleweed_X215_Y163,Pervious,Plants,Pickleweed,0.151889
+Pickleweed_X216_Y163,Pervious,Plants,Pickleweed,0.139402
+Pickleweed_X217_Y163,Pervious,Plants,Pickleweed,0.152658
+Pickleweed_X218_Y163,Pervious,Plants,Pickleweed,0.158024
+ShallowWater_X165_Y174,Pervious,Water,Shallow Water,0.135636
+ShallowWater_X165_Y175,Pervious,Water,Shallow Water,0.135106
+ShallowWater_X166_Y174,Pervious,Water,Shallow Water,0.133847
+ShallowWater_X200_Y59,Pervious,Water,Shallow Water,0.354017
+ShallowWater_X200_Y60,Pervious,Water,Shallow Water,0.395954
+ShallowWater_X201_Y60,Pervious,Water,Shallow Water,0.345613
+ShallowWater_X202_Y211,Pervious,Water,Shallow Water,0.305343
+ShallowWater_X203_Y211,Pervious,Water,Shallow Water,0.306369
+Trees_X136_Y152,Pervious,Plants,Trees,0.0434125
+Trees_X136_Y153,Pervious,Plants,Trees,0.032213
+Trees_X219_Y186,Pervious,Plants,Trees,0.0377706
+Trees_X9_Y106,Pervious,Plants,Trees,0.198107
+Trees_X9_Y106,Pervious,Plants,Trees,0.25078
+Trees_X9_Y106,Pervious,Plants,Trees,0.174356
+Trees_X9_Y106,Pervious,Plants,Trees,0.155556
+Trees_X9_Y106,Pervious,Plants,Trees,0.21507
+Trees_X9_Y106,Pervious,Plants,Trees,0.207509
+Trees_X9_Y106,Pervious,Plants,Trees,0.0400422
+Trees_X9_Y106,Pervious,Plants,Trees,0.0383284
+Trees_X9_Y106,Pervious,Plants,Trees,0.0421714
+Trees_X9_Y106,Pervious,Plants,Trees,0.0424751
+Trees_X9_Y106,Pervious,Plants,Trees,0.0406687
+Trees_X9_Y106,Pervious,Plants,Trees,0.0405837
+Trees_X9_Y106,Pervious,Plants,Trees,0.0380859
+Trees_X9_Y106,Pervious,Plants,Trees,0.0394191
+Trees_X9_Y106,Pervious,Plants,Trees,0.256381
+Trees_X9_Y106,Pervious,Plants,Trees,0.162605
+Trees_X9_Y106,Pervious,Plants,Trees,0.110089
+Trees_X9_Y106,Pervious,Plants,Trees,0.151653
+Trees_X9_Y106,Pervious,Plants,Trees,0.2024
+Upalnds_X101_Y164,Pervious,Plants,Upalnds,0.0321162
+Upalnds_X102_Y164,Pervious,Plants,Upalnds,0.0320257
+Upalnds_X102_Y165,Pervious,Plants,Upalnds,0.0444908
+Upalnds_X103_Y164,Pervious,Plants,Upalnds,0.0324584
+Upalnds_X103_Y165,Pervious,Plants,Upalnds,0.0434181
+Upalnds_X104_Y164,Pervious,Plants,Upalnds,0.0319257
+Upalnds_X104_Y165,Pervious,Plants,Upalnds,0.0443223
+Uplands_X143_Y103,Pervious,Plants,Uplands,0.336044
+Uplands_X143_Y104,Pervious,Plants,Uplands,0.307371
+Uplands_X162_Y49,Pervious,Plants,Uplands,0.0330756
+Uplands_X162_Y50,Pervious,Plants,Uplands,0.0328002
+Uplands_X163_Y49,Pervious,Plants,Uplands,0.0318778
+Uplands_X232_Y22,Pervious,Plants,Uplands,0.356201
+Uplands_X232_Y23,Pervious,Plants,Uplands,0.302504
+Uplands_X233_Y22,Pervious,Plants,Uplands,0.297953
+Water_X105_Y296,Pervious,Water,Water,0.11566
+Water_X106_Y296,Pervious,Water,Water,0.0934063
+Water_X107_Y296,Pervious,Water,Water,0.103325
+Water_X108_Y296,Pervious,Water,Water,0.115668
+Water_X173_Y193,Pervious,Water,Water,0.445889
+Water_X173_Y194,Pervious,Water,Water,0.343179
+Water_X174_Y193,Pervious,Water,Water,0.341108
+Water_X198_Y103,Pervious,Water,Water,0.205754
+Water_X199_Y103,Pervious,Water,Water,0.325993
+Water_X209_Y122,Pervious,Water,Water,0.351052
+Water_X210_Y122,Pervious,Water,Water,0.285943
+WetSand_X142_Y364,Pervious,Bare Soil,Wet Sand,0.224201
+WetSand_X143_Y363,Pervious,Bare Soil,Wet Sand,0.350931
+WetSand_X143_Y364,Pervious,Bare Soil,Wet Sand,0.182409
+WetSand_X144_Y363,Pervious,Bare Soil,Wet Sand,0.356955
+WetSand_X97_Y349,Pervious,Bare Soil,Wet Sand,0.284876
+WetSand_X97_Y350,Pervious,Bare Soil,Wet Sand,0.340296
+WetSand_X98_Y349,Pervious,Bare Soil,Wet Sand,0.319113
+WetSand_X98_Y350,Pervious,Bare Soil,Wet Sand,0.294371

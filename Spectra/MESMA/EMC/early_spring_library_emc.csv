@@ -1,0 +1,207 @@
+Output of VIPER 2 Tools EAR/MASA/COB routine: Mon Aug 28 15:08:59 2023
+
+Name:,Spectrum name
+Group:, Attribute in grouping field
+EAR:, Within group Endmember Average Root Mean Squared Error
+MASA:, Within group Average Spectral Angle
+InCoB:, Within group count of spectra modeled
+OutCoB:, Outside of group count of spectra modeled
+CoBI:, CoB Index calculated as: InCoB/OutCoB/number of spectra in group
+
+Name,Group,EAR,MASA,InCoB,OutCoB,CoBI
+Algae/Water_X170_Y224, ALGAE/WATER,   4.05769e-06,      0.312104,            5,          141,    0.00591017
+Algae/Water_X171_Y224, ALGAE/WATER,   3.55956e-06,      0.266633,            0,            0,       0.00000
+Algae/Water_X172_Y224, ALGAE/WATER,   3.57202e-06,      0.268744,            0,            0,       0.00000
+Algae/Water_X175_Y217, ALGAE/WATER,   8.63814e-06,      0.838863,            5,           98,    0.00850340
+Algae/Water_X176_Y217, ALGAE/WATER,   3.48361e-06,      0.261287,            0,            0,       0.00000
+Algae/Water_X177_Y217, ALGAE/WATER,   3.39416e-06,      0.253542,            5,          126,    0.00661376
+220302b.25m.asd                 No-OAR, BARE SOIL,   6.80923e-06,      0.380678,            0,            0,       0.00000
+220302b.27m.asd                 No-OAR, BARE SOIL,   6.92781e-06,      0.381603,            0,            0,       0.00000
+220302b.30m.asd                 No-OAR, BARE SOIL,   6.79503e-06,      0.383776,           16,          162,    0.00580973
+220302b.31m.asd                 No-OAR, BARE SOIL,   7.03147e-06,      0.391552,            0,            0,       0.00000
+220302b.32m.asd                 No-OAR  , BARE SOIL,   7.01301e-06,      0.389784,            0,            0,       0.00000
+BareSoil_X178_Y152, BARE SOIL,   5.36313e-06,      0.254140,            0,            0,       0.00000
+BareSoil_X178_Y153, BARE SOIL,   5.38842e-06,      0.258114,            0,            0,       0.00000
+BareSoil_X178_Y89, BARE SOIL,   5.70217e-06,      0.269510,            0,            0,       0.00000
+BareSoil_X178_Y90, BARE SOIL,   5.67617e-06,      0.270276,            0,            0,       0.00000
+BareSoil_X179_Y153, BARE SOIL,   5.11136e-06,      0.243552,            0,            0,       0.00000
+BareSoil_X202_Y140, BARE SOIL,   6.22810e-06,      0.295588,            0,            0,       0.00000
+BareSoil_X203_Y140, BARE SOIL,   6.38024e-06,      0.302915,            0,            0,       0.00000
+BareSoil_X204_Y140, BARE SOIL,   6.43124e-06,      0.305731,            0,            0,       0.00000
+BareSoil_X218_Y155, BARE SOIL,   5.10496e-06,      0.257163,            0,            0,       0.00000
+BareSoil_X218_Y156, BARE SOIL,   5.14461e-06,      0.260748,            0,            0,       0.00000
+BareSoil_X219_Y155, BARE SOIL,   4.91535e-06,      0.249646,            0,            0,       0.00000
+BareSoil_X220_Y155, BARE SOIL,   5.14461e-06,      0.260748,            0,            0,       0.00000
+220302b.28m.asd                 No-OAR, BARE SOIL/PICKLEWEED,   1.51616e-06,     0.0604950,            0,            0,       0.00000
+220302b.29m.asd                 No-OAR, BARE SOIL/PICKLEWEED,   1.47082e-06,     0.0604950,            1,          165,    0.00303030
+BeachSand_X134_Y363, BEACH SAND,   1.22606e-05,      0.326559,            0,            0,       0.00000
+BeachSand_X135_Y363, BEACH SAND,   5.33639e-06,      0.253276,            0,            0,       0.00000
+BeachSand_X70_Y303, BEACH SAND,   1.11739e-05,      0.285788,            0,            0,       0.00000
+BeachSand_X71_Y303, BEACH SAND,   9.74922e-06,      0.252669,            0,            0,       0.00000
+BeachSand_X71_Y305, BEACH SAND,   5.35207e-06,      0.251518,            0,            0,       0.00000
+BeachSand_X72_Y303, BEACH SAND,   1.13924e-05,      0.290850,            0,            0,       0.00000
+BeachSand_X72_Y305, BEACH SAND,   5.34249e-06,      0.249746,            0,            0,       0.00000
+BeachSand_X73_Y305, BEACH SAND,   5.39352e-06,      0.256042,            7,          187,    0.00467914
+HighMarsh_X178_Y257, HIGH MARSH,   5.07538e-06,      0.466721,            0,            0,       0.00000
+HighMarsh_X179_Y256, HIGH MARSH,   5.20813e-06,      0.483149,            5,          112,    0.00744048
+HighMarsh_X179_Y257, HIGH MARSH,   5.12504e-06,      0.478556,            0,            0,       0.00000
+HighMarsh_X194_Y48, HIGH MARSH,   7.24133e-06,      0.479046,            0,            0,       0.00000
+HighMarsh_X197_Y47, HIGH MARSH,   7.19318e-06,      0.474237,            0,            0,       0.00000
+HighMarsh_X198_Y47, HIGH MARSH,   7.24693e-06,      0.478394,            0,            0,       0.00000
+MarshSand_X178_Y111, MARSH SAND,   2.15344e-06,      0.128736,            0,            0,       0.00000
+MarshSand_X178_Y119, MARSH SAND,   1.33604e-06,     0.0808494,            0,            0,       0.00000
+MarshSand_X179_Y111, MARSH SAND,   1.30303e-06,     0.0786139,            0,            0,       0.00000
+MarshSand_X179_Y120, MARSH SAND,   1.47930e-06,     0.0892285,            0,            0,       0.00000
+MarshSand_X186_Y114, MARSH SAND,   1.25896e-06,     0.0761745,            4,          102,    0.00784314
+Mud_X178_Y87, MUD,   1.90438e-06,      0.177613,            1,           78,    0.00641026
+Mud_X179_Y88, MUD,   1.91856e-06,      0.177613,            1,           74,    0.00675676
+220302a.0m.asd                 No-OAR   , PICKLEWEED,   3.68712e-06,      0.199252,            0,            0,       0.00000
+220302a.10m.asd                 No-OAR  , PICKLEWEED,   3.97778e-06,      0.216560,            0,            0,       0.00000
+220302a.11m.asd                 No-OAR  , PICKLEWEED,   3.68171e-06,      0.198611,            0,            0,       0.00000
+220302a.12m.asd                 No-OAR  , PICKLEWEED,   3.63313e-06,      0.195837,            0,            0,       0.00000
+220302a.13m.asd                 No-OAR  , PICKLEWEED,   3.65071e-06,      0.196897,            0,            0,       0.00000
+220302a.14m.asd                 No-OAR  , PICKLEWEED,   3.76050e-06,      0.203608,            0,            0,       0.00000
+220302a.15m.asd                 No-OAR  , PICKLEWEED,   3.63953e-06,      0.195989,            0,            0,       0.00000
+220302a.16m.asd                 No-OAR  , PICKLEWEED,   4.10068e-06,      0.224653,            0,            0,       0.00000
+220302a.17m.asd                 No-OAR  , PICKLEWEED,   3.91472e-06,      0.213247,            0,            0,       0.00000
+220302a.18m.asd                 No-OAR  , PICKLEWEED,   3.86871e-06,      0.210137,            0,            0,       0.00000
+220302a.19m.asd                 No-OAR  , PICKLEWEED,   3.61143e-06,      0.194599,            0,            0,       0.00000
+220302a.1m.asd                 No-OAR   , PICKLEWEED,   3.71599e-06,      0.200806,            0,            0,       0.00000
+220302a.20m.asd                 No-OAR  , PICKLEWEED,   4.55640e-06,      0.253278,            0,            0,       0.00000
+220302a.21m.asd                 No-OAR  , PICKLEWEED,   3.75523e-06,      0.203377,            0,            0,       0.00000
+220302a.22m.asd                 No-OAR  , PICKLEWEED,   3.69457e-06,      0.199509,            0,            0,       0.00000
+220302a.23m.asd                 No-OAR  , PICKLEWEED,   3.65674e-06,      0.197086,            0,            0,       0.00000
+220302a.24m.asd                 No-OAR  , PICKLEWEED,   3.67984e-06,      0.198360,            0,            0,       0.00000
+220302a.25m.asd                 No-OAR  , PICKLEWEED,   3.71487e-06,      0.200993,            0,            0,       0.00000
+220302a.26m.asd                 No-OAR  , PICKLEWEED,   4.08110e-06,      0.224046,            0,            0,       0.00000
+220302a.27m.asd                 No-OAR  , PICKLEWEED,   3.65762e-06,      0.197036,            0,            0,       0.00000
+220302a.28m.asd                 No-OAR  , PICKLEWEED,   3.85109e-06,      0.209283,            0,            0,       0.00000
+220302a.29m.asd                 No-OAR  , PICKLEWEED,   4.06915e-06,      0.223586,            0,            0,       0.00000
+220302a.2m.asd                 No-OAR   , PICKLEWEED,   3.71554e-06,      0.201155,            0,            0,       0.00000
+220302a.30m.asd                 No-OAR  , PICKLEWEED,   4.09643e-06,      0.225313,            0,            0,       0.00000
+220302a.31m.asd                 No-OAR  , PICKLEWEED,   4.13990e-06,      0.228056,            0,            0,       0.00000
+220302a.32m.asd                 No-OAR  , PICKLEWEED,   4.04413e-06,      0.221829,            0,            0,       0.00000
+220302a.3m.asd                 No-OAR   , PICKLEWEED,   3.69489e-06,      0.199564,            0,            0,       0.00000
+220302a.4m.asd                 No-OAR   , PICKLEWEED,   3.74332e-06,      0.202428,            0,            0,       0.00000
+220302a.5m.asd                 No-OAR   , PICKLEWEED,   3.67068e-06,      0.198247,            0,            0,       0.00000
+220302a.6M.asd                 No-OAR   , PICKLEWEED,   3.75190e-06,      0.202968,            0,            0,       0.00000
+220302a.7m.asd                 No-OAR   , PICKLEWEED,   3.68335e-06,      0.198884,            0,            0,       0.00000
+220302a.8m.asd                 No-OAR   , PICKLEWEED,   3.76712e-06,      0.203953,            0,            0,       0.00000
+220302a.9m.asd                 No-OAR   , PICKLEWEED,   3.80480e-06,      0.206241,            0,            0,       0.00000
+220302b.00050.asd                 No-OAR, PICKLEWEED,   6.76953e-06,      0.392899,            0,            0,       0.00000
+220302b.10m.asd                 No-OAR, PICKLEWEED,   3.78524e-06,      0.204767,            0,            0,       0.00000
+220302b.11m.asd                 No-OAR, PICKLEWEED,   3.75253e-06,      0.203294,            0,            0,       0.00000
+220302b.12m.asd                 No-OAR, PICKLEWEED,   3.73279e-06,      0.202054,            0,            0,       0.00000
+220302b.13m.asd                 No-OAR, PICKLEWEED,   3.73471e-06,      0.202067,            0,            0,       0.00000
+220302b.14m.asd                 No-OAR, PICKLEWEED,   3.84512e-06,      0.209002,            0,            0,       0.00000
+220302b.15m.asd                 No-OAR, PICKLEWEED,   3.69042e-06,      0.199373,            0,            0,       0.00000
+220302b.16m.asd                 No-OAR, PICKLEWEED,   3.68103e-06,      0.198729,            0,            0,       0.00000
+220302b.17m.asd                 No-OAR, PICKLEWEED,   3.82001e-06,      0.207761,            0,            0,       0.00000
+220302b.18m.asd                 No-OAR, PICKLEWEED,   3.65765e-06,      0.197352,            0,            0,       0.00000
+220302b.19m.asd                 No-OAR, PICKLEWEED,   3.70147e-06,      0.199819,            0,            0,       0.00000
+220302b.20m.asd                 No-OAR, PICKLEWEED,   3.64107e-06,      0.196212,            0,            0,       0.00000
+220302b.21m.asd                 No-OAR, PICKLEWEED,   3.76993e-06,      0.204448,            0,            0,       0.00000
+220302b.22m.asd                 No-OAR, PICKLEWEED,   3.67295e-06,      0.198072,            0,            0,       0.00000
+220302b.23m.asd                 No-OAR, PICKLEWEED,   3.83672e-06,      0.208790,            0,            0,       0.00000
+220302b.24m.asd                 No-OAR, PICKLEWEED,   3.64321e-06,      0.196092,            0,            0,       0.00000
+220302b.26m.asd                 No-OAR, PICKLEWEED,   3.64947e-06,      0.196834,            0,            0,       0.00000
+220302b.8m.asd                 No-OAR, PICKLEWEED,   3.99034e-06,      0.218064,            0,            0,       0.00000
+220302b.9m.asd                 No-OAR, PICKLEWEED,   3.70715e-06,      0.200219,            0,            0,       0.00000
+Pickleweed_X174_Y253, PICKLEWEED,   5.44128e-06,      0.323042,            0,            0,       0.00000
+Pickleweed_X175_Y253, PICKLEWEED,   5.57209e-06,      0.335141,            0,            0,       0.00000
+Pickleweed_X175_Y92, PICKLEWEED,   5.91772e-06,      0.365739,            0,            0,       0.00000
+Pickleweed_X176_Y252, PICKLEWEED,   7.61989e-06,      0.472902,            0,            0,       0.00000
+Pickleweed_X176_Y92, PICKLEWEED,   5.72445e-06,      0.352564,            0,            0,       0.00000
+Pickleweed_X176_Y93, PICKLEWEED,   6.11238e-06,      0.377982,            0,            0,       0.00000
+Pickleweed_X177_Y251, PICKLEWEED,   7.88759e-06,      0.491359,            0,            0,       0.00000
+Pickleweed_X177_Y93, PICKLEWEED,   5.54465e-06,      0.338929,           78,           88,     0.0112198
+Pickleweed_X178_Y250, PICKLEWEED,   7.57527e-06,      0.467369,            0,            0,       0.00000
+Pickleweed_X178_Y251, PICKLEWEED,   7.64372e-06,      0.471840,            0,            0,       0.00000
+Pickleweed_X178_Y93, PICKLEWEED,   5.94652e-06,      0.366950,            0,            0,       0.00000
+Pickleweed_X178_Y94, PICKLEWEED,   5.76196e-06,      0.353709,            0,            0,       0.00000
+Pickleweed_X179_Y94, PICKLEWEED,   5.74676e-06,      0.354120,            0,            0,       0.00000
+Pickleweed_X180_Y94, PICKLEWEED,   9.89732e-06,      0.629970,            0,            0,       0.00000
+Pickleweed_X195_Y52, PICKLEWEED,   5.99177e-06,      0.362098,            0,            0,       0.00000
+Pickleweed_X196_Y51, PICKLEWEED,   7.08042e-06,      0.435697,            0,            0,       0.00000
+Pickleweed_X196_Y52, PICKLEWEED,   6.01906e-06,      0.364058,            0,            0,       0.00000
+Pickleweed_X197_Y51, PICKLEWEED,   9.37283e-06,      0.591022,            0,            0,       0.00000
+Pickleweed_X198_Y50, PICKLEWEED,   9.82369e-06,      0.624802,            0,            0,       0.00000
+Pickleweed_X198_Y51, PICKLEWEED,   6.40998e-06,      0.391180,            0,            0,       0.00000
+Pickleweed_X199_Y50, PICKLEWEED,   6.12048e-06,      0.375430,            0,            0,       0.00000
+Pickleweed_X200_Y50, PICKLEWEED,   5.53460e-06,      0.335811,            0,            0,       0.00000
+Pickleweed_X201_Y50, PICKLEWEED,   5.52344e-06,      0.336106,            0,            0,       0.00000
+Pickleweed_X215_Y163, PICKLEWEED,   6.18279e-06,      0.372388,            0,            0,       0.00000
+Pickleweed_X216_Y163, PICKLEWEED,   6.45620e-06,      0.393284,            0,            0,       0.00000
+Pickleweed_X217_Y163, PICKLEWEED,   6.27485e-06,      0.380320,            0,            0,       0.00000
+Pickleweed_X218_Y163, PICKLEWEED,   5.94066e-06,      0.357423,            0,            0,       0.00000
+ShallowWater_X165_Y174, SHALLOW WATER,   1.27998e-05,      0.388063,            0,            0,       0.00000
+ShallowWater_X165_Y175, SHALLOW WATER,   1.25918e-05,      0.385864,            0,            0,       0.00000
+ShallowWater_X166_Y174, SHALLOW WATER,   1.18104e-05,      0.356853,            0,            0,       0.00000
+ShallowWater_X200_Y59, SHALLOW WATER,   5.66973e-06,      0.284861,            0,            0,       0.00000
+ShallowWater_X200_Y60, SHALLOW WATER,   6.17232e-06,      0.309755,            7,          183,    0.00478142
+ShallowWater_X201_Y60, SHALLOW WATER,   6.54696e-06,      0.313474,            0,            0,       0.00000
+ShallowWater_X202_Y211, SHALLOW WATER,   5.58548e-06,      0.248039,            0,            0,       0.00000
+ShallowWater_X203_Y211, SHALLOW WATER,   5.61239e-06,      0.246000,            0,            0,       0.00000
+Trees_X136_Y152, TREES,   1.05775e-05,      0.569588,            0,            0,       0.00000
+Trees_X136_Y153, TREES,   1.10223e-05,      0.603710,            0,            0,       0.00000
+Trees_X219_Y186, TREES,   1.07738e-05,      0.586020,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.81124e-06,      0.652333,           21,          148,    0.00644963
+Trees_X9_Y106, TREES,   1.08955e-05,      0.595188,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   1.08032e-05,      0.588766,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.24430e-06,      0.617363,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   1.08474e-05,      0.592822,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   1.06642e-05,      0.576216,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   8.81849e-06,      0.586878,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.30735e-06,      0.620858,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   1.07517e-05,      0.583768,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.41120e-06,      0.628651,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.79702e-06,      0.594528,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.47338e-06,      0.614428,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.71487e-06,      0.647295,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.29599e-06,      0.617825,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   7.32538e-06,      0.589009,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   1.05676e-05,      0.568459,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   8.27244e-06,      0.603509,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   1.07971e-05,      0.588585,            0,            0,       0.00000
+Trees_X9_Y106, TREES,   1.08234e-05,      0.588836,            0,            0,       0.00000
+Upalnds_X101_Y164, UPALNDS,   2.71702e-06,      0.227800,            0,            0,       0.00000
+Upalnds_X102_Y164, UPALNDS,   2.72537e-06,      0.227439,            0,            0,       0.00000
+Upalnds_X102_Y165, UPALNDS,   2.76516e-06,      0.244581,            0,            0,       0.00000
+Upalnds_X103_Y164, UPALNDS,   2.59626e-06,      0.216636,            0,            0,       0.00000
+Upalnds_X103_Y165, UPALNDS,   2.68157e-06,      0.234896,            0,            0,       0.00000
+Upalnds_X104_Y164, UPALNDS,   2.83979e-06,      0.237670,            0,            0,       0.00000
+Upalnds_X104_Y165, UPALNDS,   2.70412e-06,      0.238608,            6,          122,    0.00702576
+220302b.0m.asd                 No-OAR, UPLANDS,   9.61915e-06,      0.567968,            0,            0,       0.00000
+220302b.1m.asd                 No-OAR, UPLANDS,   6.30514e-06,      0.405538,            0,            0,       0.00000
+220302b.2m.asd                 No-OAR, UPLANDS,   6.23046e-06,      0.402755,            0,            0,       0.00000
+220302b.3m.asd                 No-OAR, UPLANDS,   6.13677e-06,      0.401997,            0,            0,       0.00000
+220302b.4m.asd                 No-OAR, UPLANDS,   6.14463e-06,      0.409168,            0,            0,       0.00000
+220302b.5m.asd                 No-OAR, UPLANDS,   6.99883e-06,      0.440555,            0,            0,       0.00000
+220302b.6m.asd                 No-OAR, UPLANDS,   6.10174e-06,      0.403110,            0,            0,       0.00000
+Uplands_X143_Y103, UPLANDS,   5.68370e-06,      0.436305,            0,            0,       0.00000
+Uplands_X143_Y104, UPLANDS,   5.69279e-06,      0.422688,            0,            0,       0.00000
+Uplands_X162_Y49, UPLANDS,   1.96968e-05,       1.06551,            0,            0,       0.00000
+Uplands_X162_Y50, UPLANDS,   1.96505e-05,       1.06238,            0,            0,       0.00000
+Uplands_X163_Y49, UPLANDS,   1.96246e-05,       1.05955,            0,            0,       0.00000
+Uplands_X232_Y22, UPLANDS,   5.80764e-06,      0.438454,           14,          175,    0.00533333
+Uplands_X232_Y23, UPLANDS,   5.81219e-06,      0.435825,            0,            0,       0.00000
+Uplands_X233_Y22, UPLANDS,   5.75391e-06,      0.422704,            0,            0,       0.00000
+Water_X105_Y296, WATER,   1.55471e-05,      0.492171,            0,            0,       0.00000
+Water_X106_Y296, WATER,   1.81417e-05,      0.593509,            0,            0,       0.00000
+Water_X107_Y296, WATER,   1.63836e-05,      0.520676,            0,            0,       0.00000
+Water_X108_Y296, WATER,   1.47958e-05,      0.466343,            0,            0,       0.00000
+Water_X173_Y193, WATER,   7.09099e-06,      0.401437,           10,          185,    0.00491400
+Water_X173_Y194, WATER,   6.26671e-06,      0.368792,            0,            0,       0.00000
+Water_X174_Y193, WATER,   6.26337e-06,      0.368628,            0,            0,       0.00000
+Water_X198_Y103, WATER,   9.13670e-06,      0.363871,            0,            0,       0.00000
+Water_X199_Y103, WATER,   6.20759e-06,      0.337029,            0,            0,       0.00000
+Water_X209_Y122, WATER,   6.30881e-06,      0.369282,            0,            0,       0.00000
+Water_X210_Y122, WATER,   6.67083e-06,      0.344612,            0,            0,       0.00000
+WetSand_X142_Y364, WET SAND,   8.75948e-06,      0.270082,            0,            0,       0.00000
+WetSand_X143_Y363, WET SAND,   4.08968e-06,      0.157633,            0,            0,       0.00000
+WetSand_X143_Y364, WET SAND,   1.19061e-05,      0.367141,            0,            0,       0.00000
+WetSand_X144_Y363, WET SAND,   4.42178e-06,      0.170531,            7,          181,    0.00483425
+WetSand_X97_Y349, WET SAND,   4.21370e-06,      0.154490,            0,            0,       0.00000
+WetSand_X97_Y350, WET SAND,   3.95243e-06,      0.152235,            0,            0,       0.00000
+WetSand_X98_Y349, WET SAND,   3.78502e-06,      0.145786,            0,            0,       0.00000
+WetSand_X98_Y350, WET SAND,   4.20392e-06,      0.158992,            0,            0,       0.00000

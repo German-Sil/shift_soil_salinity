@@ -1,0 +1,113 @@
+Name,ROI_name,X_img,Y_img,WGS84_Lat,WGS84_Lon,Meta1,Meta2,Meta3
+BareSoil_X218_Y155,Bare Soil,218,155,34.416385,-119.87378,Pervious,Bare Soil,Bare Soil
+BareSoil_X219_Y155,Bare Soil,219,155,34.416386,-119.87373,Pervious,Bare Soil,Bare Soil
+BareSoil_X220_Y155,Bare Soil,220,155,34.416388,-119.87367,Pervious,Bare Soil,Bare Soil
+BareSoil_X218_Y156,Bare Soil,218,156,34.416342,-119.87378,Pervious,Bare Soil,Bare Soil
+BeachSand_X70_Y303,Beach Sand,70,303,34.409805,-119.88128,Pervious,Bare Soil,Beach Sand
+BeachSand_X71_Y303,Beach Sand,71,303,34.409806,-119.88123,Pervious,Bare Soil,Beach Sand
+BeachSand_X72_Y303,Beach Sand,72,303,34.409807,-119.88118,Pervious,Bare Soil,Beach Sand
+WetSand_X142_Y364,Wet Sand,142,364,34.407256,-119.87743,Pervious,Bare Soil,Wet Sand
+WetSand_X143_Y364,Wet Sand,143,364,34.407257,-119.87738,Pervious,Bare Soil,Wet Sand
+WetSand_X144_Y363,Wet Sand,144,363,34.407302,-119.87733,Pervious,Bare Soil,Wet Sand
+WetSand_X143_Y363,Wet Sand,143,363,34.407301,-119.87738,Pervious,Bare Soil,Wet Sand
+WetSand_X97_Y349,Wet Sand,97,349,34.407849,-119.8798,Pervious,Bare Soil,Wet Sand
+WetSand_X98_Y349,Wet Sand,98,349,34.407851,-119.87975,Pervious,Bare Soil,Wet Sand
+WetSand_X97_Y350,Wet Sand,97,350,34.407806,-119.8798,Pervious,Bare Soil,Wet Sand
+WetSand_X98_Y350,Wet Sand,98,350,34.407807,-119.87975,Pervious,Bare Soil,Wet Sand
+Water_X105_Y296,Water,105,296,34.410151,-119.87946,Pervious,Water,Water
+Water_X106_Y296,Water,106,296,34.410152,-119.87941,Pervious,Water,Water
+Water_X107_Y296,Water,107,296,34.410153,-119.87936,Pervious,Water,Water
+Water_X108_Y296,Water,108,296,34.410154,-119.87931,Pervious,Water,Water
+ShallowWater_X165_Y174,Shallow Water,165,174,34.415499,-119.87651,Pervious,Water,Shallow Water
+ShallowWater_X166_Y174,Shallow Water,166,174,34.4155,-119.87646,Pervious,Water,Shallow Water
+ShallowWater_X165_Y175,Shallow Water,165,175,34.415455,-119.87651,Pervious,Water,Shallow Water
+Algae/Water_X175_Y217,Algae/Water,175,217,34.413652,-119.87593,Pervious,Water,Algae/Water
+Algae/Water_X176_Y217,Algae/Water,176,217,34.413653,-119.87588,Pervious,Water,Algae/Water
+Algae/Water_X177_Y217,Algae/Water,177,217,34.413654,-119.87583,Pervious,Water,Algae/Water
+Algae/Water_X170_Y224,Algae/Water,170,224,34.413343,-119.87618,Pervious,Water,Algae/Water
+Algae/Water_X171_Y224,Algae/Water,171,224,34.413344,-119.87613,Pervious,Water,Algae/Water
+Algae/Water_X172_Y224,Algae/Water,172,224,34.413346,-119.87608,Pervious,Water,Algae/Water
+Upalnds_X101_Y164,Upalnds,101,164,34.415852,-119.87987,Pervious,Plants,Upalnds
+Upalnds_X102_Y164,Upalnds,102,164,34.415854,-119.87982,Pervious,Plants,Upalnds
+Upalnds_X103_Y164,Upalnds,103,164,34.415855,-119.87976,Pervious,Plants,Upalnds
+Upalnds_X104_Y164,Upalnds,104,164,34.415856,-119.87971,Pervious,Plants,Upalnds
+Upalnds_X102_Y165,Upalnds,102,165,34.41581,-119.87981,Pervious,Plants,Upalnds
+Upalnds_X103_Y165,Upalnds,103,165,34.415812,-119.87976,Pervious,Plants,Upalnds
+Upalnds_X104_Y165,Upalnds,104,165,34.415813,-119.87971,Pervious,Plants,Upalnds
+Trees_X136_Y152,Trees,136,152,34.416414,-119.87806,Pervious,Plants,Trees
+Trees_X136_Y153,Trees,136,153,34.416371,-119.87806,Pervious,Plants,Trees
+Uplands_X162_Y49,Uplands,162,49,34.420899,-119.87686,Pervious,Plants,Uplands
+Uplands_X163_Y49,Uplands,163,49,34.4209,-119.8768,Pervious,Plants,Uplands
+Uplands_X162_Y50,Uplands,162,50,34.420856,-119.87686,Pervious,Plants,Uplands
+Mud_X178_Y87,Mud,178,87,34.419276,-119.87597,Pervious,Bare Soil,Mud
+Mud_X179_Y88,Mud,179,88,34.419234,-119.87591,Pervious,Bare Soil,Mud
+Pickleweed_X178_Y93,Pickleweed,178,93,34.419017,-119.87596,Pervious,Plants,Pickleweed
+Pickleweed_X175_Y92,Pickleweed,175,92,34.419056,-119.87611,Pervious,Plants,Pickleweed
+Pickleweed_X176_Y92,Pickleweed,176,92,34.419057,-119.87606,Pervious,Plants,Pickleweed
+Pickleweed_X176_Y93,Pickleweed,176,93,34.419014,-119.87606,Pervious,Plants,Pickleweed
+Pickleweed_X177_Y93,Pickleweed,177,93,34.419015,-119.87601,Pervious,Plants,Pickleweed
+Pickleweed_X178_Y94,Pickleweed,178,94,34.418973,-119.87596,Pervious,Plants,Pickleweed
+Pickleweed_X179_Y94,Pickleweed,179,94,34.418974,-119.8759,Pervious,Plants,Pickleweed
+Pickleweed_X180_Y94,Pickleweed,180,94,34.418976,-119.87585,Pervious,Plants,Pickleweed
+Pickleweed_X198_Y50,Pickleweed,198,50,34.4209,-119.87498,Pervious,Plants,Pickleweed
+Pickleweed_X199_Y50,Pickleweed,199,50,34.420901,-119.87492,Pervious,Plants,Pickleweed
+Pickleweed_X200_Y50,Pickleweed,200,50,34.420903,-119.87487,Pervious,Plants,Pickleweed
+Pickleweed_X201_Y50,Pickleweed,201,50,34.420904,-119.87482,Pervious,Plants,Pickleweed
+Pickleweed_X196_Y51,Pickleweed,196,51,34.420854,-119.87508,Pervious,Plants,Pickleweed
+Pickleweed_X197_Y51,Pickleweed,197,51,34.420856,-119.87503,Pervious,Plants,Pickleweed
+Pickleweed_X198_Y51,Pickleweed,198,51,34.420857,-119.87498,Pervious,Plants,Pickleweed
+Pickleweed_X195_Y52,Pickleweed,195,52,34.42081,-119.87513,Pervious,Plants,Pickleweed
+Pickleweed_X196_Y52,Pickleweed,196,52,34.420811,-119.87508,Pervious,Plants,Pickleweed
+Pickleweed_X215_Y163,Pickleweed,215,163,34.416036,-119.87392,Pervious,Plants,Pickleweed
+Pickleweed_X216_Y163,Pickleweed,216,163,34.416037,-119.87387,Pervious,Plants,Pickleweed
+Pickleweed_X217_Y163,Pickleweed,217,163,34.416038,-119.87382,Pervious,Plants,Pickleweed
+Pickleweed_X218_Y163,Pickleweed,218,163,34.416039,-119.87377,Pervious,Plants,Pickleweed
+Pickleweed_X174_Y253,Pickleweed,174,253,34.412094,-119.87593,Pervious,Plants,Pickleweed
+Pickleweed_X175_Y253,Pickleweed,175,253,34.412096,-119.87588,Pervious,Plants,Pickleweed
+Pickleweed_X176_Y252,Pickleweed,176,252,34.41214,-119.87583,Pervious,Plants,Pickleweed
+Pickleweed_X177_Y251,Pickleweed,177,251,34.412184,-119.87577,Pervious,Plants,Pickleweed
+Pickleweed_X178_Y250,Pickleweed,178,250,34.412229,-119.87572,Pervious,Plants,Pickleweed
+Pickleweed_X178_Y251,Pickleweed,178,251,34.412186,-119.87572,Pervious,Plants,Pickleweed
+HighMarsh_X179_Y256,High Marsh,179,256,34.411971,-119.87566,Pervious,Plants,High Marsh
+HighMarsh_X178_Y257,High Marsh,178,257,34.411926,-119.87571,Pervious,Plants,High Marsh
+HighMarsh_X179_Y257,High Marsh,179,257,34.411927,-119.87566,Pervious,Plants,High Marsh
+MarshSand_X178_Y111,Marsh Sand,178,111,34.418238,-119.87593,Pervious,Bare Soil,Marsh Sand
+MarshSand_X179_Y111,Marsh Sand,179,111,34.41824,-119.87588,Pervious,Bare Soil,Marsh Sand
+MarshSand_X178_Y119,Marsh Sand,178,119,34.417892,-119.87592,Pervious,Bare Soil,Marsh Sand
+MarshSand_X179_Y120,Marsh Sand,179,120,34.41785,-119.87586,Pervious,Bare Soil,Marsh Sand
+MarshSand_X186_Y114,Marsh Sand,186,114,34.418118,-119.87551,Pervious,Bare Soil,Marsh Sand
+BareSoil_X202_Y140,Bare Soil,202,140,34.417014,-119.87464,Pervious,Bare Soil,Bare Soil
+BareSoil_X203_Y140,Bare Soil,203,140,34.417015,-119.87458,Pervious,Bare Soil,Bare Soil
+BareSoil_X204_Y140,Bare Soil,204,140,34.417016,-119.87453,Pervious,Bare Soil,Bare Soil
+BareSoil_X178_Y89,Bare Soil,178,89,34.419189,-119.87596,Pervious,Bare Soil,Bare Soil
+BareSoil_X178_Y90,Bare Soil,178,90,34.419146,-119.87596,Pervious,Bare Soil,Bare Soil
+BareSoil_X178_Y152,Bare Soil,178,152,34.416466,-119.87587,Pervious,Bare Soil,Bare Soil
+BareSoil_X178_Y153,Bare Soil,178,153,34.416423,-119.87587,Pervious,Bare Soil,Bare Soil
+BareSoil_X179_Y153,Bare Soil,179,153,34.416424,-119.87582,Pervious,Bare Soil,Bare Soil
+BeachSand_X134_Y363,Beach Sand,134,363,34.40729,-119.87785,Pervious,Bare Soil,Beach Sand
+BeachSand_X135_Y363,Beach Sand,135,363,34.407291,-119.8778,Pervious,Bare Soil,Beach Sand
+BeachSand_X71_Y305,Beach Sand,71,305,34.40972,-119.88122,Pervious,Bare Soil,Beach Sand
+BeachSand_X72_Y305,Beach Sand,72,305,34.409721,-119.88117,Pervious,Bare Soil,Beach Sand
+BeachSand_X73_Y305,Beach Sand,73,305,34.409722,-119.88112,Pervious,Bare Soil,Beach Sand
+Water_X173_Y193,Water,173,193,34.414687,-119.87607,Pervious,Water,Water
+Water_X173_Y194,Water,173,194,34.414644,-119.87607,Pervious,Water,Water
+Water_X174_Y193,Water,174,193,34.414688,-119.87602,Pervious,Water,Water
+Water_X209_Y122,Water,209,122,34.417801,-119.8743,Pervious,Water,Water
+Water_X210_Y122,Water,210,122,34.417802,-119.87424,Pervious,Water,Water
+Water_X198_Y103,Water,198,103,34.418609,-119.8749,Pervious,Water,Water
+Water_X199_Y103,Water,199,103,34.41861,-119.87485,Pervious,Water,Water
+ShallowWater_X202_Y211,Shallow Water,202,211,34.413944,-119.87453,Pervious,Water,Shallow Water
+ShallowWater_X203_Y211,Shallow Water,203,211,34.413946,-119.87448,Pervious,Water,Shallow Water
+ShallowWater_X200_Y59,Shallow Water,200,59,34.420513,-119.87486,Pervious,Water,Shallow Water
+ShallowWater_X200_Y60,Shallow Water,200,60,34.42047,-119.87486,Pervious,Water,Shallow Water
+ShallowWater_X201_Y60,Shallow Water,201,60,34.420471,-119.87481,Pervious,Water,Shallow Water
+Uplands_X232_Y22,Uplands,232,22,34.422152,-119.87324,Pervious,Plants,Uplands
+Uplands_X233_Y22,Uplands,233,22,34.422154,-119.87319,Pervious,Plants,Uplands
+Uplands_X232_Y23,Uplands,232,23,34.422109,-119.87324,Pervious,Plants,Uplands
+Uplands_X143_Y103,Uplands,143,103,34.418541,-119.87777,Pervious,Plants,Uplands
+Uplands_X143_Y104,Uplands,143,104,34.418498,-119.87777,Pervious,Plants,Uplands
+HighMarsh_X197_Y47,High Marsh,197,47,34.421029,-119.87503,Pervious,Plants,High Marsh
+HighMarsh_X198_Y47,High Marsh,198,47,34.42103,-119.87498,Pervious,Plants,High Marsh
+HighMarsh_X194_Y48,High Marsh,194,48,34.420982,-119.87519,Pervious,Plants,High Marsh
+Trees_X219_Y186,Trees,219,186,34.415046,-119.87368,Pervious,Plants,Trees
+Trees_X9_Y106,Trees,9,106,34.418247,-119.88475,Pervious,Plants,Trees

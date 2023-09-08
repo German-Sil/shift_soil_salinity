@@ -1,0 +1,60 @@
+Name,Meta1,Meta2,Meta3,brightness
+Algae/Water_X171_Y224,Pervious,Water,Algae/Water,0.0330536
+Algae/Water_X172_Y224,Pervious,Water,Algae/Water,0.0322908
+Algae/Water_X176_Y217,Pervious,Water,Algae/Water,0.0330756
+Algae/Water_X177_Y217,Pervious,Water,Algae/Water,0.0318778
+BareSoil_X178_Y152,Pervious,Bare Soil,Bare Soil,0.325993
+BareSoil_X178_Y153,Pervious,Bare Soil,Bare Soil,0.305343
+BareSoil_X179_Y153,Pervious,Bare Soil,Bare Soil,0.306369
+BareSoil_X203_Y140,Pervious,Bare Soil,Bare Soil,0.341108
+BareSoil_X219_Y157,Pervious,Bare Soil,Bare Soil,0.197297
+BareSoil_X220_Y154,Pervious,Bare Soil,Bare Soil,0.170659
+BareSoil_X220_Y157,Pervious,Bare Soil,Bare Soil,0.224201
+BeachSand_X135_Y363,Pervious,Bare Soil,Beach Sand,0.395954
+BeachSand_X71_Y303,Pervious,Bare Soil,Beach Sand,0.350931
+BeachSand_X71_Y305,Pervious,Bare Soil,Beach Sand,0.345613
+BeachSand_X72_Y305,Pervious,Bare Soil,Beach Sand,0.356201
+HighMarsh_X194_Y48,Pervious,Plants,High Marsh,0.162605
+HighMarsh_X198_Y47,Pervious,Plants,High Marsh,0.155556
+HighMarsh_X198_Y47,Pervious,Plants,High Marsh,0.155556
+MarshSand_X178_Y119,Pervious,Bare Soil,Marsh Sand,0.417446
+MarshSand_X179_Y111,Pervious,Bare Soil,Marsh Sand,0.420473
+MarshSand_X179_Y120,Pervious,Bare Soil,Marsh Sand,0.430620
+MarshSand_X186_Y114,Pervious,Bare Soil,Marsh Sand,0.445889
+Mud_X178_Y87,Pervious,Bare Soil,Mud,0.142762
+Mud_X179_Y88,Pervious,Bare Soil,Mud,0.117952
+220302b.20m.asd                 No-OAR,Pervious,Plants,Pickleweed,0.159586
+220302b.24m.asd                 No-OAR,Pervious,Plants,Pickleweed,0.145891
+220302b.26m.asd                 No-OAR,Pervious,Plants,Pickleweed,0.138027
+Pickleweed_X173_Y144,Pervious,Plants,Pickleweed,0.151176
+Pickleweed_X175_Y140,Pervious,Plants,Pickleweed,0.140939
+Pickleweed_X175_Y92,Pervious,Plants,Pickleweed,0.132223
+Pickleweed_X177_Y93,Pervious,Plants,Pickleweed,0.139402
+Pickleweed_X178_Y93,Pervious,Plants,Pickleweed,0.170726
+Pickleweed_X195_Y52,Pervious,Plants,Pickleweed,0.186480
+Pickleweed_X198_Y50,Pervious,Plants,Pickleweed,0.156548
+Pickleweed_X200_Y50,Pervious,Plants,Pickleweed,0.151889
+Pickleweed_X201_Y50,Pervious,Plants,Pickleweed,0.129610
+Pickleweed_X201_Y50,Pervious,Plants,Pickleweed,0.137510
+Pickleweed_X217_Y163,Pervious,Plants,Pickleweed,0.161028
+ShallowWater_X137_Y49,Pervious,Water,Shallow Water,0.0415923
+ShallowWater_X200_Y54,Pervious,Water,Shallow Water,0.0602255
+ShallowWater_X200_Y59,Pervious,Water,Shallow Water,0.0383284
+ShallowWater_X200_Y60,Pervious,Water,Shallow Water,0.0400422
+ShallowWater_X202_Y211,Pervious,Water,Shallow Water,0.0424751
+ShallowWater_X203_Y211,Pervious,Water,Shallow Water,0.0421714
+Trees_X136_Y152,Pervious,Plants,Trees,0.139337
+Trees_X136_Y153,Pervious,Plants,Trees,0.141045
+Trees_X219_Y186,Pervious,Plants,Trees,0.110089
+Uplands_X143_Y104,Pervious,Plants,Uplands,0.250780
+Uplands_X197_Y47,Pervious,Plants,Uplands,0.155556
+Uplands_X232_Y23,Pervious,Plants,Uplands,0.215070
+Uplands_X233_Y22,Pervious,Plants,Uplands,0.198107
+Water_X174_Y193,Pervious,Water,Water,0.0314340
+Water_X198_Y103,Pervious,Water,Water,0.0405837
+Water_X199_Y103,Pervious,Water,Water,0.0406687
+Water_X210_Y122,Pervious,Water,Water,0.0380859
+WetSand_X143_Y363,Pervious,Bare Soil,Wet Sand,0.115668
+WetSand_X97_Y349,Pervious,Bare Soil,Wet Sand,0.135636
+WetSand_X97_Y350,Pervious,Bare Soil,Wet Sand,0.135106
+WetSand_X98_Y349,Pervious,Bare Soil,Wet Sand,0.133847

@@ -1,8 +1,11 @@
 ENVI
 description = {
-  Spectral library created by Viper Tools 2 [Mon Aug 28 14:19:41 2023]}
+  ENVI spectral library created by VIPER Tools from ROIs using the following
+  image:C:\Users\gsilva\Documents\UCSB
+  code\shift_soil_salinity\imagery\subset_images\rfl_2022_02_28.tif [Thu Aug
+  31 14:22:38 2023]}
 samples = 425
-lines   = 130
+lines   = 10
 bands   = 1
 header offset = 0
 file type = ENVI Spectral Library
@@ -14,46 +17,10 @@ wavelength units = Unknown
 band names = {
  Spectral Library}
 spectra names = {
- Water_X107_Y296, Water_X108_Y296, Water_X109_Y296, WetSand_X98_Y350, 
- Water_X105_Y296, Water_X106_Y296, Pickleweed_X178_Y251, 
- HighMarsh_X179_Y256, Pickleweed_X177_Y251, Pickleweed_X178_Y250, 
- HighMarsh_X178_Y257, Pickleweed_X174_Y253, Pickleweed_X175_Y253, 
- Pickleweed_X176_Y252, BareSoil_X218_Y155, BareSoil_X218_Y156, 
- BareSoil_X219_Y155, BareSoil_X220_Y155, HighMarsh_X179_Y257, 
- MarshSand_X178_Y111, BareSoil_X219_Y156, BareSoil_X220_Y156, 
- MarshSand_X179_Y111, BareSoil_X218_Y157, MarshSand_X178_Y119, 
- MarshSand_X179_Y120, Pickleweed_X198_Y51, Pickleweed_X197_Y51, 
- Pickleweed_X195_Y52, Water_X174_Y193, Water_X173_Y193, Water_X173_Y194, 
- Pickleweed_X196_Y52, Pickleweed_X216_Y163, Pickleweed_X215_Y163, 
- Pickleweed_X217_Y163, Pickleweed_X218_Y163, Algae/Water_X171_Y224, 
- Algae/Water_X172_Y224, Pickleweed_X180_Y94, Pickleweed_X198_Y50, 
- Upalnds_X102_Y164, Pickleweed_X199_Y50, Upalnds_X103_Y164, 
- Upalnds_X104_Y164, Pickleweed_X200_Y50, Upalnds_X102_Y165, 
- Pickleweed_X201_Y50, Pickleweed_X196_Y51, Upalnds_X101_Y164, 
- Upalnds_X103_Y165, Upalnds_X104_Y165, Trees_X136_Y152, Pickleweed_X175_Y92, 
- Mud_X178_Y87, Pickleweed_X176_Y92, Mud_X179_Y88, Trees_X136_Y153, 
- Pickleweed_X178_Y93, Uplands_X162_Y49, Uplands_X163_Y49, Uplands_X162_Y50, 
- Pickleweed_X176_Y93, Pickleweed_X177_Y93, Pickleweed_X178_Y94, 
- Pickleweed_X179_Y94, WetSand_X97_Y349, WetSand_X97_Y350, WetSand_X98_Y349, 
- BeachSand_X134_Y363, BeachSand_X135_Y363, BeachSand_X71_Y305, 
- BareSoil_X178_Y153, BareSoil_X179_Y153, ShallowWater_X166_Y175, 
- Algae/Water_X175_Y217, Water_X209_Y122, Uplands_X233_Y22, 
- Uplands_X143_Y104, HighMarsh_X197_Y47, HighMarsh_X198_Y47, 
- Uplands_X232_Y23, Uplands_X233_Y23, ShallowWater_X200_Y60, 
- ShallowWater_X200_Y59, ShallowWater_X203_Y211, ShallowWater_X202_Y211, 
- Water_X199_Y103, Water_X198_Y103, Water_X210_Y122, ShallowWater_X201_Y60, 
- Uplands_X143_Y103, HighMarsh_X194_Y48, Trees_X219_Y186, Trees_X9_Y106, 
- Uplands_X232_Y22, Water_X105_Y297, Water_X106_Y297, ShallowWater_X165_Y174, 
- Water_X107_Y297, ShallowWater_X166_Y174, Water_X108_Y297, 
- ShallowWater_X165_Y175, BeachSand_X72_Y306, BeachSand_X73_Y306, 
- Algae/Water_X176_Y217, Algae/Water_X170_Y224, Algae/Water_X177_Y217, 
- BeachSand_X72_Y305, BeachSand_X71_Y306, BeachSand_X73_Y305, 
- WetSand_X142_Y364, WetSand_X143_Y364, WetSand_X144_Y363, WetSand_X143_Y363, 
- MarshSand_X186_Y114, BareSoil_X202_Y140, BareSoil_X203_Y140, 
- BareSoil_X178_Y90, BareSoil_X178_Y152, BareSoil_X204_Y140, 
- BareSoil_X178_Y89, BareSoil_X219_Y157, BeachSand_X71_Y303, 
- BareSoil_X220_Y157, BeachSand_X70_Y303, BeachSand_X72_Y303, 
- BeachSand_X71_Y304, BeachSand_X70_Y304, BeachSand_X72_Y304}
+ Pickleweed_X200_Y50, Pickleweed_X198_Y50, Pickleweed_X195_Y52, 
+ Pickleweed_X217_Y162, Pickleweed_X217_Y163, Pickleweed_X167_Y144, 
+ Pickleweed_X168_Y144, Pickleweed_X169_Y144, ShallowWater_X137_Y49, 
+ ShallowWater_X198_Y199}
 wavelength = {
   377.195648,  382.205658,  387.215637,  392.225647,  397.225647,  402.235657,
   407.245636,  412.255646,  417.265656,  422.275635,  427.285645,  432.295654,

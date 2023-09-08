@@ -1,0 +1,46 @@
+ENVI
+description = {
+  Viper 2 Square Array [Fri Sep 01 13:42:25 2023]}
+samples = 88
+lines   = 88
+bands   = 5
+header offset = 0
+file type = ENVI Standard
+data type = 4
+interleave = bil
+sensor type = Unknown
+byte order = 0
+wavelength units = Unknown
+band names = {
+ RMSE, Spectral Angle, EM Fraction, Shade Fraction, Constrained}
+spectra names = {
+ Algae/Water_X171_Y224, Algae/Water_X171_Y224, Algae/Water_X172_Y224, 
+ Algae/Water_X172_Y224, Algae/Water_X176_Y217, Algae/Water_X176_Y217, 
+ Algae/Water_X177_Y217, Algae/Water_X177_Y217, BareSoil_X178_Y152, 
+ BareSoil_X178_Y152, BareSoil_X178_Y153, BareSoil_X178_Y153, 
+ BareSoil_X179_Y153, BareSoil_X179_Y153, BareSoil_X203_Y140, 
+ BareSoil_X203_Y140, BeachSand_X135_Y363, BeachSand_X135_Y363, 
+ BeachSand_X71_Y303, BeachSand_X71_Y303, BeachSand_X71_Y305, 
+ BeachSand_X71_Y305, BeachSand_X72_Y305, BeachSand_X72_Y305, 
+ HighMarsh_X194_Y48, HighMarsh_X194_Y48, HighMarsh_X198_Y47, 
+ HighMarsh_X198_Y47, HighMarsh_X198_Y47, HighMarsh_X198_Y47, 
+ MarshSand_X178_Y119, MarshSand_X178_Y119, MarshSand_X179_Y111, 
+ MarshSand_X179_Y111, MarshSand_X179_Y120, MarshSand_X179_Y120, 
+ MarshSand_X186_Y114, MarshSand_X186_Y114, Mud_X178_Y87, Mud_X178_Y87, 
+ Mud_X179_Y88, Mud_X179_Y88, 220302b.20m.asd                 No-OAR, 
+ 220302b.20m.asd                 No-OAR, 
+ 220302b.24m.asd                 No-OAR, 
+ 220302b.24m.asd                 No-OAR, 
+ 220302b.26m.asd                 No-OAR, 
+ 220302b.26m.asd                 No-OAR, Pickleweed_X177_Y93, 
+ Pickleweed_X177_Y93, Pickleweed_X201_Y50, Pickleweed_X201_Y50, 
+ ShallowWater_X200_Y59, ShallowWater_X200_Y59, ShallowWater_X200_Y60, 
+ ShallowWater_X200_Y60, ShallowWater_X202_Y211, ShallowWater_X202_Y211, 
+ ShallowWater_X203_Y211, ShallowWater_X203_Y211, Trees_X136_Y152, 
+ Trees_X136_Y152, Trees_X136_Y153, Trees_X136_Y153, Trees_X219_Y186, 
+ Trees_X219_Y186, Uplands_X143_Y104, Uplands_X143_Y104, Uplands_X232_Y23, 
+ Uplands_X232_Y23, Uplands_X233_Y22, Uplands_X233_Y22, Water_X174_Y193, 
+ Water_X174_Y193, Water_X198_Y103, Water_X198_Y103, Water_X199_Y103, 
+ Water_X199_Y103, Water_X210_Y122, Water_X210_Y122, WetSand_X143_Y363, 
+ WetSand_X143_Y363, WetSand_X97_Y349, WetSand_X97_Y349, WetSand_X97_Y350, 
+ WetSand_X97_Y350, WetSand_X98_Y349, WetSand_X98_Y349}

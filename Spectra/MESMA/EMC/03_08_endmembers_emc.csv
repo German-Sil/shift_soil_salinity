@@ -1,0 +1,99 @@
+Output of VIPER 2 Tools EAR/MASA/COB routine: Fri Sep 01 13:42:51 2023
+
+Name:,Spectrum name
+Group:, Attribute in grouping field
+EAR:, Within group Endmember Average Root Mean Squared Error
+MASA:, Within group Average Spectral Angle
+InCoB:, Within group count of spectra modeled
+OutCoB:, Outside of group count of spectra modeled
+CoBI:, CoB Index calculated as: InCoB/OutCoB/number of spectra in group
+
+Name,Group,EAR,MASA,InCoB,OutCoB,CoBI
+Algae/Water_X171_Y224, ALGAE/WATER,   1.68495e-06,      0.158060,            7,           18,     0.0486111
+Algae/Water_X171_Y224, ALGAE/WATER,   1.68495e-06,      0.158060,            7,           18,     0.0486111
+Algae/Water_X172_Y224, ALGAE/WATER,   1.32925e-06,      0.124191,            7,           20,     0.0437500
+Algae/Water_X172_Y224, ALGAE/WATER,   1.32925e-06,      0.124191,            7,           20,     0.0437500
+Algae/Water_X176_Y217, ALGAE/WATER,   1.14699e-06,      0.107500,            7,           20,     0.0437500
+Algae/Water_X176_Y217, ALGAE/WATER,   1.14699e-06,      0.107500,            7,           20,     0.0437500
+Algae/Water_X177_Y217, ALGAE/WATER,   9.69100e-07,     0.0898002,            7,            8,      0.109375
+Algae/Water_X177_Y217, ALGAE/WATER,   9.69100e-07,     0.0898002,            7,            8,      0.109375
+BareSoil_X178_Y152, BARE SOIL,   1.82078e-06,     0.0521402,            7,           68,     0.0128676
+BareSoil_X178_Y152, BARE SOIL,   1.82078e-06,     0.0521402,            7,           68,     0.0128676
+BareSoil_X178_Y153, BARE SOIL,   2.32016e-06,     0.0654687,            0,            0,       0.00000
+BareSoil_X178_Y153, BARE SOIL,   2.32016e-06,     0.0654687,            0,            0,       0.00000
+BareSoil_X179_Y153, BARE SOIL,   2.07621e-06,     0.0586498,            0,            0,       0.00000
+BareSoil_X179_Y153, BARE SOIL,   2.07621e-06,     0.0586498,            0,            0,       0.00000
+BareSoil_X203_Y140, BARE SOIL,   4.27306e-06,      0.129208,            7,           70,     0.0125000
+BareSoil_X203_Y140, BARE SOIL,   4.27306e-06,      0.129208,            7,           70,     0.0125000
+BeachSand_X135_Y363, BEACH SAND,   3.58807e-06,     0.0984946,            7,           74,     0.0118243
+BeachSand_X135_Y363, BEACH SAND,   3.58807e-06,     0.0984946,            7,           74,     0.0118243
+BeachSand_X71_Y303, BEACH SAND,   2.86178e-06,     0.0742981,            0,            0,       0.00000
+BeachSand_X71_Y303, BEACH SAND,   2.86178e-06,     0.0742981,            0,            0,       0.00000
+BeachSand_X71_Y305, BEACH SAND,   2.87921e-06,     0.0738849,            0,            0,       0.00000
+BeachSand_X71_Y305, BEACH SAND,   2.87921e-06,     0.0738849,            0,            0,       0.00000
+BeachSand_X72_Y305, BEACH SAND,   3.19674e-06,     0.0827999,            0,            0,       0.00000
+BeachSand_X72_Y305, BEACH SAND,   3.19674e-06,     0.0827999,            0,            0,       0.00000
+HighMarsh_X194_Y48, HIGH MARSH,   3.21019e-06,      0.176715,            5,           52,     0.0160256
+HighMarsh_X194_Y48, HIGH MARSH,   3.21019e-06,      0.176715,            5,           52,     0.0160256
+HighMarsh_X198_Y47, HIGH MARSH,   1.37148e-06,     0.0709790,            0,            0,       0.00000
+HighMarsh_X198_Y47, HIGH MARSH,   1.37148e-06,     0.0709790,            0,            0,       0.00000
+HighMarsh_X198_Y47, HIGH MARSH,   1.37148e-06,     0.0709790,            0,            0,       0.00000
+HighMarsh_X198_Y47, HIGH MARSH,   1.37148e-06,     0.0709790,            0,            0,       0.00000
+MarshSand_X178_Y119, MARSH SAND,   1.94327e-06,     0.0430850,            0,            0,       0.00000
+MarshSand_X178_Y119, MARSH SAND,   1.94327e-06,     0.0430850,            0,            0,       0.00000
+MarshSand_X179_Y111, MARSH SAND,   2.21974e-06,     0.0491306,            0,            0,       0.00000
+MarshSand_X179_Y111, MARSH SAND,   2.21974e-06,     0.0491306,            0,            0,       0.00000
+MarshSand_X179_Y120, MARSH SAND,   1.92210e-06,     0.0428286,            7,           80,     0.0109375
+MarshSand_X179_Y120, MARSH SAND,   1.92210e-06,     0.0428286,            7,           80,     0.0109375
+MarshSand_X186_Y114, MARSH SAND,   2.29615e-06,     0.0518260,            7,           80,     0.0109375
+MarshSand_X186_Y114, MARSH SAND,   2.29615e-06,     0.0518260,            7,           80,     0.0109375
+Mud_X178_Y87, MUD,   3.30832e-06,      0.204168,            3,           48,     0.0156250
+Mud_X178_Y87, MUD,   3.30832e-06,      0.204168,            3,           48,     0.0156250
+Mud_X179_Y88, MUD,   3.56234e-06,      0.204168,            0,            0,       0.00000
+Mud_X179_Y88, MUD,   3.56234e-06,      0.204168,            0,            0,       0.00000
+220302b.20m.asd                 No-OAR, PICKLEWEED,   3.85964e-06,      0.235670,            9,           48,     0.0187500
+220302b.20m.asd                 No-OAR, PICKLEWEED,   3.85964e-06,      0.235670,            9,           48,     0.0187500
+220302b.24m.asd                 No-OAR, PICKLEWEED,   4.45256e-06,      0.271810,            0,            0,       0.00000
+220302b.24m.asd                 No-OAR, PICKLEWEED,   4.45256e-06,      0.271810,            0,            0,       0.00000
+220302b.26m.asd                 No-OAR, PICKLEWEED,   3.92131e-06,      0.238894,            0,            0,       0.00000
+220302b.26m.asd                 No-OAR, PICKLEWEED,   3.92131e-06,      0.238894,            0,            0,       0.00000
+Pickleweed_X177_Y93, PICKLEWEED,   6.09501e-06,      0.398229,            9,           38,     0.0236842
+Pickleweed_X177_Y93, PICKLEWEED,   6.09501e-06,      0.398229,            9,           38,     0.0236842
+Pickleweed_X201_Y50, PICKLEWEED,   6.19961e-06,      0.414499,            9,           48,     0.0187500
+Pickleweed_X201_Y50, PICKLEWEED,   6.19961e-06,      0.414499,            9,           48,     0.0187500
+ShallowWater_X200_Y59, SHALLOW WATER,   2.13510e-06,      0.175529,            7,           38,     0.0230263
+ShallowWater_X200_Y59, SHALLOW WATER,   2.13510e-06,      0.175529,            7,           38,     0.0230263
+ShallowWater_X200_Y60, SHALLOW WATER,   2.07876e-06,      0.172401,            7,           44,     0.0198864
+ShallowWater_X200_Y60, SHALLOW WATER,   2.07876e-06,      0.172401,            7,           44,     0.0198864
+ShallowWater_X202_Y211, SHALLOW WATER,   1.84538e-06,      0.152939,            7,           40,     0.0218750
+ShallowWater_X202_Y211, SHALLOW WATER,   1.84538e-06,      0.152939,            7,           40,     0.0218750
+ShallowWater_X203_Y211, SHALLOW WATER,   1.78423e-06,      0.147703,            7,           36,     0.0243056
+ShallowWater_X203_Y211, SHALLOW WATER,   1.78423e-06,      0.147703,            7,           36,     0.0243056
+Trees_X136_Y152, TREES,   1.52375e-06,     0.0862606,            5,           52,     0.0160256
+Trees_X136_Y152, TREES,   1.52375e-06,     0.0862606,            5,           52,     0.0160256
+Trees_X136_Y153, TREES,   1.49489e-06,     0.0846512,            5,           52,     0.0160256
+Trees_X136_Y153, TREES,   1.49489e-06,     0.0846512,            5,           52,     0.0160256
+Trees_X219_Y186, TREES,   2.38285e-06,      0.116646,            0,            0,       0.00000
+Trees_X219_Y186, TREES,   2.38285e-06,      0.116646,            0,            0,       0.00000
+Uplands_X143_Y104, UPLANDS,   4.49569e-06,      0.184943,            5,           58,     0.0143678
+Uplands_X143_Y104, UPLANDS,   4.49569e-06,      0.184943,            5,           58,     0.0143678
+Uplands_X232_Y23, UPLANDS,   3.04822e-06,      0.112726,            0,            0,       0.00000
+Uplands_X232_Y23, UPLANDS,   3.04822e-06,      0.112726,            0,            0,       0.00000
+Uplands_X233_Y22, UPLANDS,   3.36053e-06,      0.122352,            0,            0,       0.00000
+Uplands_X233_Y22, UPLANDS,   3.36053e-06,      0.122352,            0,            0,       0.00000
+Water_X174_Y193, WATER,   2.42276e-06,      0.184240,            0,            0,       0.00000
+Water_X174_Y193, WATER,   2.42276e-06,      0.184240,            0,            0,       0.00000
+Water_X198_Y103, WATER,   1.41678e-06,      0.115724,            7,           68,     0.0128676
+Water_X198_Y103, WATER,   1.41678e-06,      0.115724,            7,           68,     0.0128676
+Water_X199_Y103, WATER,   1.25817e-06,      0.103264,            7,           74,     0.0118243
+Water_X199_Y103, WATER,   1.25817e-06,      0.103264,            7,           74,     0.0118243
+Water_X210_Y122, WATER,   1.29376e-06,      0.104510,            7,           62,     0.0141129
+Water_X210_Y122, WATER,   1.29376e-06,      0.104510,            7,           62,     0.0141129
+WetSand_X143_Y363, WET SAND,   2.87468e-06,      0.181172,            0,            0,       0.00000
+WetSand_X143_Y363, WET SAND,   2.87468e-06,      0.181172,            0,            0,       0.00000
+WetSand_X97_Y349, WET SAND,   2.34288e-06,      0.151236,            7,           38,     0.0230263
+WetSand_X97_Y349, WET SAND,   2.34288e-06,      0.151236,            7,           38,     0.0230263
+WetSand_X97_Y350, WET SAND,   2.71370e-06,      0.174890,            7,           38,     0.0230263
+WetSand_X97_Y350, WET SAND,   2.71370e-06,      0.174890,            7,           38,     0.0230263
+WetSand_X98_Y349, WET SAND,   2.22680e-06,      0.143303,            7,           36,     0.0243056
+WetSand_X98_Y349, WET SAND,   2.22680e-06,      0.143303,            7,           36,     0.0243056

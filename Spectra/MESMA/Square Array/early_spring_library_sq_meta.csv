@@ -1,9 +1,9 @@
 Viper 2 - Metadata file for viper_create_square_array.pro run,
-Mon Aug 21 15:31:46 2023
+Mon Aug 28 14:25:29 2023
 
 Input spectral library:,early_spring_library.sli
 Input spectral library pathname:,C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\Spectral Library
-Number of spectra:,          81
+Number of spectra:,         196
 Number of bands:,         425
 Number of good bands:,         425
 Scale factor:,       10000
@@ -11,8 +11,8 @@ Output square array:,early_spring_library_sq.sqr
 Output square array pathname:,C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\MESMA\Square Array
 Constraint Type:,2 - Constrained
 Constraints used:
-Minimum non-shade fraction:,   -0.0500000
-Maximum non-shade fraction:,      1.05000
+Minimum non-shade fraction:,      0.00000
+Maximum non-shade fraction:,      1.00000
 Maximum RMS error:,    0.0250000
 
-Time required to complete processing: 0.00730000 minutes
+Time required to complete processing: 0.00581667 minutes
