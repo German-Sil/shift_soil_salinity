@@ -1,30 +1,14 @@
-Name,Meta1,Meta2,Meta3
+Name,META1,META2,META3
 Pickleweed_X198_Y51,Pervious,Plants,Pickleweed
-Pickleweed_X195_Y52,Pervious,Plants,Pickleweed
 Pickleweed_X201_Y50,Pervious,Plants,Pickleweed
-Pickleweed_X178_Y93,Pervious,Plants,Pickleweed
-Pickleweed_X177_Y92,Pervious,Plants,Pickleweed
-Pickleweed_X174_Y92,Pervious,Plants,Pickleweed
-Pickleweed_X175_Y92,Pervious,Plants,Pickleweed
-Pickleweed_X166_Y144,Pervious,Plants,Pickleweed
-Pickleweed_X167_Y144,Pervious,Plants,Pickleweed
-Pickleweed_X178_Y139,Pervious,Plants,Pickleweed
-Algae/Water_X194_Y200,Pervious,Water,Algae/Water
-Algae/Water_X187_Y204,Pervious,Water,Algae/Water
-Algae/Water_X168_Y228,Pervious,Water,Algae/Water
-Algae/Water_X170_Y226,Pervious,Water,Algae/Water
-Algae/Water_X171_Y226,Pervious,Water,Algae/Water
-BareSoil_X172_Y163,Pervious,Bare Soil,Bare Soil
-BareSoil_X179_Y151,Pervious,Bare Soil,Bare Soil
-BareSoil_X219_Y152,Pervious,Bare Soil,Bare Soil
-BareSoil_X217_Y158,Pervious,Bare Soil,Bare Soil
-BareSoil_X221_Y144,Pervious,Bare Soil,Bare Soil
-BareSoil_X181_Y114,Pervious,Bare Soil,Bare Soil
-BareSoil_X192_Y115,Pervious,Bare Soil,Bare Soil
-Uplands_X167_Y110,Pervious,Plants,Uplands
-Uplands_X161_Y112,Pervious,Plants,Uplands
-Uplands_X197_Y47,Pervious,Plants,Uplands
-Uplands_X196_Y45,Pervious,Plants,Uplands
-Uplands_X219_Y94,Pervious,Plants,Uplands
-ShallowWater_X179_Y197,Pervious,Water,Shallow Water
-ShallowWater_X147_Y198,Pervious,Water,Shallow Water
+Pickleweed_X189_Y57,Pervious,Plants,Pickleweed
+Pickleweed_X180_Y94,Pervious,Plants,Pickleweed
+Pickleweed_X195_Y53,Pervious,Plants,Pickleweed
+Uplands_X199_Y47,Pervious,Plants,Uplands
+Uplands_X189_Y48,Pervious,Plants,Uplands
+Uplands_X189_Y49,Pervious,Plants,Uplands
+BareSoil_X190_Y45,Pervious,Bare Soil,Bare Soil
+BareSoil_X199_Y38,Pervious,Bare Soil,Bare Soil
+BareSoil_X200_Y38,Pervious,Bare Soil,Bare Soil
+BareSoil_X219_Y50,Pervious,Bare Soil,Bare Soil
+BareSoil_X207_Y50,Pervious,Bare Soil,Bare Soil

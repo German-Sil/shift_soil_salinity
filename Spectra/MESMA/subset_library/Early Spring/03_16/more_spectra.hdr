@@ -2,10 +2,10 @@ ENVI
 description = {
   ENVI spectral library created by VIPER Tools from ROIs using the following
   image:C:\Users\gsilva\Documents\UCSB
-  code\shift_soil_salinity\imagery\subset_images\rfl_2022_03_16.tif [Thu Sep
-  07 14:19:12 2023]}
+  code\shift_soil_salinity\imagery\subset_images\rfl_2022_03_16.tif [Fri Oct
+  13 13:18:29 2023]}
 samples = 425
-lines   = 29
+lines   = 13
 bands   = 1
 header offset = 0
 file type = ENVI Spectral Library
@@ -17,16 +17,10 @@ wavelength units = Unknown
 band names = {
  Spectral Library}
 spectra names = {
- Pickleweed_X198_Y51, Pickleweed_X195_Y52, Pickleweed_X201_Y50, 
- Pickleweed_X178_Y93, Pickleweed_X177_Y92, Pickleweed_X174_Y92, 
- Pickleweed_X175_Y92, Pickleweed_X166_Y144, Pickleweed_X167_Y144, 
- Pickleweed_X178_Y139, Algae/Water_X194_Y200, Algae/Water_X187_Y204, 
- Algae/Water_X168_Y228, Algae/Water_X170_Y226, Algae/Water_X171_Y226, 
- BareSoil_X172_Y163, BareSoil_X179_Y151, BareSoil_X219_Y152, 
- BareSoil_X217_Y158, BareSoil_X221_Y144, BareSoil_X181_Y114, 
- BareSoil_X192_Y115, Uplands_X167_Y110, Uplands_X161_Y112, Uplands_X197_Y47, 
- Uplands_X196_Y45, Uplands_X219_Y94, ShallowWater_X179_Y197, 
- ShallowWater_X147_Y198}
+ Pickleweed_X198_Y51, Pickleweed_X201_Y50, Pickleweed_X189_Y57, 
+ Pickleweed_X180_Y94, Pickleweed_X195_Y53, Uplands_X199_Y47, 
+ Uplands_X189_Y48, Uplands_X189_Y49, BareSoil_X190_Y45, BareSoil_X199_Y38, 
+ BareSoil_X200_Y38, BareSoil_X219_Y50, BareSoil_X207_Y50}
 wavelength = {
   377.195648,  382.205658,  387.215637,  392.225647,  397.225647,  402.235657,
   407.245636,  412.255646,  417.265656,  422.275635,  427.285645,  432.295654,
