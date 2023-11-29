@@ -79,6 +79,7 @@ mllw_extract <- mllw %>% # call dem
 
 ```
 
+
 ## Join soil and elevation data:
 ```{r}
 soils <- cbind(soils, mllw_extract$dem.tif) %>% #bind extracted values to the soil data
@@ -636,6 +637,77 @@ pc_all <- c(merged_pc_1, merged_pc_2, merged_pc_3, merged_pc_4, merged_pc_5, mer
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
+## Calling Fractional Cover Data
+
+### Uplands
+
+```{r}
+upland_frac_1 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_02_24.tif_SMA_20230831T10H58M05S")) %>% 
+  filter(band == "UPLANDS_fraction")
+
+upland_frac_2 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_02_28.tif_SMA_20230831T14H27M47S")) %>% 
+  filter(band == "UPLANDS_fraction")
+
+upland_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif_SMA_20230906T12H54M10S")) %>% 
+  filter(band == "UPLANDS_fraction")
+
+upland_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
+  filter(band == "UPLANDS_fraction")
+
+#upland_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
+ # filter(band == "Uplands_fraction")
+
+
+up_frac_all <- c(upland_frac_1, upland_frac_2, upland_frac_3, upland_frac_4, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")), names = "date")
+```
+
+### Pickleweed
+
+```{r}
+pick_frac_1 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_02_24.tif_SMA_20230831T10H58M05S")) %>% 
+  filter(band == "PICKLEWEED_fraction")
+
+pick_frac_2 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_02_28.tif_SMA_20230831T14H27M47S")) %>% 
+  filter(band == "PICKLEWEED_fraction")
+
+pick_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif_SMA_20230906T12H54M10S")) %>% 
+  filter(band == "PICKLEWEED_fraction")
+
+pick_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
+  filter(band == "PICKLEWEED_fraction")
+
+#upland_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
+ # filter(band == "Uplands_fraction")
+
+
+pick_frac_all <- c(pick_frac_1, pick_frac_2, pick_frac_3, pick_frac_4, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")), names = "date")
+```
+
+### Bare Soil
+
+```{r}
+soil_frac_1 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_02_24.tif_SMA_20230831T10H58M05S")) %>% 
+  filter(band == "BARE SOIL_fraction")
+
+soil_frac_2 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_02_28.tif_SMA_20230831T14H27M47S")) %>% 
+  filter(band == "BARE SOIL_fraction")
+
+soil_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif_SMA_20230906T12H54M10S")) %>% 
+  filter(band == "BARE SOIL_fraction")
+
+soil_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
+  filter(band == "BARE SOIL_fraction")
+
+#upland_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
+ # filter(band == "Uplands_fraction")
+
+
+soil_frac_all <- c(soil_frac_1, soil_frac_2, soil_frac_3, soil_frac_4, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")), names = "date")
+```
+
 ## Adjusting elevation data
 
 ```{r}
@@ -666,7 +738,7 @@ for (i in unique(lubridate::week(soils$paired_flight))){
   
   nir_week <- nir_all %>% 
     filter(lubridate::week(date) == i) %>% 
-    st_as_sf
+    st_as_sf()
   
   pc_week <- pc_all %>% 
     filter(lubridate::week(date) == i) %>% 
@@ -687,7 +759,7 @@ for (i in unique(lubridate::week(soils$paired_flight))){
   
   crsi_extract <- crsi_week %>% 
     st_extract(soil_week)
-  
+   
   nir_extract <- soil_week %>% 
     st_join(nir_week) %>% 
     select("76":"126") %>% 
@@ -1251,4 +1323,85 @@ Conductivity
 ```
 
 
+```{r}
 
+soils_subset <- soils %>% 
+  filter(paired_flight %in% lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")))
+
+soils_extract_2 <- data.frame()
+
+for (i in unique(lubridate::week(soils_subset$paired_flight))){
+  ndvi_week <- ndvi_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  mari_week <- mari_all %>% 
+    filter(lubridate::week(date) == i)
+
+  vssi_week <- vssi_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  crsi_week <- crsi_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  nir_week <- nir_all %>% 
+    filter(lubridate::week(date) == i) %>% 
+    st_as_sf()
+  
+  pc_week <- pc_all %>% 
+    filter(lubridate::week(date) == i) %>% 
+    st_as_sf()
+  
+  upland_week <- up_frac_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  pick_week <- pick_frac_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  bsoil_week <- soil_frac_all %>% 
+    filter(lubridate::week(date) == i)
+  
+  soil_week <- soils %>% 
+    mutate(week = lubridate::week(paired_flight)) %>% 
+    filter(week == i)
+  
+  ndvi_extract <- ndvi_week %>% 
+    st_extract(soil_week)
+  
+  mari_extract <- mari_week %>% 
+    st_extract(soil_week)
+  
+  vssi_extract <- vssi_week %>% 
+    st_extract(soil_week)
+  
+  crsi_extract <- crsi_week %>% 
+    st_extract(soil_week)
+  
+   upland_extract <- upland_week %>% 
+    st_extract(soil_week)
+  
+   pick_extract <- pick_week %>% 
+    st_extract(soil_week)
+   
+   bsoil_extract <- bsoil_week %>% 
+    st_extract(soil_week)
+   
+  nir_extract <- soil_week %>% 
+    st_join(nir_week) %>% 
+    select("76":"126") %>% 
+    st_drop_geometry()
+  
+  pc_extract <- soil_week %>% 
+    st_join(pc_week) %>% 
+    select("PC3":"PC14") %>% 
+    st_drop_geometry()
+  
+  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi, mari_extract$mari, vssi_extract$vssi, crsi_extract$crsi, nir_extract, pc_extract) %>% 
+    rename("upland_frac" = "...16",
+           "pick_frac" = "...17",
+           "soil_frac" = "...18")
+    
+  soils_extract <- rbind(soils_extract, soils_week)
+}
+
+#write.csv(soils_extract, file = here("data", "extracted_soils.csv"))
+```
