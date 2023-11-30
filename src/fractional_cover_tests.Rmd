@@ -486,8 +486,12 @@ frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_
   filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
   split(3)
 
-frac_all <- c(frac_1, frac_2, frac_3, frac_4, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")), names = "date")
+frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
+  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
+  split(3)
+
+frac_all <- c(frac_1, frac_2, frac_3, frac_4, frac_5, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22")), names = "date")
 ```
 
 ### Uplands
@@ -505,12 +509,12 @@ upland_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.t
 upland_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
   filter(band == "UPLANDS_fraction")
 
-#upland_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
- # filter(band == "Uplands_fraction")
+upland_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
+  filter(band == "Uplands_fraction")
 
 
-up_frac_all <- c(upland_frac_1, upland_frac_2, upland_frac_3, upland_frac_4, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")), names = "date")
+up_frac_all <- c(upland_frac_1, upland_frac_2, upland_frac_3, upland_frac_4, upland_frac_5, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022-_03_22")), names = "date")
 ```
 
 ### Pickleweed
@@ -528,12 +532,12 @@ pick_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif
 pick_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
   filter(band == "PICKLEWEED_fraction")
 
-#upland_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
- # filter(band == "Uplands_fraction")
+pick_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
+  filter(band == "PICKLEWEED_fraction")
 
 
-pick_frac_all <- c(pick_frac_1, pick_frac_2, pick_frac_3, pick_frac_4, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")), names = "date")
+pick_frac_all <- c(pick_frac_1, pick_frac_2, pick_frac_3, pick_frac_4, pick_frac_5, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022-_03_22")), names = "date")
 ```
 
 ### Bare Soil
@@ -551,12 +555,12 @@ soil_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif
 soil_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
   filter(band == "BARE SOIL_fraction")
 
-#upland_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
- # filter(band == "Uplands_fraction")
+soil_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
+  filter(band == "BARE SOIL_fraction")
 
 
-soil_frac_all <- c(soil_frac_1, soil_frac_2, soil_frac_3, soil_frac_4, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")), names = "date")
+soil_frac_all <- c(soil_frac_1, soil_frac_2, soil_frac_3, soil_frac_4, soil_frac_5, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022-_03_22")), names = "date")
 ```
 
 ## Adjusting elevation data
@@ -575,7 +579,7 @@ mllw_all <- mllw_all %>%
 ```{r}
 
 soils_subset <- soils %>% 
-  filter(paired_flight %in% lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16")))
+  filter(paired_flight %in% lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022-_03_22")))
 
 soils_extract_2 <- data.frame()
 
