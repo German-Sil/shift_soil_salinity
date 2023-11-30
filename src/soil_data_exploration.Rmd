@@ -770,7 +770,7 @@ ggplot()+#ggplot object
        x = "Predicted Electrical conductivity (mS/cm)")+
   ggtitle("Elevation and Indices")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
+        plot.background = element_rect("#f9f9f9"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
         axis.text = element_text(color = "#5b4f41", size = 16),
@@ -1109,7 +1109,7 @@ ggplot()+#ggplot object
        x = "Predicted Electrical conductivity (mS/cm)")+
   ggtitle("Elevation")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
+        plot.background = element_rect("#f9f9f9"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
         axis.text = element_text(color = "#5b4f41", size = 16),
