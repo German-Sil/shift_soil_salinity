@@ -761,23 +761,23 @@ cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
 
 ```{r}
 ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_all$finalModel$y, x = fit_all$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted", linewidth = 1.5)+
+  geom_point(aes(y = fit_all$finalModel$y, x = fit_all$finalModel$predicted), color = "#E69512", size = 4)+#data to make points from
   geom_smooth(method = "lm", aes(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
   scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
   labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
        x = "Predicted Electrical conductivity (mS/cm)")+
   ggtitle("Elevation and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("#f9f9f9"),
+  theme(plot.title = element_text(color = "#5b4f41", size = 28, hjust = 0.5, face = "bold"),#plot themes
+        plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        panel.grid = element_line(linetype= "longdash", color = "#B4AA98"),
+        axis.text = element_text(color = "#5b4f41", size = 18,),
+        axis.title = element_text(color = "#5b4f41", size = 22, hjust = 0.5, face = "bold"),
         strip.background = element_rect("#f8f8f8"),
         strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
+        axis.line = element_line(color = "#5b4f41", linewidth = 1))
 
 ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
@@ -1100,23 +1100,23 @@ elevation_cor#call/print correlation value
 
 ```{r}
 ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_ele$finalModel$y, x = fit_ele$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted", linewidth = 1.5)+
+  geom_point(aes(y = fit_ele$finalModel$y, x = fit_ele$finalModel$predicted), color = "#E69512", size = 3)+#data to make points from
   geom_smooth(method = "lm", aes(y = fit_ele$finalModel$y, x = fit_ele$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
   scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
   labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
        x = "Predicted Electrical conductivity (mS/cm)")+
   ggtitle("Elevation")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("#f9f9f9"),
+  theme(plot.title = element_text(color = "#5b4f41", size = 28, hjust = 0.5, face = "bold"),#plot themes
+        plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        panel.grid = element_line(linetype= "longdash", color = "#B4AA98"),
+        axis.text = element_text(color = "#5b4f41", size = 18,),
+        axis.title = element_text(color = "#5b4f41", size = 22, hjust = 0.5, face = "bold"),
         strip.background = element_rect("#f8f8f8"),
         strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
+        axis.line = element_line(color = "#5b4f41", linewidth = 1))
 
 ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
