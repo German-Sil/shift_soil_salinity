@@ -1,0 +1,24 @@
+ENVI
+description = {
+  ENVI spectral library created by VIPER Tools from ROIs using the following
+  image:C:\Users\gsilva\Documents\UCSB
+  code\shift_soil_salinity\imagery\subset_images\rfl_2022_04_12.tif [Wed Dec
+  06 11:36:00 2023]}
+samples = 425
+lines   = 15
+bands   = 1
+header offset = 0
+file type = ENVI Spectral Library
+data type = 4
+interleave = bsq
+sensor type = Unknown
+byte order = 0
+wavelength units = Unknown
+band names = {
+ Spectral Library}
+spectra names = {
+ Algae/Water_X164_Y189, Algae/Water_X177_Y211, Algae/Water_X181_Y208, 
+ Algae/Water_X185_Y202, ShallowWater_X205_Y206, ShallowWater_X196_Y192, 
+ ShallowWater_X185_Y187, ShallowWater_X178_Y167, ShallowWater_X199_Y54, 
+ Water_X71_Y30, Water_X55_Y38, Water_X128_Y280, Water_X197_Y61, 
+ Water_X175_Y192, Water_X187_Y90}

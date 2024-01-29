@@ -1,0 +1,24 @@
+ENVI
+description = {
+  ENVI spectral library created by VIPER Tools from ROIs using the following
+  image:C:\Users\gsilva\Documents\UCSB
+  code\shift_soil_salinity\imagery\subset_images\rfl_2022_04_12.tif [Tue Dec
+  05 10:59:53 2023]}
+samples = 425
+lines   = 15
+bands   = 1
+header offset = 0
+file type = ENVI Spectral Library
+data type = 4
+interleave = bsq
+sensor type = Unknown
+byte order = 0
+wavelength units = Unknown
+band names = {
+ Spectral Library}
+spectra names = {
+ Pickleweed_X217_Y161, Pickleweed_X180_Y94, Pickleweed_X176_Y92, 
+ Pickleweed_X170_Y90, Pickleweed_X166_Y88, Pickleweed_X149_Y76, 
+ Uplands_X143_Y81, Uplands_X167_Y102, BareSoil_X220_Y159, 
+ BareSoil_X177_Y112, BareSoil_X190_Y121, BareSoil_X219_Y147, 
+ BareSoil_X217_Y150, BareSoil_X217_Y151, BareSoil_X217_Y152}

@@ -1,0 +1,39 @@
+ENVI
+description = {
+  Spectral library created by Viper Tools 2 [Tue Dec 05 11:02:14 2023]}
+samples = 425
+lines   = 67
+bands   = 1
+header offset = 0
+file type = ENVI Spectral Library
+data type = 4
+interleave = bsq
+sensor type = Unknown
+byte order = 0
+wavelength units = Unknown
+band names = {
+ Spectral Library}
+spectra names = {
+ Algae/Water_X164_Y189, Algae/Water_X165_Y175, Algae/Water_X165_Y243, 
+ Algae/Water_X166_Y190, Algae/Water_X166_Y244, Algae/Water_X168_Y179, 
+ Algae/Water_X169_Y185, Algae/Water_X173_Y223, 
+ 220406b.27m.asd                 No-OAR, 
+ 220406c.21m.asd                 No-OAR, BareSoil_X170_Y178, 
+ BareSoil_X171_Y181, BareSoil_X172_Y179, BareSoil_X177_Y112, 
+ BareSoil_X178_Y149, BareSoil_X190_Y121, BareSoil_X193_Y143, 
+ BareSoil_X207_Y45, BareSoil_X210_Y46, BareSoil_X217_Y150, 
+ BareSoil_X217_Y151, BareSoil_X217_Y152, BareSoil_X219_Y147, 
+ BareSoil_X220_Y159, Pickleweed_X149_Y76, Pickleweed_X157_Y148, 
+ Pickleweed_X166_Y88, Pickleweed_X168_Y143, Pickleweed_X170_Y90, 
+ Pickleweed_X175_Y92, Pickleweed_X176_Y92, Pickleweed_X177_Y93, 
+ Pickleweed_X179_Y140, Pickleweed_X179_Y250, Pickleweed_X179_Y94, 
+ Pickleweed_X180_Y94, Pickleweed_X195_Y52, Pickleweed_X196_Y52, 
+ Pickleweed_X198_Y49, Pickleweed_X198_Y51, Pickleweed_X199_Y52, 
+ Pickleweed_X200_Y49, Pickleweed_X215_Y163, Pickleweed_X217_Y161, 
+ Pickleweed_X217_Y163, 220406b.32m.asd                 No-OAR, 
+ ShallowWater_X176_Y84, ShallowWater_X177_Y85, ShallowWater_X201_Y145, 
+ ShallowWater_X214_Y158, ShallowWater_X215_Y159, Uplands_X110_Y160, 
+ Uplands_X143_Y81, Uplands_X166_Y106, Uplands_X166_Y52, Uplands_X167_Y102, 
+ Uplands_X168_Y121, Uplands_X193_Y45, Uplands_X197_Y46, Uplands_X197_Y47, 
+ Uplands_X199_Y47, Uplands_X237_Y70, Water_X120_Y285, Water_X150_Y221, 
+ Water_X174_Y191, Water_X193_Y98, Water_X212_Y142}
