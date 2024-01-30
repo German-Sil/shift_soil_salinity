@@ -596,7 +596,7 @@ frac_8 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_20.tif_SMA
   split(3)
 
 frac_all <- c(frac_1, frac_2, frac_3, frac_4, frac_5, frac_6, frac_7, frac_8, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20")), names = "date")
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20")), names = "date") 
 ```
 
 ### Uplands
@@ -692,7 +692,7 @@ soil_frac_8 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_20.ti
 
 soil_frac_all <- c(soil_frac_1, soil_frac_2, soil_frac_3, soil_frac_4, soil_frac_5, soil_frac_6, soil_frac_7, soil_frac_8, along = 3) %>%
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20")), names = "date") %>% 
-  setNames("BARE SOIL_fraction")
+  setNames("BARE_SOIL_fraction")
 ```
 
 ## Adjusting elevation data
@@ -766,7 +766,8 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
     rename("ndvi" = "...12",
            "mari" = "...13",
            "vssi" = "...14",
-           "crsi" = "...15")
+           "crsi" = "...15",
+           "BARE_SOIL_fraction" = "BARE SOIL_fraction")
     
   soils_extract_2 <- rbind(soils_extract_2, soils_week)
 }
@@ -778,7 +779,7 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
 
 ```{r}
 
-fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi  + UPLANDS_fraction + `BARE SOIL_fraction`,
+fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi  + UPLANDS_fraction + BARE_SOIL_fraction,
                       data = soils_extract_2, 
                       method = "rf", 
                  trControl = trainControl(method = "cv", number = 10), 
@@ -849,7 +850,9 @@ all_corr
 ```{r}
 raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, pick_frac_all, soil_frac_all, up_frac_all)
 
-all_pred <- predict(raster_all, fit_all_frac, drop_dimensions = F)
+all_pred <- predict(raster_all, fit_all_frac, drop_dimensions = F, na.action = na.omit)
+
+write_stars(all_pred, dsn = here("data", "frac_predictions_nc.tif"))
 
 ```
 
@@ -857,7 +860,6 @@ all_pred <- predict(raster_all, fit_all_frac, drop_dimensions = F)
 
 ```{r}
 all_pred_feb <- all_pred %>% 
-  st_warp(dest = crsi_all) %>% 
   st_crop(y = boundary, crop = TRUE, as_points = FALSE)
 
 
