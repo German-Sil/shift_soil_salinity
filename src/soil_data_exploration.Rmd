@@ -716,6 +716,7 @@ for (i in unique(lubridate::week(soils$paired_flight))){
 ## Fitting the model to all variables
 
 ```{r}
+set.seed(1234)
 
 fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
                  data = soils_extract, 
@@ -737,8 +738,8 @@ fit_all_imp_scaled <- predict(preProcess(fit_all_imp, method = c("range")), fit_
 ggplot(fit_all_imp_scaled) +
   geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
   geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_all_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+  geom_point(aes(x = `%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = `%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
    labs(y = "Variables",#labels
        x = "Importance (Scaled)")+
   ggtitle("Random Forest Variable Importance")+#plot title
@@ -784,230 +785,6 @@ ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height =
 all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
 all_corr
 ```
-
-# Comparing which variables are most important by landcover type
-
-## Bare soil
-
-```{r}
-
-soils_soils <- soils_extract %>% 
-  filter(landcover == "soil")
-
-
-fit_soil <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
-                 data = soils_soils, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-
-```
-
-
-### Evaluating Model
-
-```{r}
-# using caret
-fit_soil_imp <- as.data.frame(fit_soil$finalModel$importance)
-fit_soil_imp_scaled <- predict(preProcess(fit_soil_imp, method = c("range")), fit_soil_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_soil_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_soil_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_soil_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-ggsave(filename = "bare_soil_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-### Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_soil$finalModel$y, x = fit_soil$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_soil$finalModel$y, x = fit_soil$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(3, 14)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(3, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-cor(fit_soil$finalModel$y, fit_soil$finalModel$predicted)
-
-ggsave(filename = "bare_soil_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-
-## Vegetated
-
-```{r}
-
-soils_veg <- soils_extract %>% 
-  filter(landcover == "vegetated")
-
-
-fit_veg <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
-                 data = soils_veg, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-
-```
-
-
-### Evaluating Model
-
-```{r}
-# using caret
-fit_veg_imp <- as.data.frame(fit_veg$finalModel$importance)
-fit_veg_imp_scaled <- predict(preProcess(fit_veg_imp, method = c("range")), fit_veg_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_veg_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_veg_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_veg_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-ggsave(filename = "veg_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-### Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_veg$finalModel$y, x = fit_veg$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_veg$finalModel$y, x = fit_veg$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 12)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 12))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-cor(fit_veg$finalModel$y, fit_veg$finalModel$predicted)
-
-ggsave(filename = "veg_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-
-
-
-## Including PCs
-
-```{r}
-
-fit_pc <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `PC3` + `PC4` + `PC5` + `PC6` + `PC7` + `PC8` + `PC9` + `PC10` + `PC11` + `PC12` + `PC13` + `PC14`, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
-
-### Evaluating Model
-
-```{r}
-# using caret
-fit_pc_imp <- as.data.frame(fit_pc$finalModel$importance)
-fit_pc_imp_scaled <- predict(preProcess(fit_pc_imp, method = c("range")), fit_pc_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_pc_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_pc_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_pc_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-ggsave(filename = "all_si_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-cor(fit_pc$finalModel$y, fit_pc$finalModel$predicted)
-```
-
-### Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_pc$finalModel$y, x = fit_pc$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_pc$finalModel$y, x = fit_pc$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation, Indices, and PC")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-ggsave(filename = "all_si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-```
-
 
 # Spectral Indices & PCs Only
 
@@ -1251,4 +1028,509 @@ Conductivity
         legend.text = element_text(color = "#5b4f41"))
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
+
+
+
+
+
+
+
+
+# TESTING COLLINEARITY AND ALTERATIVE MODEL FITS
+
+## Collinearity
+
+```{r}
+model <- lm(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, data = soils_extract)
+
+car::vif(model)
+
+```
+
+Based on the VIF collinearity data, CRSI is highly correlated with the other variables and should potentially be removed from the model, NDVI and mARI seem to have moderate collinearity as well, potential removal of ndvi may be a possible solution. 
+
+```{r}
+model <- lm(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi, data = soils_extract)
+
+car::vif(model)
+```
+
+With CRSI removed, VIF values for mARI and NDVI are reduced, but they seem to be the two collinear values. Might be worth testing model fits between a model excluding CRSI and NDVI and just excluding CRSI.
+
+```{r}
+model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi, data = soils_extract)
+
+car::vif(model)
+```
+
+## Testing Exclusion of Spectral Indices (due to collinearity)
+
+```{r}
+
+fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi, 
+                 data = soils_extract, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+```
+
+
+### Evaluating Model
+
+```{r}
+# using caret
+fit_all_imp <- as.data.frame(fit_all$finalModel$importance)
+fit_all_imp_scaled <- predict(preProcess(fit_all_imp, method = c("range")), fit_all_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_all_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_all_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+  
+#ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
+```
+
+### Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted", linewidth = 1.5)+
+  geom_point(aes(y = fit_all$finalModel$y, x = fit_all$finalModel$predicted), color = "#E69512", size = 4)+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 28, hjust = 0.5, face = "bold"),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#B4AA98"),
+        axis.text = element_text(color = "#5b4f41", size = 18,),
+        axis.title = element_text(color = "#5b4f41", size = 22, hjust = 0.5, face = "bold"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41", linewidth = 1))
+
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
+all_corr
+```
+
+## Without CRSI AND NDVI
+
+```{r}
+
+fit_all <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi, 
+                 data = soils_extract, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE,
+                 tuneLength = 2)
+
+```
+
+
+### Evaluating Model
+
+```{r}
+# using caret
+fit_all_imp <- as.data.frame(fit_all$finalModel$importance)
+fit_all_imp_scaled <- predict(preProcess(fit_all_imp, method = c("range")), fit_all_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_all_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_all_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+  
+ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
+```
+
+### Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_all$finalModel$y, x = fit_all$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 28, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#B4AA98"),
+        axis.text = element_text(color = "#5b4f41", size = 18,),
+        axis.title = element_text(color = "#5b4f41", size = 22, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41", linewidth = 1))
+
+ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
+all_corr
+```
+
+
+```{r}
+
+fit_all <- train(electro_cond_mS_per_cm ~ mari + elevation, 
+                 data = soils_extract, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE,
+                 tuneLength = 2)
+
+```
+
+
+### Evaluating Model
+
+```{r}
+# using caret
+fit_all_imp <- as.data.frame(fit_all$finalModel$importance)
+fit_all_imp_scaled <- predict(preProcess(fit_all_imp, method = c("range")), fit_all_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_all_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_all_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+  
+#ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
+```
+
+### Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_all$finalModel$y, x = fit_all$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 28, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#B4AA98"),
+        axis.text = element_text(color = "#5b4f41", size = 18,),
+        axis.title = element_text(color = "#5b4f41", size = 22, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41", linewidth = 1))
+
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
+all_corr
+```
+
+
+## Including PCs
+
+```{r}
+
+fit_pc <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `PC3` + `PC4` + `PC5` + `PC6` + `PC7` + `PC8` + `PC9` + `PC10` + `PC11` + `PC12` + `PC13` + `PC14`, 
+                 data = soils_extract, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+```
+
+### Evaluating Model
+
+```{r}
+# using caret
+fit_pc_imp <- as.data.frame(fit_pc$finalModel$importance)
+fit_pc_imp_scaled <- predict(preProcess(fit_pc_imp, method = c("range")), fit_pc_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_pc_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_pc_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_pc_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+ggsave(filename = "all_si_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+cor(fit_pc$finalModel$y, fit_pc$finalModel$predicted)
+```
+
+### Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_pc$finalModel$y, x = fit_pc$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_pc$finalModel$y, x = fit_pc$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation, Indices, and PC")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+ggsave(filename = "all_si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+
+```
+
+
+
+
+
+
+####################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
+
+
+
+
+
+
+
+
+
+# Comparing which variables are most important by landcover type
+
+## Bare soil
+
+```{r}
+
+soils_soils <- soils_extract %>% 
+  filter(landcover == "soil")
+
+
+fit_soil <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
+                 data = soils_soils, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+
+```
+
+
+### Evaluating Model
+
+```{r}
+# using caret
+fit_soil_imp <- as.data.frame(fit_soil$finalModel$importance)
+fit_soil_imp_scaled <- predict(preProcess(fit_soil_imp, method = c("range")), fit_soil_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_soil_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_soil_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_soil_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+ggsave(filename = "bare_soil_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
+
+### Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_soil$finalModel$y, x = fit_soil$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_soil$finalModel$y, x = fit_soil$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(3, 14)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(3, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+cor(fit_soil$finalModel$y, fit_soil$finalModel$predicted)
+
+ggsave(filename = "bare_soil_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
+
+
+## Vegetated
+
+```{r}
+
+soils_veg <- soils_extract %>% 
+  filter(landcover == "vegetated")
+
+
+fit_veg <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
+                 data = soils_veg, 
+                 method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+
+```
+
+### Evaluating Model
+
+```{r}
+# using caret
+fit_veg_imp <- as.data.frame(fit_veg$finalModel$importance)
+fit_veg_imp_scaled <- predict(preProcess(fit_veg_imp, method = c("range")), fit_veg_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_veg_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_veg_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_veg_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+ggsave(filename = "veg_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
+
+### Ploting Model Fit
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_veg$finalModel$y, x = fit_veg$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_veg$finalModel$y, x = fit_veg$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 12)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 12))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation and Indices")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+cor(fit_veg$finalModel$y, fit_veg$finalModel$predicted)
+
+ggsave(filename = "veg_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
 
