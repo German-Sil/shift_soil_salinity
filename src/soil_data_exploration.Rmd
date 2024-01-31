@@ -916,18 +916,19 @@ all_pred <- predict(raster_all, fit_all, drop_dimensions = F)
 
 ```{r}
 all_pred_feb <- all_pred %>% 
-  filter(date == "2022-05-29") %>% 
+  filter(date == "2022-02-24") %>% 
   st_crop(y = boundary, crop = TRUE, as_points = FALSE)
 
 ggplot()+
   geom_stars(data = all_pred_feb, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
   scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 2, type = "continuous")))+
+  coord_sf(crs = 32116)+
   labs(y = "Northing",#labels
        x = "Easting",
        fill = "Electrical 
 Conductivity 
 (mS/cm)")+
-  ggtitle("May 29, 2022")+#plot title
+  ggtitle("February 24, 2022")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -1085,8 +1086,9 @@ car::vif(model)
 ## Testing Exclusion of Spectral Indices (due to collinearity)
 
 ```{r}
+set.seed(1234)
 
-fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi, 
+fit_all_nc <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi, 
                  data = soils_extract, 
                  method = "rf", 
                  trControl = trainControl(method = "cv", number = 10), 
@@ -1099,15 +1101,15 @@ fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi,
 
 ```{r}
 # using caret
-fit_all_imp <- as.data.frame(fit_all$finalModel$importance)
-fit_all_imp_scaled <- predict(preProcess(fit_all_imp, method = c("range")), fit_all_imp) %>% 
+fit_all_nc_imp <- as.data.frame(fit_all_nc$finalModel$importance)
+fit_all_nc_imp_scaled <- predict(preProcess(fit_all_nc_imp, method = c("range")), fit_all_nc_imp) %>% 
   rownames_to_column(var = "variable")
 
-ggplot(fit_all_imp_scaled) +
+ggplot(fit_all_nc_imp_scaled) +
   geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
   geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_all_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+  geom_point(aes(x = fit_all_nc_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_nc_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
    labs(y = "Variables",#labels
        x = "Importance (Scaled)")+
   ggtitle("Random Forest Variable Importance")+#plot title
@@ -1123,7 +1125,7 @@ ggplot(fit_all_imp_scaled) +
   
 #ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
-cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
+cor(fit_all_nc$finalModel$y, fit_all_nc$finalModel$predicted)
 ```
 
 ### Ploting Model Fit
@@ -1131,8 +1133,8 @@ cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
 ```{r}
 ggplot()+#ggplot object
   geom_abline(slope = 1, intercept = 0, linetype = "dotted", linewidth = 1.5)+
-  geom_point(aes(y = fit_all$finalModel$y, x = fit_all$finalModel$predicted), color = "#E69512", size = 4)+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  geom_point(aes(y = fit_all_nc$finalModel$y, x = fit_all_nc$finalModel$predicted), color = "#E69512", size = 4)+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_all_nc$finalModel$y, x = fit_all_nc$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
   scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
   labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
@@ -1148,11 +1150,49 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41", linewidth = 1))
 
-#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+ggsave(filename = "all_plot_nc.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
-all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
+all_corr <- cor(y= fit_all_nc$finalModel$y, x = fit_all_nc$finalModel$predicted)
 all_corr
 ```
+
+
+
+```{r}
+all_pred_nc <- predict(raster_all, fit_all_nc, drop_dimensions = F, na.action = na.omit)
+```
+
+
+```{r}
+all_pred_crop <- all_pred_nc  %>% 
+  st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
+  filter(date == "2022-02-24")
+
+ggplot()+
+  geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
+  scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 2, type = "continuous")))+
+  coord_sf(crs = 32116)+
+  labs(y = "Northing",#labels
+       x = "Easting",
+       fill = "Electrical 
+Conductivity 
+(mS/cm)")+
+  ggtitle("February 24, 2022")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"))
+```
+
+
+########################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
 
 ## Without CRSI AND NDVI
 
