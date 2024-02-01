@@ -784,6 +784,8 @@ ggplot()+#ggplot object
 
 all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
 all_corr
+
+lm(fit_all$finalModel$y ~ fit_all$finalModel$predicted)
 ```
 
 # Spectral Indices & PCs Only

@@ -600,9 +600,8 @@ frac_all <- c(frac_1, frac_2, frac_3, frac_4, frac_5, frac_6, frac_7, frac_8, al
 ### Uplands
 
 ```{r}
-up_frac_all <- c(upland_frac_1, upland_frac_2, upland_frac_3, upland_frac_4, upland_frac_5, upland_frac_6, upland_frac_7, upland_frac_8, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20")), names = "date") %>% 
-  setNames("UPLANDS_fraction")
+up_frac_all <- frac_all %>% 
+  select("UPLANDS_fraction")
 ```
 
 ### Pickleweed
@@ -753,7 +752,7 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
 
 ```{r}
 
-fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + UPLANDS_fraction + BARE_SOIL_fraction,
+fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + UPLANDS_fraction + BARE_SOIL_fraction + PICKLEWEED_fraction,
                       data = soils_extract_2, 
                       method = "rf", 
                  trControl = trainControl(method = "cv", number = 10), 
@@ -818,6 +817,8 @@ ggplot()+#ggplot object
 
 all_corr <- cor(y= fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted)
 all_corr
+
+lm(fit_all_frac$finalModel$y ~ fit_all_frac$finalModel$predicted)
 ```
 
 

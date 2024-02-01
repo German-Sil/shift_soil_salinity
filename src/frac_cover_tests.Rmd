@@ -330,7 +330,7 @@ ggplot(fit_all_frac_imp_scaled) +
 #ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 cor(fit_all_frac$finalModel$y, fit_all_frac$finalModel$predicted)
-lm(fit_all_frac$finalModel$predicted ~ fit_all_frac$finalModel$y)
+lm(fit_all_frac$finalModel$y ~ fit_all_frac$finalModel$predicted)
 ```
 
 
@@ -409,7 +409,7 @@ ggplot(fit_all_imp_scaled) +
 #ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
-lm(fit_all$finalModel$predicted ~ fit_all$finalModel$y)
+lm(fit_all$finalModel$y ~ fit_all$finalModel$predicted)
 ```
 
 
