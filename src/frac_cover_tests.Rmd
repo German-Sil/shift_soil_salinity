@@ -236,7 +236,7 @@ crsi_all <- c(crsi_1, crsi_2, crsi_3, crsi_4, crsi_5, crsi_6, crsi_7, crsi_8, al
 #  split(3) %>% 
 #  setNames(c("NPV_fraction", "GREEN_VEG_fraction", "BARE_SOIL_fraction"))
 
-frac_8 <- read_stars(here("imagery", "subset_images", "fractions_test","rfl_2022_04_20.tif_SMA_20240131T18h40M07S")) %>% 
+frac_8 <- read_stars(here("imagery", "subset_images", "fractions_test","rfl_2022_04_20.tif_SMA_20240131T18h23M31S")) %>% 
   filter(band %in% c("NPV_fraction", "GREEN VEG_fraction", "BARE SOIL_fraction")) %>% 
   split(3) %>% 
   setNames(c("NPV_fraction", "GREEN_VEG_fraction", "BARE_SOIL_fraction"))
