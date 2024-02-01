@@ -1154,6 +1154,8 @@ ggplot()+#ggplot object
 
 all_corr <- cor(y= fit_all_nc$finalModel$y, x = fit_all_nc$finalModel$predicted)
 all_corr
+
+lm(fit_all_nc$finalModel$y ~ fit_all_nc$finalModel$predicted)
 ```
 
 
