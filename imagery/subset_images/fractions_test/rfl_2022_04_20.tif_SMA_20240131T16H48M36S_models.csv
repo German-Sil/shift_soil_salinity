@@ -1,0 +1,90 @@
+Model#,#EM,Model,BARE SOIL,GREEN VEG,NPV,WATER,BARE SOIL_lib#,GREEN VEG_lib#,NPV_lib#,WATER_lib#,#pixels,%pixels
+1,1,BARE SOIL,220420c.22m.asd                 No-OAR,,,,0,,,,0,0
+2,1,BARE SOIL,220420c.25m.asd                 No-OAR,,,,1,,,,0,0
+3,1,BARE SOIL,220420c.27m.asd                 No-OAR,,,,2,,,,0,0
+4,1,BARE SOIL,220420c.28m.asd                 No-OAR,,,,3,,,,0,0
+5,1,BARE SOIL,BareSoil_X177_Y112,,,,6,,,,1998,    1.750574
+6,1,BARE SOIL,BareSoil_X178_Y149,,,,7,,,,9961,    8.727460
+7,1,BARE SOIL,BareSoil_X184_Y111,,,,10,,,,1030,    0.902448
+8,1,BARE SOIL,BareSoil_X193_Y143,,,,11,,,,248,    0.217288
+9,1,BARE SOIL,BareSoil_X215_Y148,,,,14,,,,7728,    6.770988
+10,1,BARE SOIL,BareSoil_X217_Y137,,,,15,,,,2959,    2.592566
+11,1,BARE SOIL,BareSoil_X217_Y150,,,,16,,,,1,    0.000876
+12,1,BARE SOIL,BareSoil_X219_Y147,,,,17,,,,0,0
+13,1,BARE SOIL,BareSoil_X220_Y142,,,,18,,,,4372,    3.830585
+14,1,GREEN VEG,,220420b.0m.asd                 No-OAR,,,,19,,,0,0
+15,1,GREEN VEG,,220420c.13m.asd                 No-OAR,,,,20,,,0,0
+16,1,GREEN VEG,,220420c.16m.asd                 No-OAR,,,,21,,,0,0
+17,1,GREEN VEG,,220420c.17m.asd                 No-OAR,,,,22,,,0,0
+18,1,GREEN VEG,,220420d.12m.asd                 No-OAR,,,,23,,,0,0
+19,1,GREEN VEG,,220420d.23m.asd                 No-OAR,,,,24,,,0,0
+20,1,GREEN VEG,,220420d.24m.asd                 No-OAR,,,,25,,,0,0
+21,1,GREEN VEG,,220420d.2m.asd                 No-OAR,,,,26,,,0,0
+22,1,GREEN VEG,,220420d.30m.asd                 No-OAR,,,,27,,,0,0
+23,1,GREEN VEG,,220420d.4m.asd                 No-OAR,,,,28,,,0,0
+24,1,GREEN VEG,,220420d.8m.asd                 No-OAR,,,,29,,,0,0
+25,1,GREEN VEG,,Pickleweed_X175_Y257,,,,33,,,7338,    6.429285
+26,1,GREEN VEG,,Pickleweed_X176_Y92,,,,34,,,1,    0.000876
+27,1,GREEN VEG,,Pickleweed_X200_Y49,,,,39,,,505,    0.442462
+28,1,GREEN VEG,,Pickleweed_X203_Y175,,,,40,,,1243,    1.089071
+29,1,GREEN VEG,,Pickleweed_X215_Y163,,,,41,,,0,0
+30,1,GREEN VEG,,Pickleweed_X217_Y163,,,,42,,,1152,    1.009340
+31,1,GREEN VEG,,Uplands_X143_Y171,,,,46,,,28141,   24.656107
+32,1,GREEN VEG,,Uplands_X143_Y81,,,,47,,,0,0
+33,1,GREEN VEG,,Uplands_X166_Y52,,,,49,,,3,    0.002628
+34,1,GREEN VEG,,Uplands_X167_Y102,,,,50,,,4477,    3.922582
+35,1,GREEN VEG,,Uplands_X168_Y121,,,,51,,,2270,    1.988890
+36,1,GREEN VEG,,Uplands_X193_Y45,,,,53,,,44,    0.038551
+37,1,GREEN VEG,,Uplands_X197_Y46,,,,54,,,32,    0.028037
+38,1,GREEN VEG,,Uplands_X237_Y70,,,,55,,,539,    0.472252
+39,1,NPV,,,220420a.13m.asd                 No-OAR,,,,56,,0,0
+40,1,NPV,,,220420a.15m.asd                 No-OAR,,,,57,,0,0
+41,1,NPV,,,220420a.16m.asd                 No-OAR,,,,58,,0,0
+42,1,NPV,,,220420b.20m.asd                 No-OAR,,,,59,,0,0
+43,1,NPV,,,220420b.20m.asd                 No-OAR,,,,60,,0,0
+44,1,NPV,,,220420b.24m.asd                 No-OAR,,,,61,,0,0
+45,1,NPV,,,220420b.28m.asd                 No-OAR,,,,62,,0,0
+46,1,NPV,,,220420b.28m.asd                 No-OAR,,,,63,,0,0
+47,1,NPV,,,220420c.20m.asd                 No-OAR,,,,64,,0,0
+48,1,NPV,,,Pickleweed_X157_Y148,,,,65,,0,0
+49,1,NPV,,,Pickleweed_X166_Y88,,,,66,,0,0
+50,1,NPV,,,Pickleweed_X175_Y92,,,,67,,1,    0.000876
+51,1,NPV,,,Pickleweed_X179_Y140,,,,68,,0,0
+52,1,NPV,,,Pickleweed_X198_Y49,,,,69,,0,0
+53,1,NPV,,,Uplands_X113_Y71,,,,70,,7860,    6.886642
+54,1,NPV,,,Uplands_X188_Y50,,,,71,,2752,    2.411201
+55,1,WATER,,,,220406b.32m.asd                 No-OAR,,,,72,0,0
+56,1,WATER,,,,Algae/Water_X164_Y189,,,,73,0,0
+57,1,WATER,,,,Algae/Water_X164_Y189,,,,74,409,    0.358351
+58,1,WATER,,,,Algae/Water_X165_Y175,,,,75,1407,    1.232762
+59,1,WATER,,,,Algae/Water_X165_Y243,,,,76,1369,    1.199467
+60,1,WATER,,,,Algae/Water_X166_Y190,,,,77,2092,    1.832933
+61,1,WATER,,,,Algae/Water_X166_Y244,,,,78,869,    0.761386
+62,1,WATER,,,,Algae/Water_X168_Y179,,,,79,558,    0.488899
+63,1,WATER,,,,Algae/Water_X169_Y185,,,,80,1823,    1.597245
+64,1,WATER,,,,Algae/Water_X173_Y223,,,,81,1411,    1.236266
+65,1,WATER,,,,Algae/Water_X177_Y211,,,,82,0,0
+66,1,WATER,,,,Algae/Water_X181_Y208,,,,83,0,0
+67,1,WATER,,,,Algae/Water_X185_Y202,,,,84,0,0
+68,1,WATER,,,,ShallowWater_X148_Y199,,,,85,6162,    5.398917
+69,1,WATER,,,,ShallowWater_X176_Y84,,,,86,824,    0.721958
+70,1,WATER,,,,ShallowWater_X177_Y85,,,,87,671,    0.587905
+71,1,WATER,,,,ShallowWater_X178_Y167,,,,88,0,0
+72,1,WATER,,,,ShallowWater_X185_Y187,,,,89,0,0
+73,1,WATER,,,,ShallowWater_X196_Y192,,,,90,0,0
+74,1,WATER,,,,ShallowWater_X199_Y54,,,,91,0,0
+75,1,WATER,,,,ShallowWater_X201_Y145,,,,92,1919,    1.681357
+76,1,WATER,,,,ShallowWater_X205_Y206,,,,93,0,0
+77,1,WATER,,,,ShallowWater_X214_Y158,,,,94,464,    0.406540
+78,1,WATER,,,,ShallowWater_X215_Y159,,,,95,435,    0.381131
+79,1,WATER,,,,Water_X120_Y285,,,,96,100,    0.087616
+80,1,WATER,,,,Water_X128_Y280,,,,97,0,0
+81,1,WATER,,,,Water_X150_Y221,,,,98,8571,    7.509593
+82,1,WATER,,,,Water_X174_Y191,,,,99,52,    0.045560
+83,1,WATER,,,,Water_X175_Y192,,,,100,0,0
+84,1,WATER,,,,Water_X187_Y90,,,,101,0,0
+85,1,WATER,,,,Water_X193_Y98,,,,102,0,0
+86,1,WATER,,,,Water_X197_Y61,,,,103,0,0
+87,1,WATER,,,,Water_X212_Y142,,,,104,5,    0.004381
+88,1,WATER,,,,Water_X55_Y38,,,,105,0,0
+89,1,WATER,,,,Water_X71_Y30,,,,106,0,0

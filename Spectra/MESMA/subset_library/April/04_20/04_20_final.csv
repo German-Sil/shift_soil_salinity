@@ -28,24 +28,24 @@ BareSoil_X217_Y151,Pervious,Bare Soil,Bare Soil
 BareSoil_X217_Y152,Pervious,Bare Soil,Bare Soil
 BareSoil_X219_Y147,Pervious,Bare Soil,Bare Soil
 BareSoil_X220_Y142,Pervious,Bare Soil,Bare Soil
-Pickleweed_X149_Y76,Pervious,Plants,Pickleweed
-Pickleweed_X157_Y148,Pervious,Plants,Pickleweed
-Pickleweed_X166_Y88,Pervious,Plants,Pickleweed
-Pickleweed_X168_Y143,Pervious,Plants,Pickleweed
-Pickleweed_X170_Y90,Pervious,Plants,Pickleweed
-Pickleweed_X175_Y257,Pervious,Plants,Pickleweed
-Pickleweed_X175_Y92,Pervious,Plants,Pickleweed
-Pickleweed_X176_Y92,Pervious,Plants,Pickleweed
-Pickleweed_X179_Y140,Pervious,Plants,Pickleweed
-Pickleweed_X179_Y250,Pervious,Plants,Pickleweed
-Pickleweed_X179_Y94,Pervious,Plants,Pickleweed
-Pickleweed_X185_Y145,Pervious,Plants,Pickleweed
-Pickleweed_X198_Y49,Pervious,Plants,Pickleweed
-Pickleweed_X198_Y51,Pervious,Plants,Pickleweed
-Pickleweed_X200_Y49,Pervious,Plants,Pickleweed
-Pickleweed_X203_Y175,Pervious,Plants,Pickleweed
-Pickleweed_X215_Y163,Pervious,Plants,Pickleweed
-Pickleweed_X217_Y163,Pervious,Plants,Pickleweed
+Pickleweed_X149_Y76,Pervious,green veg,Pickleweed
+Pickleweed_X157_Y148,Pervious,green veg,Pickleweed
+Pickleweed_X166_Y88,Pervious,green veg,Pickleweed
+Pickleweed_X168_Y143,Pervious,green veg,Pickleweed
+Pickleweed_X170_Y90,Pervious,green veg,Pickleweed
+Pickleweed_X175_Y257,Pervious,green veg,Pickleweed
+Pickleweed_X175_Y92,Pervious,green veg,Pickleweed
+Pickleweed_X176_Y92,Pervious,green veg,Pickleweed
+Pickleweed_X179_Y140,Pervious,green veg,Pickleweed
+Pickleweed_X179_Y250,Pervious,green veg,Pickleweed
+Pickleweed_X179_Y94,Pervious,green veg,Pickleweed
+Pickleweed_X185_Y145,Pervious,green veg,Pickleweed
+Pickleweed_X198_Y49,Pervious,green veg,Pickleweed
+Pickleweed_X198_Y51,Pervious,green veg,Pickleweed
+Pickleweed_X200_Y49,Pervious,green veg,Pickleweed
+Pickleweed_X203_Y175,Pervious,green veg,Pickleweed
+Pickleweed_X215_Y163,Pervious,green veg,Pickleweed
+Pickleweed_X217_Y163,Pervious,green veg,Pickleweed
 220406b.32m.asd                 No-OAR  ,Pervious,Water,Shallow Water
 ShallowWater_X148_Y199,Pervious,Water,Shallow Water
 ShallowWater_X176_Y84,Pervious,Water,Shallow Water
@@ -58,21 +58,21 @@ ShallowWater_X201_Y145,Pervious,Water,Shallow Water
 ShallowWater_X205_Y206,Pervious,Water,Shallow Water
 ShallowWater_X214_Y158,Pervious,Water,Shallow Water
 ShallowWater_X215_Y159,Pervious,Water,Shallow Water
-Uplands_X108_Y150,Pervious,Plants,Uplands
-Uplands_X110_Y160,Pervious,Plants,Uplands
-Uplands_X113_Y71,Pervious,Plants,Uplands
-Uplands_X135_Y115,Pervious,Plants,Uplands
-Uplands_X143_Y171,Pervious,Plants,Uplands
-Uplands_X143_Y81,Pervious,Plants,Uplands
-Uplands_X166_Y106,Pervious,Plants,Uplands
-Uplands_X166_Y52,Pervious,Plants,Uplands
-Uplands_X167_Y102,Pervious,Plants,Uplands
-Uplands_X168_Y121,Pervious,Plants,Uplands
-Uplands_X188_Y50,Pervious,Plants,Uplands
-Uplands_X188_Y51,Pervious,Plants,Uplands
-Uplands_X193_Y45,Pervious,Plants,Uplands
-Uplands_X197_Y46,Pervious,Plants,Uplands
-Uplands_X237_Y70,Pervious,Plants,Uplands
+Uplands_X108_Y150,Pervious,green veg,Uplands
+Uplands_X110_Y160,Pervious,green veg,Uplands
+Uplands_X113_Y71,Pervious,green veg,Uplands
+Uplands_X135_Y115,Pervious,green veg,Uplands
+Uplands_X143_Y171,Pervious,green veg,Uplands
+Uplands_X143_Y81,Pervious,green veg,Uplands
+Uplands_X166_Y106,Pervious,green veg,Uplands
+Uplands_X166_Y52,Pervious,green veg,Uplands
+Uplands_X167_Y102,Pervious,green veg,Uplands
+Uplands_X168_Y121,Pervious,green veg,Uplands
+Uplands_X188_Y50,Pervious,green veg,Uplands
+Uplands_X188_Y51,Pervious,green veg,Uplands
+Uplands_X193_Y45,Pervious,green veg,Uplands
+Uplands_X197_Y46,Pervious,green veg,Uplands
+Uplands_X237_Y70,Pervious,green veg,Uplands
 Water_X120_Y285,Pervious,Water,Water
 Water_X128_Y280,Pervious,Water,Water
 Water_X150_Y221,Pervious,Water,Water

@@ -1,0 +1,278 @@
+--IES Settings--
+---------Square Array Input: C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\MESMA\Square Array\04_20_ncos_resampled_sq.sqr
+-----Spectral Library Input: C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\Spectral Library\20220420\resampled\ncos_resampled.sli
+-----------Output File Name: C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\Spectral Library\20220420\resampled\ncos_resampled_ies.sli
+-------------RMSE Threshold: 0.0250000
+------------Constraint Type: RMSE & fractions constrained
+-----Forced Endmembers Used: No
+---Metadata with EM Classes: META2
+----------Unique EM Classes: 
+BARE SOIL   GREEN VEG   MIXED   NPV   
+
+New endmember entered in loop 0
+ --> Kappa at this point: 0.202328
+ --> #EM: 1, new EM name: 220420b.14m.asd                 No-OAR
+ --> Confusion Matrix:
+        BARE SO GREEN V   MIXED     NPV Unclass 
+BARE SO       0       0       0       0       0 
+GREEN V       1      51      11       4       0 
+  MIXED       0       0       0       0       0 
+    NPV       0       0       0       0       0 
+Unclass      16       9      21      19       0 
+
+New endmember entered in loop 1
+ --> Kappa at this point: 0.336898
+ --> #EM: 2, new EM name: 220420b.23m.asd                 No-OAR
+ --> Confusion Matrix:
+        BARE SO GREEN V   MIXED     NPV Unclass 
+BARE SO       0       0       0       0       0 
+GREEN V       1      51       9       3       0 
+  MIXED       0       0       0       0       0 
+    NPV       8       9      18      19       0 
+Unclass       8       0       5       1       0 
+
+New endmember entered in loop 2
+ --> Kappa at this point: 0.425717
+ --> #EM: 3, new EM name: 220420a.28m.asd                 No-OAR
+ --> Confusion Matrix:
+    0    0    0    0    0
+    1   50    6    0    0
+    0    5   11    5    0
+    8    5   10   17    0
+    8    0    5    1    0
+
+New endmember entered in loop 3
+ --> Kappa at this point: 0.504610
+ --> #EM: 4, new EM name: 220420c.26m.asd                 No-OAR
+ --> Confusion Matrix:
+   11    3    6    4    0
+    1   50    6    0    0
+    0    5   11    5    0
+    4    2    9   14    0
+    1    0    0    0    0
+
+New endmember entered in loop 4
+ --> Kappa at this point: 0.574264
+ --> #EM: 5, new EM name: 220420b.26m.asd                 No-OAR
+ --> Confusion Matrix:
+   10    3    4    2    0
+    1   50    6    0    0
+    1    7   20    8    0
+    4    0    2   13    0
+    1    0    0    0    0
+
+New endmember entered in loop 5
+ --> Kappa at this point: 0.633765
+ --> #EM: 6, new EM name: 220420b.5m.asd                 No-OAR
+ --> Confusion Matrix:
+   10    1    4    2    0
+    1   56    6    0    0
+    1    3   20    8    0
+    4    0    2   13    0
+    1    0    0    0    0
+
+New endmember entered in loop 6
+ --> Kappa at this point: 0.656481
+ --> #EM: 7, new EM name: 220420a.21m.asd                 No-OAR
+ --> Confusion Matrix:
+   10    1    4    2    0
+    1   56    6    0    0
+    1    3   20    6    0
+    4    0    2   15    0
+    1    0    0    0    0
+
+New endmember entered in loop 7
+ --> Kappa at this point: 0.676717
+ --> #EM: 8, new EM name: 220420b.0m.asd                 No-OAR
+ --> Confusion Matrix:
+   10    0    4    2    0
+    1   58    6    0    0
+    1    2   20    6    0
+    4    0    2   15    0
+    1    0    0    0    0
+
+New endmember entered in loop 8
+ --> Kappa at this point: 0.689307
+ --> #EM: 9, new EM name: 220420a.19m.asd                 No-OAR
+ --> Confusion Matrix:
+   10    0    4    2    0
+    1   58    5    0    0
+    1    1   20    5    0
+    4    1    3   16    0
+    1    0    0    0    0
+
+New endmember entered in loop 9
+ --> Kappa at this point: 0.701483
+ --> #EM: 10, new EM name: 220420b.32m.asd                 No-OAR
+ --> Confusion Matrix:
+   11    0    4    2    0
+    0   58    5    0    0
+    1    1   20    5    0
+    4    1    3   16    0
+    1    0    0    0    0
+
+New endmember entered in loop 10
+ --> Kappa at this point: 0.713211
+ --> #EM: 11, new EM name: 220420b.12m.asd                 No-OAR
+ --> Confusion Matrix:
+   11    0    4    2    0
+    0   58    4    0    0
+    1    1   21    5    0
+    4    1    3   16    0
+    1    0    0    0    0
+
+New endmember entered in loop 11
+ --> Kappa at this point: 0.724885
+ --> #EM: 12, new EM name: 220420b.10m.asd                 No-OAR
+ --> Confusion Matrix:
+   11    0    4    2    0
+    0   58    3    0    0
+    1    1   22    5    0
+    4    1    3   16    0
+    1    0    0    0    0
+
+New endmember entered in loop 12
+ --> Kappa at this point: 0.736220
+ --> #EM: 13, new EM name: 220420b.27m.asd                 No-OAR
+ --> Confusion Matrix:
+   12    0    4    2    0
+    0   58    3    0    0
+    0    1   22    5    0
+    4    1    3   16    0
+    1    0    0    0    0
+
+New endmember entered in loop 13
+ --> Kappa at this point: 0.747400
+ --> #EM: 14, new EM name: 220420b.15m.asd                 No-OAR
+ --> Confusion Matrix:
+   12    0    4    2    0
+    0   58    3    0    0
+    0    1   22    4    0
+    4    1    3   17    0
+    1    0    0    0    0
+
+New endmember entered in loop 14
+ --> Kappa at this point: 0.758201
+ --> #EM: 15, new EM name: 220420b.13m.asd                 No-OAR
+ --> Confusion Matrix:
+   12    0    4    2    0
+    0   58    3    0    0
+    0    1   23    4    0
+    4    1    2   17    0
+    1    0    0    0    0
+
+New endmember entered in loop 15
+ --> Kappa at this point: 0.768904
+ --> #EM: 16, new EM name: 220420a.9m.asd                 No-OAR
+ --> Confusion Matrix:
+   12    0    3    2    0
+    0   58    3    0    0
+    0    1   24    4    0
+    4    1    2   17    0
+    1    0    0    0    0
+
+New endmember entered in loop 16
+ --> Kappa at this point: 0.779596
+ --> #EM: 17, new EM name: 220420c.22m.asd                 No-OAR
+ --> Confusion Matrix:
+   13    0    3    2    0
+    0   58    3    0    0
+    0    1   24    4    0
+    4    1    2   17    0
+    0    0    0    0    0
+
+New endmember entered in loop 17
+ --> Kappa at this point: 0.789967
+ --> #EM: 18, new EM name: 220420b.4m.asd                 No-OAR
+ --> Confusion Matrix:
+   13    0    3    2    0
+    0   59    3    0    0
+    0    1   24    4    0
+    4    0    2   17    0
+    0    0    0    0    0
+
+New endmember entered in loop 18
+ --> Kappa at this point: 0.790284
+ --> #EM: 19, new EM name: 220420a.25m.asd                 No-OAR
+ --> Confusion Matrix:
+   13    0    3    2    0
+    0   59    3    0    0
+    0    1   23    3    0
+    4    0    3   18    0
+    0    0    0    0    0
+
+New endmember entered in loop 19
+ --> Kappa at this point: 0.790546
+ --> #EM: 20, new EM name: 220420c.28m.asd                 No-OAR
+ --> Confusion Matrix:
+   13    0    3    3    0
+    0   59    3    0    0
+    0    1   23    2    0
+    4    0    3   18    0
+    0    0    0    0    0
+
+New endmember entered in loop 20
+ --> Kappa at this point: 0.800537
+ --> #EM: 21, new EM name: 220420c.0m.asd                 No-OAR
+ --> Confusion Matrix:
+   12    0    0    1    0
+    0   58    3    0    0
+    1    2   26    4    0
+    4    0    3   18    0
+    0    0    0    0    0
+
+New endmember entered in loop 21
+ --> Kappa at this point: 0.811855
+ --> #EM: 22, new EM name: 220420b.30m.asd                 No-OAR
+ --> Confusion Matrix:
+   13    0    0    1    0
+    0   58    3    0    0
+    0    2   26    4    0
+    4    0    3   18    0
+    0    0    0    0    0
+
+New endmember entered in loop 22
+ --> Kappa at this point: 0.812045
+ --> #EM: 23, new EM name: 220420b.21m.asd                 No-OAR
+ --> Confusion Matrix:
+   14    0    0    2    0
+    0   58    3    0    0
+    0    2   26    4    0
+    3    0    3   17    0
+    0    0    0    0    0
+
+END
+ --> Final Confusion Matrix:
+        BARE SO GREEN V   MIXED     NPV Unclass 
+BARE SO      14       0       0       2       0 
+GREEN V       0      58       3       0       0 
+  MIXED       0       2      26       4       0 
+    NPV       3       0       3      17       0 
+Unclass       0       0       0       0       0 
+
+ --> Final KAPPA: 0.812045
+ --> FINAL #EM: 23
+ -->       EM names: 
+220420b.4m.asd                 No-OAR
+220420b.12m.asd                 No-OAR
+220420b.10m.asd                 No-OAR
+220420b.15m.asd                 No-OAR
+220420b.13m.asd                 No-OAR
+220420a.19m.asd                 No-OAR
+220420b.32m.asd                 No-OAR
+220420a.21m.asd                 No-OAR
+220420b.14m.asd                 No-OAR
+220420b.21m.asd                 No-OAR
+220420b.5m.asd                 No-OAR
+220420a.28m.asd                 No-OAR
+220420a.25m.asd                 No-OAR
+220420b.0m.asd                 No-OAR
+220420b.23m.asd                 No-OAR
+220420b.27m.asd                 No-OAR
+220420b.26m.asd                 No-OAR
+220420c.28m.asd                 No-OAR
+220420c.0m.asd                 No-OAR
+220420a.9m.asd                 No-OAR
+220420c.26m.asd                 No-OAR
+220420b.30m.asd                 No-OAR
+220420c.22m.asd                 No-OAR
