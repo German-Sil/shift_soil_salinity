@@ -753,7 +753,7 @@ ggplot(fit_all_imp_scaled) +
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
   
-ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
 ```
@@ -780,7 +780,7 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41", linewidth = 1))
 
-ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
 all_corr
@@ -827,7 +827,7 @@ ggplot(fit_si_imp_scaled) +
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "si_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "si_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 cor(y = fit_si$finalModel$y, x= fit_si$finalModel$predicted)
 
@@ -855,7 +855,7 @@ theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
 
 # Elevation prediction
@@ -895,7 +895,7 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41", linewidth = 1))
 
-ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
  
 # Compiling all raster data
@@ -1150,7 +1150,7 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41", linewidth = 1))
 
-ggsave(filename = "all_plot_nc.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "all_plot_nc.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 all_corr <- cor(y= fit_all_nc$finalModel$y, x = fit_all_nc$finalModel$predicted)
 all_corr
@@ -1238,7 +1238,7 @@ ggplot(fit_pc_imp_scaled) +
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "all_si_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "all_si_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 cor(fit_pc$finalModel$y, fit_pc$finalModel$predicted)
 ```
@@ -1265,7 +1265,7 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "all_si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "all_si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 ```
 
@@ -1330,7 +1330,7 @@ ggplot(fit_soil_imp_scaled) +
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "bare_soil_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "bare_soil_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
 
 ### Ploting Model Fit
@@ -1357,7 +1357,7 @@ ggplot()+#ggplot object
 
 cor(fit_soil$finalModel$y, fit_soil$finalModel$predicted)
 
-ggsave(filename = "bare_soil_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "bare_soil_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
 
 
@@ -1404,7 +1404,7 @@ ggplot(fit_veg_imp_scaled) +
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "veg_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "veg_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
 
 ### Ploting Model Fit
@@ -1431,6 +1431,6 @@ ggplot()+#ggplot object
 
 cor(fit_veg$finalModel$y, fit_veg$finalModel$predicted)
 
-ggsave(filename = "veg_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "veg_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
 
