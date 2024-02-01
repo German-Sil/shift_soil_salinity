@@ -600,33 +600,8 @@ frac_all <- c(frac_1, frac_2, frac_3, frac_4, frac_5, frac_6, frac_7, frac_8, al
 ### Uplands
 
 ```{r}
-upland_frac_1 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_02_24.tif_SMA_20230831T10H58M05S")) %>% 
-  filter(band == "UPLANDS_fraction")
-
-upland_frac_2 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_02_28.tif_SMA_20230831T14H27M47S")) %>% 
-  filter(band == "UPLANDS_fraction")
-
-upland_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif_SMA_20230906T12H54M10S")) %>% 
-  filter(band == "UPLANDS_fraction")
-
-upland_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
-  filter(band == "UPLANDS_fraction")
-
-upland_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
-  filter(band == "UPLANDS_fraction")
-
-upland_frac_6 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_05.tif_SMA_20231116T14h05M20S")) %>% 
-  filter(band == "UPLANDS_fraction")
-
-upland_frac_7 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_12.tif_SMA_20240116T10h38M24S")) %>% 
-  filter(band == "UPLANDS_fraction")
-
-upland_frac_8 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_20.tif_SMA_20240119T16h15M36S")) %>% 
-  filter(band == "UPLANDS_fraction")
-
-up_frac_all <- c(upland_frac_1, upland_frac_2, upland_frac_3, upland_frac_4, upland_frac_5, upland_frac_6, upland_frac_7, upland_frac_8, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20")), names = "date") %>% 
-  setNames("UPLANDS_fraction")
+up_frac_all <- frac_all %>% 
+  select("UPLANDS_fraction")
 ```
 
 ### Pickleweed
@@ -777,7 +752,7 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
 
 ```{r}
 
-fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + UPLANDS_fraction + BARE_SOIL_fraction,
+fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + UPLANDS_fraction + BARE_SOIL_fraction + PICKLEWEED_fraction,
                       data = soils_extract_2, 
                       method = "rf", 
                  trControl = trainControl(method = "cv", number = 10), 
@@ -838,10 +813,12 @@ ggplot()+#ggplot object
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
 
-ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 
 all_corr <- cor(y= fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted)
 all_corr
+
+lm(fit_all_frac$finalModel$y ~ fit_all_frac$finalModel$predicted)
 ```
 
 
