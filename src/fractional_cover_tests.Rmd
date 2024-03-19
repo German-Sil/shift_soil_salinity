@@ -104,18 +104,18 @@ ndvi_7 <- read_stars(here("imagery", "NDVI", "2022_04_12_ndvi.tif")) %>%
   setNames("ndvi")
 ndvi_8 <- read_stars(here("imagery", "NDVI", "2022_04_20_ndvi.tif")) %>% 
   setNames("ndvi")
-#ndvi_9 <- read_stars(here("imagery", "NDVI", "2022_04_29_ndvi.tif")) %>% 
-#  setNames("ndvi")
-#ndvi_10 <- read_stars(here("imagery", "NDVI", "2022_05_03_ndvi.tif")) %>% 
-#  setNames("ndvi")
-#ndvi_11 <- read_stars(here("imagery", "NDVI", "2022_05_11_ndvi.tif")) %>% 
-#  setNames("ndvi")
-#ndvi_12 <- read_stars(here("imagery", "NDVI", "2022_05_12_ndvi.tif")) %>% 
- # setNames("ndvi")
-#ndvi_13 <- read_stars(here("imagery", "NDVI", "2022_05_17_ndvi.tif")) %>% 
-#  setNames("ndvi")
-#ndvi_14 <- read_stars(here("imagery", "NDVI", "2022_05_29_ndvi.tif")) %>% 
-#  setNames("ndvi")
+ndvi_9 <- read_stars(here("imagery", "NDVI", "2022_04_29_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_10 <- read_stars(here("imagery", "NDVI", "2022_05_03_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_11 <- read_stars(here("imagery", "NDVI", "2022_05_11_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_12 <- read_stars(here("imagery", "NDVI", "2022_05_12_ndvi.tif")) %>% 
+  setNames("ndvi")
+ndvi_13 <- read_stars(here("imagery", "NDVI", "2022_05_17_ndvi.tif")) %>% 
+ setNames("ndvi")
+ndvi_14 <- read_stars(here("imagery", "NDVI", "2022_05_29_ndvi.tif")) %>% 
+  setNames("ndvi")
 
 
 ndvi_all <- c(ndvi_1, ndvi_2, ndvi_3, ndvi_4, ndvi_5, ndvi_6, ndvi_7, ndvi_8, along = 3) %>% 
@@ -561,111 +561,69 @@ pc_all <- c(merged_pc_1, merged_pc_2, merged_pc_3, merged_pc_4, merged_pc_5, mer
 ### All Fractions
 
 ```{r}
-frac_1 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_02_24.tif_SMA_20230831T10H58M05S")) %>% 
-  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
-  split(3)
+frac_1 <- read_stars(here("imagery", "fractional_cover", "shade_norm", "rfl_2022_02_24_shadeNorm")) %>% 
+  filter(band %in% c("ShadeNorm_ NPV_fraction", "ShadeNorm_ GREEN VEG_fraction", "ShadeNorm_ BARE SOIL_fraction")) %>%
+  split(3) %>% 
+  setNames(c("Soil_fraction", "GV_fraction", "NPV_fraction" ))
 
-frac_2 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_02_28.tif_SMA_20230831T14H27M47S")) %>% 
-  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
-  split(3)
+frac_2 <-read_stars(here("imagery", "fractional_cover", "shade_norm", "rfl_2022_02_28_shadeNorm")) %>% 
+  filter(band %in% c("ShadeNorm_ NPV_fraction", "ShadeNorm_ GREEN VEG_fraction", "ShadeNorm_ BARE SOIL_fraction")) %>%
+  split(3) %>% 
+  setNames(c("Soil_fraction", "GV_fraction", "NPV_fraction" ))
 
-frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif_SMA_20230906T12H54M10S"))%>% 
-  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
-  split(3)
+frac_3 <-read_stars(here("imagery", "fractional_cover", "shade_norm", "rfl_2022_03_08_shadeNorm"))%>% 
+  filter(band %in% c("ShadeNorm_ NPV_fraction", "ShadeNorm_ GREEN VEG_fraction", "ShadeNorm_ BARE SOIL_fraction")) %>%
+  split(3) %>% 
+  setNames(c("Soil_fraction", "GV_fraction", "NPV_fraction" ))
 
-frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S"))%>% 
-  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
-  split(3)
+frac_4 <-read_stars(here("imagery", "fractional_cover", "shade_norm", "rfl_2022_03_16_shadeNorm"))%>% 
+  filter(band %in% c("ShadeNorm_ NPV_fraction", "ShadeNorm_ GREEN VEG_fraction", "ShadeNorm_ BARE SOIL_fraction")) %>%
+  split(3) %>% 
+  setNames(c("Soil_fraction", "GV_fraction", "NPV_fraction" ))
 
-frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
-  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
-  split(3)
+frac_5 <-read_stars(here("imagery", "fractional_cover", "shade_norm", "rfl_2022_03_22_shadeNorm")) %>% 
+  filter(band %in% c("ShadeNorm_ NPV_fraction", "ShadeNorm_ GREEN VEG_fraction", "ShadeNorm_ BARE SOIL_fraction")) %>%
+  split(3) %>% 
+  setNames(c("Soil_fraction", "GV_fraction", "NPV_fraction" ))
 
-frac_6 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_05.tif_SMA_20231116T14h05M20S"))%>% 
-  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
-  split(3)
+frac_6 <- read_stars(here("imagery", "fractional_cover", "shade_norm", "rfl_2022_04_05_shadeNorm"))%>% 
+  filter(band %in% c("ShadeNorm_ NPV_fraction", "ShadeNorm_ GREEN VEG_fraction", "ShadeNorm_ BARE SOIL_fraction")) %>%
+  split(3) %>% 
+  setNames(c("Soil_fraction", "GV_fraction", "NPV_fraction" ))
 
-frac_7 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_12.tif_SMA_20240116T10h38M24S"))%>% 
-  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
-  split(3)
+frac_7 <- read_stars(here("imagery", "fractional_cover", "shade_norm", "rfl_2022_04_12_shadeNorm"))%>% 
+  filter(band %in% c("ShadeNorm_ NPV_fraction", "ShadeNorm_ GREEN VEG_fraction", "ShadeNorm_ BARE SOIL_fraction")) %>%
+  split(3) %>% 
+  setNames(c("Soil_fraction", "GV_fraction", "NPV_fraction" ))
 
-frac_8 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_20.tif_SMA_20240119T16h15M36S"))%>% 
-  filter(band %in% c("UPLANDS_fraction", "PICKLEWEED_fraction", "BARE SOIL_fraction")) %>%
-  split(3)
+frac_8 <- read_stars(here("imagery", "fractional_cover", "shade_norm", "rfl_2022_04_20_shadeNorm"))%>% 
+  filter(band %in% c("ShadeNorm_ NPV_fraction", "ShadeNorm_ GREEN VEG_fraction", "ShadeNorm_ BARE SOIL_fraction")) %>%
+  split(3) %>% 
+  setNames(c("Soil_fraction", "GV_fraction", "NPV_fraction" ))
 
 frac_all <- c(frac_1, frac_2, frac_3, frac_4, frac_5, frac_6, frac_7, frac_8, along = 3) %>%
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20")), names = "date") 
 ```
 
-### Uplands
+### NPV
 
 ```{r}
-up_frac_all <- frac_all %>% 
-  select("UPLANDS_fraction")
+npv_frac_all <- frac_all %>% 
+  select("NPV_fraction")
 ```
 
-### Pickleweed
+### GV
 
 ```{r}
-pick_frac_1 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_02_24.tif_SMA_20230831T10H58M05S")) %>% 
-  filter(band == "PICKLEWEED_fraction")
-
-pick_frac_2 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_02_28.tif_SMA_20230831T14H27M47S")) %>% 
-  filter(band == "PICKLEWEED_fraction")
-
-pick_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif_SMA_20230906T12H54M10S")) %>% 
-  filter(band == "PICKLEWEED_fraction")
-
-pick_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
-  filter(band == "PICKLEWEED_fraction")
-
-pick_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
-  filter(band == "PICKLEWEED_fraction")
-
-pick_frac_6 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_05.tif_SMA_20231116T14h05M20S")) %>% 
-  filter(band == "PICKLEWEED_fraction")
-
-pick_frac_7 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_12.tif_SMA_20240116T10h38M24S")) %>% 
-  filter(band == "PICKLEWEED_fraction")
-
-pick_frac_8 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_20.tif_SMA_20240119T16h15M36S")) %>% 
-  filter(band == "PICKLEWEED_fraction")
-
-pick_frac_all <- c(pick_frac_1, pick_frac_2, pick_frac_3, pick_frac_4, pick_frac_5, pick_frac_6, pick_frac_7, pick_frac_8, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20")), names = "date") %>% 
-  setNames("PICKLEWEED_fraction")
+gv_frac_all <- frac_all %>% 
+  select("GV_fraction")
 ```
 
 ### Bare Soil
 
 ```{r}
-soil_frac_1 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_02_24.tif_SMA_20230831T10H58M05S")) %>% 
-  filter(band == "BARE SOIL_fraction")
-
-soil_frac_2 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_02_28.tif_SMA_20230831T14H27M47S")) %>% 
-  filter(band == "BARE SOIL_fraction")
-
-soil_frac_3 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_08.tif_SMA_20230906T12H54M10S")) %>% 
-  filter(band == "BARE SOIL_fraction")
-
-soil_frac_4 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_16.tif_SMA_20231013T13H21M22S")) %>% 
-  filter(band == "BARE SOIL_fraction")
-
-soil_frac_5 <-read_stars(here("imagery", "fractional_cover", "rfl_2022_03_22.tif_SMA_20231107T13H19M50S")) %>% 
-  filter(band == "BARE SOIL_fraction")
-
-soil_frac_6 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_05.tif_SMA_20231116T14h05M20S")) %>% 
-  filter(band == "BARE SOIL_fraction")
-
-soil_frac_7 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_12.tif_SMA_20240116T10h38M24S")) %>% 
-  filter(band == "BARE SOIL_fraction")
-
-soil_frac_8 <- read_stars(here("imagery", "fractional_cover", "rfl_2022_04_20.tif_SMA_20240119T16h15M36S")) %>% 
-  filter(band == "BARE SOIL_fraction")
-
-soil_frac_all <- c(soil_frac_1, soil_frac_2, soil_frac_3, soil_frac_4, soil_frac_5, soil_frac_6, soil_frac_7, soil_frac_8, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20")), names = "date") %>% 
-  setNames("BARE_SOIL_fraction")
+soil_frac_all <- frac_all %>% 
+  select("Soil_fraction")
 ```
 
 ## Adjusting elevation data
@@ -727,7 +685,7 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
   
   frac_extract <- soil_week %>% 
     st_join(frac_week) %>% 
-    select("BARE SOIL_fraction":"UPLANDS_fraction") %>% 
+    select("Soil_fraction":"NPV_fraction") %>% 
     st_drop_geometry()
   
   pc_extract <- soil_week %>% 
@@ -739,8 +697,7 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
     rename("ndvi" = "...12",
            "mari" = "...13",
            "vssi" = "...14",
-           "crsi" = "...15",
-           "BARE_SOIL_fraction" = "BARE SOIL_fraction")
+           "crsi" = "...15")
     
   soils_extract_2 <- rbind(soils_extract_2, soils_week)
 }
@@ -752,7 +709,7 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
 
 ```{r}
 
-fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + UPLANDS_fraction + BARE_SOIL_fraction + PICKLEWEED_fraction,
+fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + NPV_fraction + Soil_fraction + GV_fraction,
                       data = soils_extract_2, 
                       method = "rf", 
                  trControl = trainControl(method = "cv", number = 10), 
@@ -824,7 +781,7 @@ lm(fit_all_frac$finalModel$y ~ fit_all_frac$finalModel$predicted)
 
 
 ```{r}
-raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, pick_frac_all, soil_frac_all, up_frac_all)
+raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, gv_frac_all, soil_frac_all, npv_frac_all)
 
 all_pred_frac <- predict(raster_all, fit_all_frac, drop_dimensions = F, na.action = na.omit)
 
