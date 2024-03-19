@@ -1,0 +1,49 @@
+Name,Meta1,Meta2,Meta3,brightness
+BareSoil_X182_Y120,pervious,Bare Soil,Bare Soil,0.463053
+BareSoil_X184_Y114,pervious,Bare Soil,Bare Soil,0.530587
+BareSoil_X191_Y113,Pervious,Bare Soil,Bare Soil,0.179808
+BareSoil_X199_Y142,Pervious,Bare Soil,Bare Soil,0.386507
+BareSoil_X200_Y136,Pervious,Bare Soil,Bare Soil,0.262087
+BareSoil_X219_Y150,Pervious,Bare Soil,Bare Soil,0.127626
+BareSoil_X220_Y142,Pervious,Bare Soil,Bare Soil,0.238258
+BareSoil_X225_Y62,Pervious,Bare Soil,Bare Soil,0.417566
+soil_X168_Y150,pervious,bare soil,soil,0.172312
+soil_X174_Y161,pervious,bare soil,soil,0.272061
+soil_X182_Y152,pervious,bare soil,soil,0.362871
+soil_X228_Y145,pervious,bare soil,soil,0.328257
+greenveg_X186_Y103,pervious,green veg,green veg,0.170884
+greenveg_X196_Y133,pervious,green veg,green veg,0.125529
+greenveg_X196_Y48,pervious,green veg,green veg,0.258239
+greenveg_X198_Y130,pervious,green veg,green veg,0.178141
+greenveg_X214_Y133,pervious,green veg,green veg,0.132935
+greenveg_X214_Y163,pervious,green veg,green veg,0.122526
+greenveg_X214_Y199,pervious,green veg,green veg,0.151389
+greenveg_X218_Y247,pervious,green veg,green veg,0.252790
+greenveg_X225_Y41,pervious,green veg,green veg,0.194123
+greenveg_X83_Y198,pervious,green veg,green veg,0.278168
+Pickleweed_X176_Y92,Pervious,green veg,Pickleweed,0.169245
+Pickleweed_X185_Y145,Pervious,green veg,Pickleweed,0.203421
+Pickleweed_X198_Y51,Pervious,green veg,Pickleweed,0.196861
+Uplands_X168_Y121,Pervious,green veg,Uplands,0.206493
+Uplands_X188_Y51,Pervious,green veg,Uplands,0.269723
+npv_X183_Y44,pervious,npv,npv,0.322558
+npv_X187_Y40,pervious,npv,npv,0.241555
+npv_X254_Y22,pervious,npv,npv,0.258223
+Algae/Water_X166_Y190,Pervious,Water,Algae/Water,0.0709761
+Algae/Water_X173_Y223,Pervious,Water,Algae/Water,0.0910748
+algae_X161_Y225,Pervious,water,algae,0.0876036
+algae_X162_Y245,pervious,water,algae,0.0532317
+algae_X180_Y235,Pervious,water,algae,0.0967087
+algae_X193_Y210,pervious,water,algae,0.133249
+algae_X207_Y206,pervious,water,algae,0.0529142
+algae_X209_Y208,pervious,water,algae,0.0826679
+shallowwater_X130_Y44,pervious,water,shallow water,0.114994
+shallowwater_X172_Y158,pervious,water,shallow water,0.0789483
+shallowwater_X173_Y81,pervious,water,shallow water,0.139073
+shallowwater_X180_Y160,pervious,water,shallow water,0.120937
+shallowwater_X203_Y145,Pervious,water,shallow water,0.111624
+shallowwater_X207_Y145,Pervious,water,shallow water,0.0818917
+Water_X172_Y208,Pervious,Water,Shallow Water,0.0742376
+Water_X192_Y177,Pervious,Water,Shallow Water,0.0915631
+Water_X204_Y145,Pervious,Water,Shallow Water,0.125055
+Water_X216_Y154,Pervious,Water,Shallow Water,0.0806327

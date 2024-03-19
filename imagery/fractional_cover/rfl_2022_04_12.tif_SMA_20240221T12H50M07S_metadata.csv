@@ -1,0 +1,80 @@
+Metadata file for MESMA based on RMSE and SVD. Run on Wed Feb 21 12:50:07 2024
+
+Input image path:,C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\imagery\subset_images\rfl_2022_04_12.tif
+     Scale factor:,   10000
+     Number of lines:,         383
+     Number of samples:,         298
+     Number of bands:,         425
+     Number of good bands:,         383
+
+Spectral library path:,C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\MESMA\subset_library\April\04_05\gns\subsets\less_than_0_5_percent\04_05_expanded_2.sli
+Metadata EM class:,META2
+
+     Endmember class:,BARE SOIL
+     Selected models:,1,2,3,4,5,6,7,8,
+
+     Endmember class:,GREEN VEG
+     Selected models:,9,10,11,12,13,14,15,16,17,18,
+
+     Endmember class:,NPV
+     Selected models:,19,20,21,
+
+     Endmember class:,WATER
+     Selected models:,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,
+
+Shade spectrum:,Photometric shade used
+
+Constraints used:
+     Minimum fraction (incl. shade):,        0.00
+     Maximum fraction (excl. shade):,        1.00
+     Minimum shade fraction:,        0.00
+     Maximum shade fraction:,        0.80
+     Maximum RMSE:,n.a.
+     Maximum residual:,    0.025000
+     Residual count (number of bands):,       7
+
+Output SMA image:,C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\imagery\subset_images\rfl_2022_04_12.tif_SMA_20240221T12H50M07S
+Output data type:,BIL
+
+LOOK-UP TABLE:,BARE SOIL-GREEN VEG
+     Number of endmembers:,           3
+     Total number of models:,          80
+LOOK-UP TABLE:,BARE SOIL-NPV
+     Number of endmembers:,           3
+     Total number of models:,          24
+LOOK-UP TABLE:,BARE SOIL-WATER
+     Number of endmembers:,           3
+     Total number of models:,         120
+LOOK-UP TABLE:,GREEN VEG-NPV
+     Number of endmembers:,           3
+     Total number of models:,          30
+LOOK-UP TABLE:,GREEN VEG-WATER
+     Number of endmembers:,           3
+     Total number of models:,         150
+LOOK-UP TABLE:,NPV-WATER
+     Number of endmembers:,           3
+     Total number of models:,          45
+LOOK-UP TABLE:,BARE SOIL-GREEN VEG-NPV
+     Number of endmembers:,           4
+     Total number of models:,         240
+LOOK-UP TABLE:,BARE SOIL-GREEN VEG-WATER
+     Number of endmembers:,           4
+     Total number of models:,        1200
+LOOK-UP TABLE:,BARE SOIL-NPV-WATER
+     Number of endmembers:,           4
+     Total number of models:,         360
+LOOK-UP TABLE:,GREEN VEG-NPV-WATER
+     Number of endmembers:,           4
+     Total number of models:,         450
+ 
+Unclassified pixels:,#pixels,% of image
+,1629,    1.427270
+
+Number of successful models:,         291
+List of successful models:,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,18,21,22,23,24,25,26,28,31,32,33,34,35,36,42,43,44,45,46,51,52,53,54,55,56,58,62,63,64,65,66,67,68,70,71,
+,72,73,74,75,76,78,81,82,83,84,85,86,88,89,90,91,92,96,97,98,99,100,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,123,124,125,128,129,130,131,133,135,140,
+,141,142,143,145,146,148,149,154,157,161,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,190,191,193,194,196,197,198,199,201,202,205,206,208,209,210,211,
+,212,213,214,215,217,218,219,220,221,222,223,224,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,246,248,252,253,254,260,263,265,266,269,270,271,272,273,274,275,276,277,278,279,280,
+,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,
+,331,332,333,334,335,336,337,338,339,340,341,342,343,344,364,375,385,387,394,400,403,405,406,408,409,411,413,414,415,416,418,421,423,424,426,430,433,434,439,442,443,
+Elapsed time:,      6.53792 minutes

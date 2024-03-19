@@ -1,0 +1,41 @@
+ENVI
+description = {
+  Viper 2 Square Array [Wed Feb 14 15:16:19 2024]}
+samples = 79
+lines   = 79
+bands   = 5
+header offset = 0
+file type = ENVI Standard
+data type = 4
+interleave = bil
+sensor type = Unknown
+byte order = 0
+wavelength units = Unknown
+band names = {
+ RMSE, Spectral Angle, EM Fraction, Shade Fraction, Constrained}
+spectra names = {
+ BareSoil_X100_Y181, BareSoil_X113_Y75, BareSoil_X177_Y112, 
+ BareSoil_X178_Y149, BareSoil_X181_Y110, BareSoil_X181_Y120, 
+ BareSoil_X182_Y120, BareSoil_X184_Y110, BareSoil_X184_Y114, 
+ BareSoil_X193_Y143, BareSoil_X203_Y138, BareSoil_X206_Y138, 
+ BareSoil_X211_Y39, BareSoil_X215_Y148, BareSoil_X217_Y137, 
+ BareSoil_X217_Y150, BareSoil_X219_Y141, BareSoil_X219_Y150, 
+ BareSoil_X220_Y142, BareSoil_X225_Y62, BareSoil_X226_Y62, 
+ 220420b_0m_asd_no-OAR, 220420c_13m_asd_no-OAR, 220420c_16m_asd_no-OAR, 
+ 220420c_17m_asd_no-OAR, 220420d_12m_asd_no-OAR, 220420d_23m_asd_no-OAR, 
+ 220420d_24m_asd_no-OAR, 220420d_2m_asd_no-OAR, 220420d_30m_asd_no-OAR, 
+ 220420d_4m_asd_no-OAR, 220420d_8m_asd_no-OAR, greenveg_X196_Y48, 
+ greenveg_X201_Y45, greenveg_X209_Y34, greenveg_X218_Y247, 
+ greenveg_X225_Y41, greenveg_X231_Y39, greenveg_X83_Y198, 
+ Pickleweed_X149_Y76, Pickleweed_X170_Y90, Pickleweed_X175_Y257, 
+ Pickleweed_X176_Y92, Pickleweed_X179_Y250, Pickleweed_X179_Y94, 
+ Pickleweed_X185_Y145, Pickleweed_X198_Y51, Pickleweed_X215_Y163, 
+ Uplands_X110_Y160, Uplands_X143_Y171, Uplands_X143_Y81, Uplands_X166_Y52, 
+ Uplands_X168_Y121, Uplands_X188_Y51, Uplands_X193_Y45, Uplands_X197_Y46, 
+ Uplands_X237_Y70, 220420a_15m_asd_no-OAR, 220420c_20m_asd_no-OAR, 
+ NPV_X130_Y187, npv_X130_Y265, NPV_X151_Y331, npv_X167_Y142, NPV_X236_Y70, 
+ NPV_X24_Y102, npv_X31_Y107, Algae/Water_X164_Y189, Algae/Water_X165_Y243, 
+ Algae/Water_X166_Y190, Algae/Water_X166_Y244, Algae/Water_X173_Y223, 
+ Algae/Water_X177_Y211, Algae/Water_X181_Y208, Algae/Water_X185_Y202, 
+ Water_X172_Y208, Water_X174_Y161, Water_X192_Y177, Water_X204_Y145, 
+ Water_X216_Y154}

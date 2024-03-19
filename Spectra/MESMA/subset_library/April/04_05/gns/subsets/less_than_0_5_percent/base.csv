@@ -1,0 +1,38 @@
+Name,Meta1,Meta2,Meta3
+BareSoil_X182_Y120,pervious,Bare Soil,Bare Soil
+BareSoil_X184_Y114,pervious,Bare Soil,Bare Soil
+BareSoil_X191_Y113,Pervious,Bare Soil,Bare Soil
+BareSoil_X199_Y142,Pervious,Bare Soil,Bare Soil
+BareSoil_X200_Y136,Pervious,Bare Soil,Bare Soil
+BareSoil_X219_Y150,Pervious,Bare Soil,Bare Soil
+BareSoil_X220_Y142,Pervious,Bare Soil,Bare Soil
+BareSoil_X225_Y62,Pervious,Bare Soil,Bare Soil
+soil_X168_Y150,pervious,bare soil,soil
+greenveg_X186_Y103,pervious,green veg,green veg
+greenveg_X196_Y48,pervious,green veg,green veg
+greenveg_X218_Y247,pervious,green veg,green veg
+greenveg_X225_Y41,pervious,green veg,green veg
+greenveg_X83_Y198,pervious,green veg,green veg
+Pickleweed_X176_Y92,Pervious,green veg,Pickleweed
+Pickleweed_X185_Y145,Pervious,green veg,Pickleweed
+Pickleweed_X198_Y51,Pervious,green veg,Pickleweed
+Uplands_X168_Y121,Pervious,green veg,Uplands
+Uplands_X188_Y51,Pervious,green veg,Uplands
+NPV_X130_Y187,Pervious,NPV,NPV
+NPV_X151_Y331,Pervious,NPV,NPV
+NPV_X24_Y102,Pervious,NPV,NPV
+Algae/Water_X166_Y190,Pervious,Water,Algae/Water
+Algae/Water_X173_Y223,Pervious,Water,Algae/Water
+algae_X161_Y225,Pervious,water,algae
+algae_X180_Y235,Pervious,water,algae
+algae_X193_Y210,pervious,water,algae
+shallowwater_X130_Y44,pervious,water,shallow water
+shallowwater_X172_Y158,pervious,water,shallow water
+shallowwater_X173_Y81,pervious,water,shallow water
+shallowwater_X180_Y160,pervious,water,shallow water
+shallowwater_X203_Y145,Pervious,water,shallow water
+shallowwater_X207_Y145,Pervious,water,shallow water
+Water_X172_Y208,Pervious,Water,Shallow Water
+Water_X192_Y177,Pervious,Water,Shallow Water
+Water_X204_Y145,Pervious,Water,Shallow Water
+Water_X216_Y154,Pervious,Water,Shallow Water

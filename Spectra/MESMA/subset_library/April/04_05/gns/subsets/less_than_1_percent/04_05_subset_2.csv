@@ -1,0 +1,26 @@
+Name,Meta1,Meta2,Meta3,brightness
+BareSoil_X219_Y150,Pervious,Bare Soil,Bare Soil,0.127626
+BareSoil_X206_Y138,Pervious,Bare Soil,Bare Soil,0.154240
+BareSoil_X220_Y142,Pervious,Bare Soil,Bare Soil,0.238258
+BareSoil_X226_Y62,Pervious,Bare Soil,Bare Soil,0.381118
+BareSoil_X215_Y148,Pervious,Bare Soil,Bare Soil,0.414037
+BareSoil_X184_Y114,pervious,Bare Soil,Bare Soil,0.530587
+Uplands_X143_Y81,Pervious,green veg,Uplands,0.190849
+Uplands_X237_Y70,Pervious,green veg,Uplands,0.191182
+Pickleweed_X185_Y145,Pervious,green veg,Pickleweed,0.203421
+Uplands_X168_Y121,Pervious,green veg,Uplands,0.206493
+Uplands_X197_Y46,Pervious,green veg,Uplands,0.213022
+Uplands_X166_Y52,Pervious,green veg,Uplands,0.218862
+Uplands_X110_Y160,Pervious,green veg,Uplands,0.234748
+greenveg_X218_Y247,pervious,green veg,green veg,0.252790
+greenveg_X196_Y48,pervious,green veg,green veg,0.258239
+Uplands_X188_Y51,Pervious,green veg,Uplands,0.269723
+greenveg_X83_Y198,pervious,green veg,green veg,0.278168
+NPV_X236_Y70,Pervious,NPV,NPV,0.280305
+npv_X130_Y265,pervious,npv,npv,0.296007
+npv_X167_Y142,pervious,npv,npv,0.308867
+NPV_X151_Y331,Pervious,NPV,NPV,0.325077
+Algae/Water_X166_Y190,Pervious,Water,Algae/Water,0.0709761
+Water_X172_Y208,Pervious,Water,Shallow Water,0.0742376
+Water_X192_Y177,Pervious,Water,Shallow Water,0.0915631
+Water_X204_Y145,Pervious,Water,Shallow Water,0.125055
