@@ -976,6 +976,7 @@ si_pred_feb <- si_pred %>%
 ggplot()+
   geom_stars(data = si_pred_feb, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
   scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 2, type = "continuous")))+
+  coord_sf(crs = 32116)+
   labs(y = "Northing",#labels
        x = "Easting",
        fill = "Electrical 
@@ -1012,6 +1013,7 @@ ele_pred_feb <- ele_pred %>%
 ggplot()+
   geom_stars(data = ele_pred_feb, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
   scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 2, type = "continuous")))+
+  coord_sf(crs = 32116)+
   labs(y = "Northing",#labels
        x = "Easting",
        fill = "Electrical 
