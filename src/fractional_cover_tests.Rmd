@@ -832,7 +832,7 @@ all_pred_crop <- all_pred_frac %>%
 
 ggplot()+
   geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 10, type = "continuous")))+
+  scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
   coord_sf(crs = 32116)+
   labs(y = "Latitude",#labels
        x = "Longitude",
@@ -906,7 +906,7 @@ ggplot()+#ggplot object
   scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
   labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
        x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation, Fractional Cover, and Indices")+#plot title
+  ggtitle("Elevation and Spectral Indices")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -932,6 +932,8 @@ min(fit_all_nc$finalModel$predicted)
 
 ```{r}
 all_pred_nc <- predict(raster_all, fit_all_nc, drop_dimensions = F, na.action = na.omit)
+
+plot(all_pred_nc)
 ```
 
 
@@ -944,7 +946,7 @@ all_pred_crop <- all_pred_nc  %>%
 
 ggplot()+
   geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 10, type = "continuous")))+
+  scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
   coord_sf(crs = 32116)+
   labs(y = "Latitude",#labels
        x = "Longitude",
@@ -964,6 +966,7 @@ Conductivity
         legend.title = element_text(color = "#5b4f41"),
         legend.text = element_text(color = "#5b4f41"))
 ```
+
 
 
 # Comparing
@@ -1020,33 +1023,271 @@ car::vif(model)
 ```
 
 ```{r}
-# remove GV
-model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + GV_fraction, data = soils_extract_2)
+# Add Soil remove GV
+model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + Soil_fraction, data = soils_extract_2)
 
 car::vif(model)
 ```
 removing ndvi and leaving GV fractions leaves acceptable collinearity
 
-```{r}
-# remove GV and NDVI add soil
-model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + Soil_fraction, data = soils_extract_2)
 
-car::vif(model)
-```
-
-```{r}
-# remove GV and NDVI add soil
-model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + Soil_fraction, data = soils_extract_2)
-
-car::vif(model)
-```
 
 ## FIT MODEL
+
+### SOIL FRACTIONS ONLY
 
 ```{r}
 set.seed(1234)
 
 fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + Soil_fraction,
+                      data = soils_extract_2, 
+                      method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+```
+
+#### EVALUATE MODEL
+
+```{r}
+# using caret
+fit_all_frac_imp <- as.data.frame(fit_all_frac$finalModel$importance)
+fit_all_frac_imp_scaled <- predict(preProcess(fit_all_frac_imp, method = c("range")), fit_all_frac_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_all_frac_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_all_frac_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_frac_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+  
+#ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
+
+#### PLOT RELATIONSHIP
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 14)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation, Fractional Cover, and Indices")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
+
+
+#### Correlation and predicted fit metrics
+
+```{r}
+all_corr <- cor(y= fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted)
+all_corr
+
+lm(fit_all_frac$finalModel$y ~ fit_all_frac$finalModel$predicted)
+max(fit_all_frac$finalModel$predicted)
+min(fit_all_frac$finalModel$predicted)
+```
+
+##### Fitting model to all data
+
+```{r}
+raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, gv_frac_all, soil_frac_all, npv_frac_all)
+
+all_pred_frac <- predict(raster_all, fit_all_frac, drop_dimensions = F, na.action = na.omit)
+
+```
+
+#### Making a Map
+
+```{r}
+all_pred_crop <- all_pred_frac %>% 
+  st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
+  filter(date == "2022-02-24")
+
+
+
+#write_stars(all_pred_crop, dsn = here("data", "predictions_nc_feb.tif"))
+
+
+ggplot()+
+  geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
+  scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
+  coord_sf(crs = 32116)+
+  labs(y = "Latitude",#labels
+       x = "Longitude",
+       fill = "Electrical 
+Conductivity 
+(mS/cm)")+
+  ggtitle("February 24, 2022")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"))
+```
+
+
+### GV FRACTIONS ONLY
+
+```{r}
+set.seed(1234)
+
+fit_all_gv <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + GV_fraction,
+                      data = soils_extract_2, 
+                      method = "rf", 
+                 trControl = trainControl(method = "cv", number = 10), 
+                 importance = TRUE)
+
+```
+
+## EVALUATE MODEL
+
+```{r}
+# using caret
+fit_all_gv_imp <- as.data.frame(fit_all_gv$finalModel$importance)
+fit_all_gv_imp_scaled <- predict(preProcess(fit_all_gv_imp, method = c("range")), fit_all_gv_imp) %>% 
+  rownames_to_column(var = "variable")
+
+ggplot(fit_all_gv_imp_scaled) +
+  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
+  geom_point(aes(x = fit_all_gv_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_gv_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (Scaled)")+
+  ggtitle("Random Forest Variable Importance")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+  
+#ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
+
+## PLOT RELATIONSHIP
+
+```{r}
+ggplot()+#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
+  geom_point(aes(y = fit_all_gv$finalModel$y, x = fit_all_gv$finalModel$predicted), color = "#E69512")+#data to make points from
+  geom_smooth(method = "lm", aes(y= fit_all_gv$finalModel$y, x = fit_all_gv$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 14)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
+  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
+       x = "Predicted Electrical conductivity (mS/cm)")+
+  ggtitle("Elevation, GV Fractional Cover, and Indices")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
+```
+
+
+### Correlation and predicted fit metrics
+
+```{r}
+all_corr <- cor(y= fit_all_gv$finalModel$y, x = fit_all_gv$finalModel$predicted)
+all_corr
+
+lm(fit_all_gv$finalModel$y ~ fit_all_gv$finalModel$predicted)
+max(fit_all_gv$finalModel$predicted)
+min(fit_all_gv$finalModel$predicted)
+```
+
+# Fitting model to all data
+
+```{r}
+all_pred_gv <- predict(raster_all, fit_all_gv, drop_dimensions = F, na.action = na.omit)
+
+plot(all_pred_gv)
+
+```
+
+# Making a Map
+
+```{r}
+all_pred_crop <- all_pred_frac %>% 
+  st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
+  filter(date == "2022-02-24")
+
+
+
+#write_stars(all_pred_crop, dsn = here("data", "predictions_nc_feb.tif"))
+
+
+ggplot()+
+  geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
+  scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
+  coord_sf(crs = 32116)+
+  labs(y = "Latitude",#labels
+       x = "Longitude",
+       fill = "Electrical 
+Conductivity 
+(mS/cm)")+
+  ggtitle("February 24, 2022")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"))
+```
+
+
+### GV AND SOIL FRACTIONS 
+
+```{r}
+set.seed(1234)
+
+fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + GV_fraction + Soil_fraction,
                       data = soils_extract_2, 
                       method = "rf", 
                  trControl = trainControl(method = "cv", number = 10), 
@@ -1143,10 +1384,10 @@ all_pred_crop <- all_pred_frac %>%
 
 ggplot()+
   geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 10, type = "continuous")))+
+  scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
   coord_sf(crs = 32116)+
-  labs(y = "Northing",#labels
-       x = "Easting",
+  labs(y = "Latitude",#labels
+       x = "Longitude",
        fill = "Electrical 
 Conductivity 
 (mS/cm)")+
@@ -1163,6 +1404,9 @@ Conductivity
         legend.title = element_text(color = "#5b4f41"),
         legend.text = element_text(color = "#5b4f41"))
 ```
+
+
+
 
 
 

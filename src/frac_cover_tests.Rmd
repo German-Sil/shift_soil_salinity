@@ -236,7 +236,7 @@ crsi_all <- c(crsi_1, crsi_2, crsi_3, crsi_4, crsi_5, crsi_6, crsi_7, crsi_8, al
 #  split(3) %>% 
 #  setNames(c("NPV_fraction", "GREEN_VEG_fraction", "BARE_SOIL_fraction"))
 
-frac_8 <- read_stars(here("imagery", "subset_images", "fractions_test","rfl_2022_04_20.tif_SMA_20240131T18h23M31S")) %>% 
+frac_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif_SMA_20240201T11h21M37S")) %>% 
   filter(band %in% c("NPV_fraction", "GREEN VEG_fraction", "BARE SOIL_fraction")) %>% 
   split(3) %>% 
   setNames(c("NPV_fraction", "GREEN_VEG_fraction", "BARE_SOIL_fraction"))
@@ -295,7 +295,7 @@ fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + 
                  trControl = trainControl(method = "cv", number = 10), 
                  importance = TRUE)
 
-lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + crsi + GREEN_VEG_fraction + BARE_SOIL_fraction + NPV_fraction,
+lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + crsi + ndvi + GREEN_VEG_fraction + BARE_SOIL_fraction + NPV_fraction,
                       data = soils_extract) %>% 
   car::vif()
 
@@ -424,7 +424,7 @@ ggplot()+#ggplot object
   scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
   labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
        x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation, Fractional Cover, and Indices")+#plot title
+  ggtitle("Elevation and Indices")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -441,4 +441,10 @@ all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
 all_corr
 ```
 
+
+```{r}
+t.test(x = fit_all$finalModel$predicted, y = fit_all_frac$finalModel$predicted)
+
+effsize::cohen.d(fit_all$finalModel$predicted, fit_all_frac$finalModel$predicted)
+```
 
