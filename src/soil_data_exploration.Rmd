@@ -164,6 +164,35 @@ ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) 
         legend.title = element_text(color = "#5b4f41"))
 ```
 
+```{r}
+soil_avg <- soils %>% 
+  group_by(transect, paired_flight) %>% 
+  summarise(avg_ec = mean(electro_cond_mS_per_cm))
+
+ggplot(soil_avg, aes(x = paired_flight, y = avg_ec, color = transect))+
+  geom_point()+# point geometry
+  geom_smooth()+
+  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
+  theme(legend.position = "none")+# legend theme
+  labs(x = "Elevation (m)",#labels
+       y = "Electrical conductivity (mS/cm)")+
+  guides(color = guide_legend(title = "Transect ID"))+#legend title
+  ggtitle("Soil Electrical Conductivity Across Elevations")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"))
+```
+
+
 # Open Raster Files:
 
 ## Opening and Compiling NDVI:
