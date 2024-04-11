@@ -58,7 +58,7 @@ soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% # read in sf file
 
 bbox <- read_sf(here("data", "bbox.shp")) #read in bounding box file
 
-boundary <- read_sf(here("data", "boundary.shp")) %>% 
+boundary <- read_sf(here("data", "marsh_boundary.shp")) %>% 
   st_transform(crs = 32611)
 
 dem <- read_stars(here("data", "dem.tif")) %>% # read in dem 
@@ -85,6 +85,91 @@ soils <- cbind(soils, mllw_extract$dem.tif) %>% #bind extracted values to the so
 ```
 
 # Open Raster Files:
+
+
+```{r}
+savi_1 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_24.tif")) %>% 
+  st_set_dimensions(3, values = seq(1:425)) %>% 
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>% 
+  select(savi)
+
+savi_2 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_28.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_3 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_08.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_4 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_16.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_5 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_22.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_6 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_05.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_7 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_12.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_9 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_29.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_10 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_03.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_11 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_11.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_13 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_17.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  split(3) %>%
+  mutate(savi = ((((X85+X86)/2)-((X59+X60)/2))/(((X85+X86)/2)+((X59+X60)/2)+0.5)) * 1.5) %>%
+  select(savi)
+
+savi_all <- c(savi_1, savi_2, savi_3, savi_4, savi_5, savi_6, savi_7, savi_8, savi_9, savi_10, savi_11, savi_13, savi_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
+```
+
 
 ## Opening and Compiling NDVI:
 ```{r}
@@ -230,331 +315,6 @@ crsi_all <- c(crsi_1, crsi_2, crsi_3, crsi_4, crsi_5, crsi_6, crsi_7, crsi_8, cr
   st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
 ```
 
-# Principle Component Genertation
-
-# Compiling NIR Bands
-
-```{r}
-nir_1 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_24.tif")) %>% 
-  st_set_dimensions(3, values = seq(1:425)) %>% 
-  filter(band %in% c(76:126)) %>% 
-  split(3) %>% 
-  setNames(c(76:126))
-
-nir_2 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_28.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_3 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_08.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_4 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_16.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_5 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_22.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_6 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_05.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_7 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_12.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_9 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_29.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_10 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_03.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_11 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_11.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-#nir_12 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_12.tif")) %>%
-#  st_set_dimensions(3, values = seq(1:425)) %>%
-#  filter(band %in% c(76:126)) %>%
-#  split(3) %>%
-#  setNames(c(76:126))
-
-nir_13 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_17.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_all <- c(nir_1, nir_2, nir_3, nir_4, nir_5, nir_6, nir_7, nir_8, nir_9, nir_10, nir_11, nir_13, nir_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date") %>% 
-  st_warp(dest = crsi_all) 
-```
-
-
-## Calculating PCs
-
-```{r}
-nir_pc_1 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_24.tif")) %>% 
-  st_set_dimensions(3, values = seq(1:425)) %>% 
-  filter(band %in% c(76:126)) %>% 
-  split(3) %>% 
-  setNames(c(76:126)) %>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_2 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_28.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_3 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_08.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_4 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_16.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_5 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_22.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_6 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_05.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_7 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_12.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_9 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_29.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_10 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_03.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_11 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_11.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-#nir_12 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_12.tif")) %>%
-#  st_set_dimensions(3, values = seq(1:425)) %>%
-#  filter(band %in% c(76:126)) %>%
-#  split(3) %>%
-#  setNames(c(76:126))
-
-nir_pc_13 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_17.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-```
-
-
-## Applying PCs
-
-```{r}
-pc_1 <- predict(nir_1, nir_pc_1)
-
-pc_2 <- predict(nir_2, nir_pc_2)
-
-pc_3 <- predict(nir_3, nir_pc_3)
-
-pc_4 <- predict(nir_4, nir_pc_4)
-
-pc_5 <- predict(nir_5, nir_pc_5)
-
-pc_6 <- predict(nir_6, nir_pc_6)
-
-pc_7 <- predict(nir_7, nir_pc_7)
-
-pc_8 <- predict(nir_8, nir_pc_8)
-
-pc_9 <- predict(nir_9, nir_pc_9)
-
-pc_10 <- predict(nir_10, nir_pc_10)
-
-pc_11 <- predict(nir_11, nir_pc_11)
-
-pc_13 <- predict(nir_13, nir_pc_13)
-
-pc_14 <- predict(nir_14, nir_pc_14)
-```
-
-## Compling PCs
-
-```{r}
-merged_pc_1 <- merge(pc_1) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_2 <- merge(pc_2) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_3 <- merge(pc_3) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_4 <- merge(pc_4) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_5 <- merge(pc_5) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_6 <- merge(pc_6) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_7 <- merge(pc_7) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_8 <- merge(pc_8) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_9 <- merge(pc_9) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_10 <- merge(pc_10) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_11 <- merge(pc_11) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_13 <- merge(pc_13) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_14 <- merge(pc_14) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-pc_all <- c(merged_pc_1, merged_pc_2, merged_pc_3, merged_pc_4, merged_pc_5, merged_pc_6, merged_pc_7, merged_pc_8, merged_pc_9, merged_pc_10, merged_pc_11, merged_pc_13, merged_pc_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
-```
 
 ## Calling Fractional Cover Data
 
@@ -658,6 +418,10 @@ mllw_all <- mllw_all %>%
   st_warp(dest = crsi_all) %>% 
   setNames("elevation")
 
+savi_all <- savi_all %>% 
+  st_warp(dest = crsi_all) %>% 
+  st_as_stars()
+
 ```
 
 # TESTING FRACTIONAL COVER INCLUSION
@@ -688,9 +452,8 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
     filter(lubridate::week(date) == i) %>% 
     st_as_sf()
   
-  pc_week <- pc_all %>% 
-    filter(lubridate::week(date) == i) %>% 
-    st_as_sf()
+  savi_week <- savi_all %>% 
+    filter(lubridate::week(date) == i)
   
   soil_week <- soils %>% 
     mutate(week = lubridate::week(paired_flight)) %>% 
@@ -713,16 +476,15 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
     select("Soil_fraction":"NPV_fraction") %>% 
     st_drop_geometry()
   
-  pc_extract <- soil_week %>% 
-    st_join(pc_week) %>% 
-    select("PC3":"PC14") %>% 
-    st_drop_geometry()
+  savi_extract <- savi_week %>% 
+   st_extract(soil_week)
   
-  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi, mari_extract$mari, vssi_extract$vssi, crsi_extract$crsi, frac_extract, pc_extract) %>% 
+  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi, mari_extract$mari, vssi_extract$vssi, crsi_extract$crsi, savi_extract$savi, frac_extract) %>% 
     rename("ndvi" = "...12",
            "mari" = "...13",
            "vssi" = "...14",
-           "crsi" = "...15")
+           "crsi" = "...15",
+           "savi" = "...16")
     
   soils_extract_2 <- rbind(soils_extract_2, soils_week)
 }
@@ -735,7 +497,7 @@ for (i in unique(lubridate::week(soils_subset$paired_flight))){
 ```{r}
 set.seed(1234)
 
-fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + NPV_fraction + Soil_fraction + GV_fraction,
+fit_all_savi <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + savi,
                       data = soils_extract_2, 
                       method = "rf", 
                  trControl = trainControl(method = "cv", number = 10), 
@@ -747,15 +509,15 @@ fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + 
 
 ```{r}
 # using caret
-fit_all_frac_imp <- as.data.frame(fit_all_frac$finalModel$importance)
-fit_all_frac_imp_scaled <- predict(preProcess(fit_all_frac_imp, method = c("range")), fit_all_frac_imp) %>% 
+fit_all_savi_imp <- as.data.frame(fit_all_savi$finalModel$importance)
+fit_all_savi_imp_scaled <- predict(preProcess(fit_all_savi_imp, method = c("range")), fit_all_savi_imp) %>% 
   rownames_to_column(var = "variable")
 
-ggplot(fit_all_frac_imp_scaled) +
+ggplot(fit_all_savi_imp_scaled) +
   geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
   geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_all_frac_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_frac_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+  geom_point(aes(x = fit_all_savi_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
+  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_savi_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
    labs(y = "Variables",#labels
        x = "Importance (Scaled)")+
   ggtitle("Random Forest Variable Importance")+#plot title
@@ -768,23 +530,23 @@ ggplot(fit_all_frac_imp_scaled) +
         strip.background = element_rect("#f8f8f8"),
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"))
-  
+
 #ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
 ```
 
 ## PLOT RELATIONSHIP
 
 ```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
+ggplot() +#ggplot object
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted") +
+  geom_point(aes(y = fit_all_savi$finalModel$y, x = fit_all_savi$finalModel$predicted), color = "#E69512") +#data to make points from
+  geom_smooth(method = "lm", aes(y = fit_all_savi$finalModel$y, x = fit_all_savi$finalModel$predicted), color = "#3A5D3D") +#smooth line data
   scale_x_continuous(expand = c(0, 0), limits = c(0, 14)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation, Fractional Cover, and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 14)) +
+  labs(y = "Actual Electrical Conductivity (mS/cm)", #labels
+       x = "Predicted Electrical Conductivity (mS/cm)") +
+  ggtitle("Elevation, Fractional Cover, and Indices") +#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5), #plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
@@ -801,33 +563,30 @@ ggplot()+#ggplot object
 ### Correlation and predicted fit metrics
 
 ```{r}
-all_corr <- cor(y= fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted)
+all_corr <- cor(y= fit_all_savi$finalModel$y, x = fit_all_savi$finalModel$predicted)
 all_corr
 
-lm(fit_all_frac$finalModel$y ~ fit_all_frac$finalModel$predicted)
-max(fit_all_frac$finalModel$predicted)
-min(fit_all_frac$finalModel$predicted)
+lm(fit_all_savi$finalModel$y ~ fit_all_savi$finalModel$predicted)
+max(fit_all_savi$finalModel$predicted)
+min(fit_all_savi$finalModel$predicted)
 ```
 
 # Fitting model to all data
 
 ```{r}
-raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, gv_frac_all, soil_frac_all, npv_frac_all)
+raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, savi_all)
 
-all_pred_frac <- predict(raster_all, fit_all_frac, drop_dimensions = F, na.action = na.omit)
+all_pred_savi <- predict(raster_all, fit_all_savi, drop_dimensions = F, na.action = na.omit)
 
+#write_stars(all_pred_savi, dsn = here("data", "prediction_savi.tif"))
 ```
 
 # Making a Map
 
 ```{r}
-all_pred_crop <- all_pred_frac %>% 
+all_pred_crop <- all_pred_savi %>% 
   st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
   filter(date == "2022-02-24")
-
-
-
-#write_stars(all_pred_crop, dsn = here("data", "predictions_nc_feb.tif"))
 
 
 ggplot()+
@@ -944,6 +703,8 @@ all_pred_crop <- all_pred_nc  %>%
   st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
   filter(date == "2022-02-24")
 
+#write_stars(all_pred_crop, dsn = here("data", "prediction_ndvi.tif"))
+
 ggplot()+
   geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
   scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
@@ -979,6 +740,52 @@ effsize::cohen.d(fit_all_nc$finalModel$predicted, fit_all_frac$finalModel$predic
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
 
 # TESTING COLLINEARITY AND ALTERATIVE MODEL FITS
@@ -988,7 +795,7 @@ effsize::cohen.d(fit_all_nc$finalModel$predicted, fit_all_frac$finalModel$predic
 ### All variables
 
 ```{r}
-model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + ndvi + NPV_fraction + Soil_fraction + GV_fraction, data = soils_extract_2)
+model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + savi, data = soils_extract_2)
 
 car::vif(model)
 
@@ -997,7 +804,7 @@ car::vif(model)
 ### Remove NDVI
 
 ```{r}
-model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + NPV_fraction + Soil_fraction + GV_fraction, data = soils_extract_2)
+model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + savi  GV_fraction, data = soils_extract_2)
 
 car::vif(model)
 
@@ -1282,128 +1089,7 @@ Conductivity
 ```
 
 
-### GV AND SOIL FRACTIONS 
 
-```{r}
-set.seed(1234)
-
-fit_all_frac <- train(electro_cond_mS_per_cm ~ elevation + mari + vssi + GV_fraction + Soil_fraction,
-                      data = soils_extract_2, 
-                      method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
-
-## EVALUATE MODEL
-
-```{r}
-# using caret
-fit_all_frac_imp <- as.data.frame(fit_all_frac$finalModel$importance)
-fit_all_frac_imp_scaled <- predict(preProcess(fit_all_frac_imp, method = c("range")), fit_all_frac_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_all_frac_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_all_frac_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_frac_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-  
-#ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-## PLOT RELATIONSHIP
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 14)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation, Fractional Cover, and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-
-### Correlation and predicted fit metrics
-
-```{r}
-all_corr <- cor(y= fit_all_frac$finalModel$y, x = fit_all_frac$finalModel$predicted)
-all_corr
-
-lm(fit_all_frac$finalModel$y ~ fit_all_frac$finalModel$predicted)
-max(fit_all_frac$finalModel$predicted)
-min(fit_all_frac$finalModel$predicted)
-```
-
-# Fitting model to all data
-
-```{r}
-raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, gv_frac_all, soil_frac_all, npv_frac_all)
-
-all_pred_frac <- predict(raster_all, fit_all_frac, drop_dimensions = F, na.action = na.omit)
-
-```
-
-# Making a Map
-
-```{r}
-all_pred_crop <- all_pred_frac %>% 
-  st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
-  filter(date == "2022-02-24")
-
-
-
-#write_stars(all_pred_crop, dsn = here("data", "predictions_nc_feb.tif"))
-
-
-ggplot()+
-  geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
-  coord_sf(crs = 32116)+
-  labs(y = "Latitude",#labels
-       x = "Longitude",
-       fill = "Electrical 
-Conductivity 
-(mS/cm)")+
-  ggtitle("February 24, 2022")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"))
-```
 
 
 
