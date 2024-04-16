@@ -516,11 +516,26 @@ fit_all_savi_imp_scaled <- predict(preProcess(fit_all_savi_imp, method = c("rang
 ggplot(fit_all_savi_imp_scaled) +
   geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
   geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_all_savi_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_savi_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
    labs(y = "Variables",#labels
        x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
+  ggtitle("Increase in Node Purity")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 16),
+        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"))
+
+
+ggplot(fit_all_savi_imp) +
+  geom_point(aes(x = fit_all_savi_imp$`%IncMSE`, y = row.names(fit_all_savi_imp)), color ="#3A5D3D")+ 
+  geom_segment(aes(y = row.names(fit_all_savi_imp), x = 0, yend = row.names(fit_all_savi_imp), xend = fit_all_savi_imp$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
+   labs(y = "Variables",#labels
+       x = "Importance (%)")+
+  ggtitle("% Increase in MSE")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -545,7 +560,7 @@ ggplot() +#ggplot object
   scale_y_continuous(expand = c(0, 0), limits = c(0, 14)) +
   labs(y = "Actual Electrical Conductivity (mS/cm)", #labels
        x = "Predicted Electrical Conductivity (mS/cm)") +
-  ggtitle("Elevation, Fractional Cover, and Indices") +#plot title
+  ggtitle("Elevation and Indices") +#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5), #plot themes
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -733,52 +748,10 @@ Conductivity
 # Comparing
 
 ```{r}
-t.test(x = fit_all_nc$finalModel$predicted, y = fit_all_frac$finalModel$predicted)
+t.test(x = fit_all_nc$finalModel$predicted, y = fit_all_savi$finalModel$predicted)
 
-effsize::cohen.d(fit_all_nc$finalModel$predicted, fit_all_frac$finalModel$predicted)
+effsize::cohen.d(fit_all_nc$finalModel$predicted, fit_all_savi$finalModel$predicted)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -804,7 +777,7 @@ car::vif(model)
 ### Remove NDVI
 
 ```{r}
-model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + savi  GV_fraction, data = soils_extract_2)
+model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi + savi + GV_fraction, data = soils_extract_2)
 
 car::vif(model)
 
@@ -1087,6 +1060,7 @@ Conductivity
         legend.title = element_text(color = "#5b4f41"),
         legend.text = element_text(color = "#5b4f41"))
 ```
+
 
 
 
