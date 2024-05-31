@@ -1,0 +1,61 @@
+Name,Meta1,Meta2,Meta3,brightness
+BareSoil_X113_Y75,Pervious,Bare Soil,Bare Soil,0.385533
+BareSoil_X177_Y112,Pervious,Bare Soil,Bare Soil,0.496745
+BareSoil_X178_Y149,Pervious,Bare Soil,Bare Soil,0.340290
+BareSoil_X184_Y110,Pervious,Bare Soil,Bare Soil,0.526014
+BareSoil_X193_Y143,Pervious,Bare Soil,Bare Soil,0.395471
+BareSoil_X215_Y148,Pervious,Bare Soil,Bare Soil,0.414037
+BareSoil_X217_Y137,Pervious,Bare Soil,Bare Soil,0.261548
+BareSoil_X217_Y150,Pervious,Bare Soil,Bare Soil,0.246053
+BareSoil_X220_Y142,Pervious,Bare Soil,Bare Soil,0.238258
+BareSoil_X225_Y62,Pervious,Bare Soil,Bare Soil,0.417566
+BareSoil_X226_Y62,Pervious,Bare Soil,Bare Soil,0.381118
+220420b_0m_asd_no-OAR,pervious,green veg,high marsh,0.207396
+220420c_13m_asd_no-OAR,pervious,green veg,pickleweed,0.130307
+220420c_16m_asd_no-OAR,pervious,green veg,pickleweed,0.107833
+220420c_17m_asd_no-OAR,pervious,green veg,pickleweed,0.125028
+220420d_12m_asd_no-OAR,pervious,green veg,pickleweed,0.111406
+220420d_23m_asd_no-OAR,pervious,green veg,pickleweed,0.111810
+220420d_24m_asd_no-OAR,pervious,green veg,pickleweed,0.115219
+220420d_2m_asd_no-OAR,pervious,green veg,pickleweed,0.134102
+220420d_30m_asd_no-OAR,pervious,green veg,pickleweed,0.132469
+220420d_4m_asd_no-OAR,pervious,green veg,pickleweed,0.116865
+220420d_8m_asd_no-OAR,pervious,green veg,pickleweed,0.125482
+Pickleweed_X149_Y76,Pervious,green veg,Pickleweed,0.146849
+Pickleweed_X170_Y90,Pervious,green veg,Pickleweed,0.166954
+Pickleweed_X175_Y257,Pervious,green veg,Pickleweed,0.175144
+Pickleweed_X176_Y92,Pervious,green veg,Pickleweed,0.169245
+Pickleweed_X179_Y250,Pervious,green veg,Pickleweed,0.147718
+Pickleweed_X179_Y94,Pervious,green veg,Pickleweed,0.155219
+Pickleweed_X185_Y145,Pervious,green veg,Pickleweed,0.203421
+Pickleweed_X198_Y51,Pervious,green veg,Pickleweed,0.196861
+Pickleweed_X215_Y163,Pervious,green veg,Pickleweed,0.144559
+Uplands_X110_Y160,Pervious,green veg,Uplands,0.234748
+Uplands_X143_Y171,Pervious,green veg,Uplands,0.246874
+Uplands_X143_Y81,Pervious,green veg,Uplands,0.190849
+Uplands_X166_Y52,Pervious,green veg,Uplands,0.218862
+Uplands_X168_Y121,Pervious,green veg,Uplands,0.206493
+Uplands_X188_Y51,Pervious,green veg,Uplands,0.269723
+Uplands_X193_Y45,Pervious,green veg,Uplands,0.191301
+Uplands_X197_Y46,Pervious,green veg,Uplands,0.213022
+Uplands_X237_Y70,Pervious,green veg,Uplands,0.191182
+220420a_15m_asd_no-OAR,pervious,npv,npv,0.196121
+220420a_16m_asd_no-OAR,pervious,npv,npv,0.199590
+220420b_20m_asd_no-OAR,pervious,npv,npv,0.191300
+220420b_24m_asd_no-OAR,pervious,npv,npv,0.189785
+220420c_20m_asd_no-OAR,pervious,npv,npv,0.229047
+NPV_X130_Y187,Pervious,NPV,NPV,0.333887
+NPV_X151_Y331,Pervious,NPV,NPV,0.325077
+NPV_X235_Y70,Pervious,NPV,NPV,0.251164
+NPV_X236_Y70,Pervious,NPV,NPV,0.280305
+NPV_X24_Y102,Pervious,NPV,NPV,0.248853
+NPV_X96_Y161,Pervious,NPV,NPV,0.243326
+Pickleweed_X179_Y140,Pervious,npv,npv,0.205611
+Algae/Water_X164_Y189,Pervious,Water,Algae/Water,0.0650929
+Algae/Water_X165_Y243,Pervious,Water,Algae/Water,0.104938
+Algae/Water_X166_Y190,Pervious,Water,Algae/Water,0.0709761
+Algae/Water_X166_Y244,Pervious,Water,Algae/Water,0.103061
+Algae/Water_X173_Y223,Pervious,Water,Algae/Water,0.0910748
+Algae/Water_X177_Y211,Pervious,Water,Algae/Water,0.0632183
+Algae/Water_X181_Y208,Pervious,Water,Algae/Water,0.0737767
+Algae/Water_X185_Y202,Pervious,Water,Algae/Water,0.0589255

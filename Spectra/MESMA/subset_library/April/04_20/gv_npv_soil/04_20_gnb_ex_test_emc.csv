@@ -1,0 +1,118 @@
+Output of VIPER 2 Tools EAR/MASA/COB routine: Thu Feb 01 14:53:23 2024
+
+Name:,Spectrum name
+Group:, Attribute in grouping field
+EAR:, Within group Endmember Average Root Mean Squared Error
+MASA:, Within group Average Spectral Angle
+InCoB:, Within group count of spectra modeled
+OutCoB:, Outside of group count of spectra modeled
+CoBI:, CoB Index calculated as: InCoB/OutCoB/number of spectra in group
+
+Name,Group,EAR,MASA,InCoB,OutCoB,CoBI
+220420c_22m_asd_no-OAR, BARE SOIL,   5.06985e-06,      0.182713,            0,            0,       0.00000
+220420c_25m_asd_no-OAR, BARE SOIL,   3.46772e-06,      0.119338,            0,            0,       0.00000
+220420c_27m_asd_no-OAR, BARE SOIL,   3.76929e-06,      0.127103,            0,            0,       0.00000
+220420c_28m_asd_no-OAR, BARE SOIL,   3.83927e-06,      0.130157,            0,            0,       0.00000
+BareSoil_X171_Y181, BARE SOIL,   6.56056e-06,      0.190395,            0,            0,       0.00000
+BareSoil_X172_Y179, BARE SOIL,   7.55202e-06,      0.221008,            0,            0,       0.00000
+BareSoil_X177_Y112, BARE SOIL,   3.35508e-06,      0.127501,            0,            0,       0.00000
+BareSoil_X178_Y149, BARE SOIL,   3.32239e-06,      0.111638,            0,            0,       0.00000
+BareSoil_X182_Y118, BARE SOIL,   4.14474e-06,      0.135193,            0,            0,       0.00000
+BareSoil_X184_Y110, BARE SOIL,   3.90517e-06,      0.150574,            0,            0,       0.00000
+BareSoil_X184_Y111, BARE SOIL,   3.70212e-06,      0.142965,           18,           88,     0.0107656
+BareSoil_X193_Y143, BARE SOIL,   2.99281e-06,      0.109677,            0,            0,       0.00000
+BareSoil_X207_Y45, BARE SOIL,   3.17391e-06,      0.106863,            0,            0,       0.00000
+BareSoil_X210_Y46, BARE SOIL,   3.12818e-06,      0.108360,            0,            0,       0.00000
+BareSoil_X215_Y148, BARE SOIL,   2.97380e-06,      0.111117,            0,            0,       0.00000
+BareSoil_X217_Y137, BARE SOIL,   3.49240e-06,      0.109899,            0,            0,       0.00000
+BareSoil_X217_Y150, BARE SOIL,   3.91553e-06,      0.121132,            0,            0,       0.00000
+BareSoil_X219_Y147, BARE SOIL,   4.06485e-06,      0.124451,            0,            0,       0.00000
+BareSoil_X220_Y142, BARE SOIL,   4.38582e-06,      0.133497,            0,            0,       0.00000
+220420b_0m_asd_no-OAR, GREEN VEG,   2.55789e-06,      0.154647,            0,            0,       0.00000
+220420c_13m_asd_no-OAR, GREEN VEG,   2.28221e-06,      0.131344,            0,            0,       0.00000
+220420c_16m_asd_no-OAR, GREEN VEG,   2.35485e-06,      0.135507,            0,            0,       0.00000
+220420c_17m_asd_no-OAR, GREEN VEG,   2.25224e-06,      0.129416,            0,            0,       0.00000
+220420d_12m_asd_no-OAR, GREEN VEG,   2.58755e-06,      0.149082,            0,            0,       0.00000
+220420d_23m_asd_no-OAR, GREEN VEG,   2.98424e-06,      0.174986,            0,            0,       0.00000
+220420d_24m_asd_no-OAR, GREEN VEG,   2.26030e-06,      0.129940,            0,            0,       0.00000
+220420d_2m_asd_no-OAR, GREEN VEG,   2.43932e-06,      0.140071,            0,            0,       0.00000
+220420d_30m_asd_no-OAR, GREEN VEG,   2.20269e-06,      0.127389,            0,            0,       0.00000
+220420d_4m_asd_no-OAR, GREEN VEG,   2.76539e-06,      0.161439,            0,            0,       0.00000
+220420d_8m_asd_no-OAR, GREEN VEG,   2.73056e-06,      0.158048,            0,            0,       0.00000
+Pickleweed_X149_Y76, GREEN VEG,   2.34640e-06,      0.141230,            0,            0,       0.00000
+Pickleweed_X168_Y143, GREEN VEG,   3.62845e-06,      0.218590,            0,            0,       0.00000
+Pickleweed_X170_Y90, GREEN VEG,   2.44030e-06,      0.143800,            0,            0,       0.00000
+Pickleweed_X175_Y257, GREEN VEG,   2.08565e-06,      0.129030,            0,            0,       0.00000
+Pickleweed_X176_Y92, GREEN VEG,   2.30912e-06,      0.136460,            0,            0,       0.00000
+Pickleweed_X179_Y250, GREEN VEG,   2.61948e-06,      0.157399,            0,            0,       0.00000
+Pickleweed_X179_Y94, GREEN VEG,   2.04970e-06,      0.122763,            0,            0,       0.00000
+Pickleweed_X185_Y145, GREEN VEG,   2.47179e-06,      0.151581,            0,            0,       0.00000
+Pickleweed_X198_Y51, GREEN VEG,   3.85348e-06,      0.233387,            0,            0,       0.00000
+Pickleweed_X200_Y49, GREEN VEG,   3.56383e-06,      0.215423,            0,            0,       0.00000
+Pickleweed_X203_Y175, GREEN VEG,   3.45018e-06,      0.207992,            0,            0,       0.00000
+Pickleweed_X215_Y163, GREEN VEG,   2.90256e-06,      0.174579,            0,            0,       0.00000
+Pickleweed_X217_Y163, GREEN VEG,   2.70061e-06,      0.162706,            0,            0,       0.00000
+Uplands_X108_Y150, GREEN VEG,   2.72638e-06,      0.165808,            0,            0,       0.00000
+Uplands_X110_Y160, GREEN VEG,   2.20095e-06,      0.136415,            0,            0,       0.00000
+Uplands_X135_Y115, GREEN VEG,   2.19136e-06,      0.136581,            0,            0,       0.00000
+Uplands_X143_Y171, GREEN VEG,   2.14694e-06,      0.133740,            0,            0,       0.00000
+Uplands_X143_Y81, GREEN VEG,   4.00497e-06,      0.245816,            0,            0,       0.00000
+Uplands_X166_Y106, GREEN VEG,   2.46184e-06,      0.149116,            0,            0,       0.00000
+Uplands_X166_Y52, GREEN VEG,   2.28153e-06,      0.140340,            0,            0,       0.00000
+Uplands_X167_Y102, GREEN VEG,   2.25534e-06,      0.136005,           36,           58,     0.0167754
+Uplands_X168_Y121, GREEN VEG,   4.32166e-06,      0.264805,            0,            0,       0.00000
+Uplands_X188_Y51, GREEN VEG,   2.06112e-06,      0.127007,            0,            0,       0.00000
+Uplands_X193_Y45, GREEN VEG,   2.22652e-06,      0.134651,            0,            0,       0.00000
+Uplands_X197_Y46, GREEN VEG,   2.08093e-06,      0.126972,            0,            0,       0.00000
+Uplands_X237_Y70, GREEN VEG,   2.76786e-06,      0.170114,            0,            0,       0.00000
+220420a_13m_asd_no-OAR, NPV,   1.80929e-06,      0.102290,            0,            0,       0.00000
+220420a_15m_asd_no-OAR, NPV,   1.33302e-06,     0.0761019,            0,            0,       0.00000
+220420a_16m_asd_no-OAR, NPV,   1.35577e-06,     0.0771893,            0,            0,       0.00000
+220420b_20m_asd_no-OAR, NPV,   1.39703e-06,     0.0798673,            0,            0,       0.00000
+220420b_20m_asd_no-OAR, NPV,   1.39703e-06,     0.0798673,            0,            0,       0.00000
+220420b_24m_asd_no-OAR, NPV,   1.94216e-06,      0.110057,            0,            0,       0.00000
+220420b_28m_asd_no-OAR, NPV,   1.52095e-06,     0.0855515,            0,            0,       0.00000
+220420b_28m_asd_no-OAR, NPV,   1.52095e-06,     0.0855515,            0,            0,       0.00000
+220420c_20m_asd_no-OAR, NPV,   1.60909e-06,     0.0920519,            0,            0,       0.00000
+Pickleweed_X157_Y148, NPV,   1.78333e-06,      0.100988,            0,            0,       0.00000
+Pickleweed_X166_Y88, NPV,   4.92574e-06,      0.270419,            0,            0,       0.00000
+Pickleweed_X175_Y92, NPV,   1.54621e-06,     0.0880815,            0,            0,       0.00000
+Pickleweed_X179_Y140, NPV,   1.58710e-06,     0.0905433,            0,            0,       0.00000
+Pickleweed_X198_Y49, NPV,   2.23044e-06,      0.126215,            0,            0,       0.00000
+Uplands_X113_Y71, NPV,   2.58816e-06,      0.146115,            0,            0,       0.00000
+Uplands_X188_Y50, NPV,   1.85925e-06,      0.106142,           15,           77,     0.0121753
+220406b_32m_asd_no-OAR, WATER,   2.82977e-06,      0.534913,            0,            0,       0.00000
+Algae/Water_X164_Y189, WATER,   1.56719e-06,      0.367119,            0,            0,       0.00000
+Algae/Water_X164_Y189, WATER,   1.61320e-06,      0.371341,            0,            0,       0.00000
+Algae/Water_X165_Y175, WATER,   2.62951e-06,      0.637859,            0,            0,       0.00000
+Algae/Water_X165_Y243, WATER,   1.74760e-06,      0.421349,            0,            0,       0.00000
+Algae/Water_X166_Y190, WATER,   1.84804e-06,      0.349036,            0,            0,       0.00000
+Algae/Water_X166_Y244, WATER,   1.68454e-06,      0.384167,            0,            0,       0.00000
+Algae/Water_X168_Y179, WATER,   2.40265e-06,      0.591550,           34,           17,     0.0571429
+Algae/Water_X169_Y185, WATER,   2.10640e-06,      0.529091,           34,           23,     0.0422360
+Algae/Water_X173_Y223, WATER,   1.57621e-06,      0.367963,            0,            0,       0.00000
+Algae/Water_X177_Y211, WATER,   1.75320e-06,      0.418196,            0,            0,       0.00000
+Algae/Water_X181_Y208, WATER,   1.66749e-06,      0.389607,            0,            0,       0.00000
+Algae/Water_X185_Y202, WATER,   1.64424e-06,      0.357061,            0,            0,       0.00000
+ShallowWater_X148_Y199, WATER,   2.46915e-06,      0.412161,            0,            0,       0.00000
+ShallowWater_X176_Y84, WATER,   1.83018e-06,      0.350928,            0,            0,       0.00000
+ShallowWater_X177_Y85, WATER,   1.94281e-06,      0.348136,            0,            0,       0.00000
+ShallowWater_X178_Y167, WATER,   2.08978e-06,      0.350660,            0,            0,       0.00000
+ShallowWater_X185_Y187, WATER,   2.53242e-06,      0.423412,            0,            0,       0.00000
+ShallowWater_X196_Y192, WATER,   2.38531e-06,      0.406737,            0,            0,       0.00000
+ShallowWater_X199_Y54, WATER,   2.64658e-06,      0.460346,            0,            0,       0.00000
+ShallowWater_X201_Y145, WATER,   1.88534e-06,      0.413201,            0,            0,       0.00000
+ShallowWater_X205_Y206, WATER,   1.85548e-06,      0.354552,            0,            0,       0.00000
+ShallowWater_X214_Y158, WATER,   1.94825e-06,      0.397872,            0,            0,       0.00000
+ShallowWater_X215_Y159, WATER,   2.02025e-06,      0.364879,            0,            0,       0.00000
+Water_X120_Y285, WATER,   2.07831e-06,      0.379297,            0,            0,       0.00000
+Water_X128_Y280, WATER,   2.61929e-06,      0.435605,            0,            0,       0.00000
+Water_X150_Y221, WATER,   2.16723e-06,      0.395799,            0,            0,       0.00000
+Water_X174_Y191, WATER,   2.16161e-06,      0.404297,            0,            0,       0.00000
+Water_X175_Y192, WATER,   2.71852e-06,      0.461561,            0,            0,       0.00000
+Water_X187_Y90, WATER,   2.56375e-06,      0.439590,            0,            0,       0.00000
+Water_X193_Y98, WATER,   2.56631e-06,      0.484075,            0,            0,       0.00000
+Water_X197_Y61, WATER,   2.57872e-06,      0.427660,            0,            0,       0.00000
+Water_X212_Y142, WATER,   2.16259e-06,      0.399558,            0,            0,       0.00000
+Water_X55_Y38, WATER,   2.60197e-06,      0.435660,            0,            0,       0.00000
+Water_X71_Y30, WATER,   2.51013e-06,      0.435816,            0,            0,       0.00000

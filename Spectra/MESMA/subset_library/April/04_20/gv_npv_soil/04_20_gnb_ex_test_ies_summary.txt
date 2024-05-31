@@ -1,0 +1,124 @@
+--IES Settings--
+---------Square Array Input: C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\MESMA\subset_library\April\04_20\gv_npv_soil\04_20_gnb_ex_test_sq.sqr
+-----Spectral Library Input: C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\MESMA\subset_library\April\04_20\gv_npv_soil\04_20_gnb_ex_test.sli
+-----------Output File Name: C:\Users\gsilva\Documents\UCSB code\shift_soil_salinity\Spectra\MESMA\subset_library\April\04_20\gv_npv_soil\04_20_gnb_ex_test_ies.sli
+-------------RMSE Threshold: 0.0250000
+------------Constraint Type: RMSE & fractions constrained
+-----Forced Endmembers Used: No
+---Metadata with EM Classes: META2
+----------Unique EM Classes: 
+BARE SOIL   GREEN VEG   NPV   WATER   
+
+New endmember entered in loop 0
+ --> Kappa at this point: 0.223061
+ --> #EM: 1, new EM name: Algae/Water_X165_Y243
+ --> Confusion Matrix:
+        BARE SO GREEN V     NPV   WATER Unclass 
+BARE SO       0       0       0       0       0 
+GREEN V       0       0       0       0       0 
+    NPV       0       0       0       0       0 
+  WATER       0       0       0      32       0 
+Unclass      19      37      16       3       0 
+
+New endmember entered in loop 1
+ --> Kappa at this point: 0.491623
+ --> #EM: 2, new EM name: Uplands_X167_Y102
+ --> Confusion Matrix:
+        BARE SO GREEN V     NPV   WATER Unclass 
+BARE SO       0       0       0       0       0 
+GREEN V       7      37      16       3       0 
+    NPV       0       0       0       0       0 
+  WATER       0       0       0      32       0 
+Unclass      12       0       0       0       0 
+
+New endmember entered in loop 2
+ --> Kappa at this point: 0.695948
+ --> #EM: 3, new EM name: BareSoil_X184_Y111
+ --> Confusion Matrix:
+   17    2   11    0    0
+    2   35    5    3    0
+    0    0    0    0    0
+    0    0    0   32    0
+    0    0    0    0    0
+
+New endmember entered in loop 3
+ --> Kappa at this point: 0.843739
+ --> #EM: 4, new EM name: 220420c_20m_asd_no-OAR
+ --> Confusion Matrix:
+   17    0    0    0    0
+    2   33    3    3    0
+    0    4   13    0    0
+    0    0    0   32    0
+    0    0    0    0    0
+
+New endmember entered in loop 4
+ --> Kappa at this point: 0.882889
+ --> #EM: 5, new EM name: Algae/Water_X168_Y179
+ --> Confusion Matrix:
+   17    0    0    0    0
+    2   33    3    0    0
+    0    4   13    0    0
+    0    0    0   35    0
+    0    0    0    0    0
+
+New endmember entered in loop 5
+ --> Kappa at this point: 0.909311
+ --> #EM: 6, new EM name: BareSoil_X171_Y181
+ --> Confusion Matrix:
+   19    0    0    0    0
+    0   33    3    0    0
+    0    4   13    0    0
+    0    0    0   35    0
+    0    0    0    0    0
+
+New endmember entered in loop 6
+ --> Kappa at this point: 0.934891
+ --> #EM: 7, new EM name: Pickleweed_X200_Y49
+ --> Confusion Matrix:
+   19    0    0    0    0
+    0   35    3    0    0
+    0    2   13    0    0
+    0    0    0   35    0
+    0    0    0    0    0
+
+New endmember entered in loop 7
+ --> Kappa at this point: 0.935222
+ --> #EM: 8, new EM name: Uplands_X113_Y71
+ --> Confusion Matrix:
+   19    0    0    0    0
+    0   34    2    0    0
+    0    3   14    0    0
+    0    0    0   35    0
+    0    0    0    0    0
+
+New endmember entered in loop 8
+ --> Kappa at this point: 0.948046
+ --> #EM: 9, new EM name: Pickleweed_X185_Y145
+ --> Confusion Matrix:
+   19    0    0    0    0
+    0   35    2    0    0
+    0    2   14    0    0
+    0    0    0   35    0
+    0    0    0    0    0
+
+END
+ --> Final Confusion Matrix:
+        BARE SO GREEN V     NPV   WATER Unclass 
+BARE SO      19       0       0       0       0 
+GREEN V       0      35       2       0       0 
+    NPV       0       2      14       0       0 
+  WATER       0       0       0      35       0 
+Unclass       0       0       0       0       0 
+
+ --> Final KAPPA: 0.948046
+ --> FINAL #EM: 9
+ -->       EM names: 
+BareSoil_X171_Y181
+BareSoil_X184_Y111
+Pickleweed_X185_Y145
+Pickleweed_X200_Y49
+Uplands_X167_Y102
+220420c_20m_asd_no-OAR
+Uplands_X113_Y71
+Algae/Water_X165_Y243
+Algae/Water_X168_Y179
