@@ -22,6 +22,7 @@ library(randomForest)
 library(randomForestExplainer)
 library(caret)
 library(ggfortify)
+library(tsibble)
 
 # spatial analysis
 library(sf)
@@ -35,6 +36,70 @@ set.seed(1234)
 ```
 
 # Opening and exploring data
+
+## Open and explore precip data:
+
+```{r}
+precip <- read_csv(here("data", "precip_data", "copr_all.txt")) %>% 
+  janitor::clean_names() %>% 
+  mutate(date = as.Date(timestamp)) %>% 
+  select(date, rain_mm_tot) %>% 
+  mutate(date = lubridate::ymd(date),
+         month = lubridate::month(date),
+         year = lubridate::year(date),
+         day = lubridate::yday(date))
+
+precip_d_2022 <- precip %>%
+  drop_na() %>% 
+  filter(year == 2022,
+         month %in% c(2,3,4,5,6)) %>% 
+  group_by(date) %>% 
+  summarize(daily_precip = sum(rain_mm_tot))
+
+precip_monthly <- precip %>% 
+  drop_na() %>% 
+  group_by(month, year) %>% 
+  summarize(monthly_precip = sum(rain_mm_tot)) %>% 
+  ungroup()
+
+precip_2022 <- precip_monthly %>% 
+  filter(year == 2022) %>% 
+  mutate(precip_2022 = monthly_precip) %>% 
+  select(month, precip_2022)
+
+precip_avg <- precip_monthly %>% 
+  group_by(month) %>% 
+  summarize(month_avg = mean(monthly_precip)) %>% 
+  ungroup()
+
+precip_data <- merge(precip_avg, precip_2022) %>% 
+  mutate(month = factor(month.abb[month], levels = month.abb))
+
+
+colors <- c("Monthly Avg." = "#8f96a6", '2022 Monthly' = "#356575")
+
+ggplot(data = precip_data)+
+  geom_col(aes(x = month, y = month_avg, fill = "Monthly Avg."), alpha = 0.75)+
+  geom_col(aes(x = month, y = precip_2022, fill = "2022 Monthly"), alpha = 0.85)+
+  geom_rect(aes(xmin = "Feb", xmax = "May", ymin = 0, ymax = Inf), alpha = 0.0070)+
+  labs(x = "Month",#labels
+       y = "Precipitation (mm)",
+       fill = "Legend",
+       title = "Monthly Rainfall at Devereux Slough")+
+  scale_fill_manual(values = colors)+
+  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 14),
+        axis.title = element_text(color = "#5b4f41", size = 16),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"))
+```
+
 
 ## Open soil and elevation data:
 
@@ -117,7 +182,7 @@ ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) 
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+# colors to use
   labs(x = "Elevation (m)",#labels
        y = "Electrical conductivity (mS/cm)")+
-  theme(legend.position = "none")+#no legend theme
+  #theme(legend.position = "none")+#no legend theme
   guides(color = guide_legend(title = "Transect ID"))+#changing legend title
   ggtitle("Soil Electrical Conductivity Across Elevations")+# title of plot
   theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
@@ -143,7 +208,7 @@ strip_labels <- c("COPR_1_EW" = "COPR 1 EW",#create better formated labels for f
                   "NCOS_2_NS" = "NCOS 2 NS")
 
 ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) +#start ggplot
-  geom_point()+# point geometry
+  geom_jitter()+# point geometry
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
@@ -165,20 +230,68 @@ ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) 
 ```
 
 ```{r}
-soil_avg <- soils %>% 
+soil_sum <- soils %>% 
   group_by(transect, paired_flight) %>% 
-  summarise(avg_ec = mean(electro_cond_mS_per_cm))
+  summarise(avg_ec = mean(electro_cond_mS_per_cm),
+            max_ec = max(electro_cond_mS_per_cm),
+            min_ec = min(electro_cond_mS_per_cm),
+            med_ec = median(electro_cond_mS_per_cm))
 
-ggplot(soil_avg, aes(x = paired_flight, y = avg_ec, color = transect))+
+
+ggplot(soils, aes(x = paired_flight, y = electro_cond_mS_per_cm, color = transect))+
   geom_point()+# point geometry
   geom_smooth()+
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
-  labs(x = "Elevation (m)",#labels
+  labs(x = "Date",#labels
        y = "Electrical conductivity (mS/cm)")+
   guides(color = guide_legend(title = "Transect ID"))+#legend title
-  ggtitle("Soil Electrical Conductivity Across Elevations")+#plot title
+  ggtitle("Soil Electrical Conductivity by Date")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"))
+
+ggplot(soil_sum, aes(x = paired_flight, y = avg_ec, color = transect))+
+  geom_point()+# point geometry
+  geom_smooth()+
+  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
+  theme(legend.position = "none")+# legend theme
+  labs(x = "Date",#labels
+       y = "Electrical conductivity (mS/cm)")+
+  guides(color = guide_legend(title = "Transect ID"))+#legend title
+  ggtitle("Average Soil Electrical Conductivity by Transect and Date")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"))
+
+ggplot(soil_sum, aes(x = paired_flight, y = max_ec, color = transect))+
+  geom_point()+# point geometry
+  geom_smooth()+
+  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
+  theme(legend.position = "none")+# legend theme
+  labs(x = "Date",#labels
+       y = "Electrical conductivity (mS/cm)")+
+  guides(color = guide_legend(title = "Transect ID"))+#legend title
+  ggtitle("Max. Soil Electrical Conductivity by Transect and Date")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -192,1280 +305,4 @@ ggplot(soil_avg, aes(x = paired_flight, y = avg_ec, color = transect))+
         legend.title = element_text(color = "#5b4f41"))
 ```
 
-
-# Open Raster Files:
-
-## Opening and Compiling NDVI:
-
-```{r}
-ndvi_1 <- read_stars(here("imagery", "NDVI", "2022_02_24_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_2 <- read_stars(here("imagery", "NDVI", "2022_02_28_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_3 <- read_stars(here("imagery", "NDVI", "2022_03_08_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_4 <- read_stars(here("imagery", "NDVI", "2022_03_16_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_5 <- read_stars(here("imagery", "NDVI", "2022_03_22_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_6 <- read_stars(here("imagery", "NDVI", "2022_04_05_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_7 <- read_stars(here("imagery", "NDVI", "2022_04_12_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_8 <- read_stars(here("imagery", "NDVI", "2022_04_20_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_9 <- read_stars(here("imagery", "NDVI", "2022_04_29_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_10 <- read_stars(here("imagery", "NDVI", "2022_05_03_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_11 <- read_stars(here("imagery", "NDVI", "2022_05_11_ndvi.tif")) %>% 
-  setNames("ndvi")
-#ndvi_12 <- read_stars(here("imagery", "NDVI", "2022_05_12_ndvi.tif")) %>% 
- # setNames("ndvi")
-ndvi_13 <- read_stars(here("imagery", "NDVI", "2022_05_17_ndvi.tif")) %>% 
-  setNames("ndvi")
-ndvi_14 <- read_stars(here("imagery", "NDVI", "2022_05_29_ndvi.tif")) %>% 
-  setNames("ndvi")
-
-
-ndvi_all <- c(ndvi_1, ndvi_2, ndvi_3, ndvi_4, ndvi_5, ndvi_6, ndvi_7, ndvi_8, ndvi_9, ndvi_10, ndvi_11, ndvi_13, ndvi_14, along = 3) %>% 
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
-```
-
-## Opening and Compiling VSSI:
-
-```{r}
-vssi_1 <- read_stars(here("imagery", "VSSI", "02_24_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_2 <- read_stars(here("imagery", "VSSI", "02_28_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_3 <- read_stars(here("imagery", "VSSI", "03_08_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_4 <- read_stars(here("imagery", "VSSI", "03_16_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_5 <- read_stars(here("imagery", "VSSI", "03_22_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_6 <- read_stars(here("imagery", "VSSI", "04_05_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_7 <- read_stars(here("imagery", "VSSI", "04_12_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_8 <- read_stars(here("imagery", "VSSI", "04_20_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_9 <- read_stars(here("imagery", "VSSI", "04_29_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_10 <- read_stars(here("imagery", "VSSI", "05_03_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_11 <- read_stars(here("imagery", "VSSI", "05_11_vssi.tif")) %>% 
-  setNames("vssi")
-#vssi_12 <- read_stars(here("imagery", "VSSI", "05_12_vssi.tif")) %>% 
- # setNames("vssi")
-vssi_13 <- read_stars(here("imagery", "VSSI", "05_17_vssi.tif")) %>% 
-  setNames("vssi")
-vssi_14 <- read_stars(here("imagery", "VSSI", "05_29_vssi")) %>% 
-  setNames("vssi")
-
-vssi_all <- c(vssi_1, vssi_2, vssi_3, vssi_4, vssi_5, vssi_6, vssi_7, vssi_8, vssi_9, vssi_10, vssi_11, vssi_13, vssi_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
-```
-
-## Opening and Compiling mARI:
-
-```{r}
-mari_1 <- read_stars(here("imagery", "mARI", "02_24_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_2 <- read_stars(here("imagery", "mARI", "02_28_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_3 <- read_stars(here("imagery", "mARI", "03_08_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_4 <- read_stars(here("imagery", "mARI", "03_16_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_5 <- read_stars(here("imagery", "mARI", "03_22_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_6 <- read_stars(here("imagery", "mARI", "04_05_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_7 <- read_stars(here("imagery", "mARI", "04_12_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_8 <- read_stars(here("imagery", "mARI", "04_20_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_9 <- read_stars(here("imagery", "mARI", "04_29_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_10 <- read_stars(here("imagery", "mARI", "05_03_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_11 <- read_stars(here("imagery", "mARI", "05_11_mari_avg.tif")) %>% 
-  setNames("mari")
-#mari_12 <- read_stars(here("imagery", "mARI", "05_12_mari_avg.tif")) %>% 
- # setNames("mari")
-mari_13 <- read_stars(here("imagery", "mARI", "05_17_mari_avg.tif")) %>% 
-  setNames("mari")
-mari_14 <- read_stars(here("imagery", "mARI", "05_29_mari_avg.tif")) %>% 
-  setNames("mari")
-
-mari_all <- c(mari_1, mari_2, mari_3, mari_4, mari_5, mari_6, mari_7, mari_8, mari_9, mari_10, mari_11, mari_13, mari_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
-```
-
-## Opening and Compiling CRSI:
-
-```{r}
-crsi_1 <- read_stars(here("imagery", "CRSI", "02_24_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_2 <- read_stars(here("imagery", "CRSI", "02_28_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_3 <- read_stars(here("imagery", "CRSI", "03_08_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_4 <- read_stars(here("imagery", "CRSI", "03_16_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_5 <- read_stars(here("imagery", "CRSI", "03_22_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_6 <- read_stars(here("imagery", "CRSI", "04_05_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_7 <- read_stars(here("imagery", "CRSI", "04_12_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_8 <- read_stars(here("imagery", "CRSI", "04_20_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_9 <- read_stars(here("imagery", "CRSI", "04_29_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_10 <- read_stars(here("imagery", "CRSI", "05_03_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_11 <- read_stars(here("imagery", "CRSI", "05_11_crsi.tif")) %>% 
-  setNames("crsi")
-#crsi_12 <- read_stars(here("imagery", "CRSI", "05_12_crsi.tif")) %>% 
- # setNames("crsi")
-crsi_13 <- read_stars(here("imagery", "CRSI", "05_17_crsi.tif")) %>% 
-  setNames("crsi")
-crsi_14 <- read_stars(here("imagery", "CRSI", "05_29_crsi.tif")) %>% 
-  setNames("crsi")
-
-crsi_all <- c(crsi_1, crsi_2, crsi_3, crsi_4, crsi_5, crsi_6, crsi_7, crsi_8, crsi_9, crsi_10, crsi_11, crsi_13, crsi_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
-```
-
-# Compiling NIR Bands
-
-```{r}
-nir_1 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_24.tif")) %>% 
-  st_set_dimensions(3, values = seq(1:425)) %>% 
-  filter(band %in% c(76:126)) %>% 
-  split(3) %>% 
-  setNames(c(76:126))
-
-nir_2 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_28.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_3 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_08.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_4 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_16.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_5 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_22.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_6 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_05.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_7 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_12.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_9 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_29.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_10 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_03.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_11 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_11.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-#nir_12 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_12.tif")) %>%
-#  st_set_dimensions(3, values = seq(1:425)) %>%
-#  filter(band %in% c(76:126)) %>%
-#  split(3) %>%
-#  setNames(c(76:126))
-
-nir_13 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_17.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))
-
-nir_all <- c(nir_1, nir_2, nir_3, nir_4, nir_5, nir_6, nir_7, nir_8, nir_9, nir_10, nir_11, nir_13, nir_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date") %>% 
-  st_warp(dest = crsi_all) 
-```
-
-
-# Principle Component Genertation
-
-## Calculating PCs
-
-```{r}
-nir_pc_1 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_24.tif")) %>% 
-  st_set_dimensions(3, values = seq(1:425)) %>% 
-  filter(band %in% c(76:126)) %>% 
-  split(3) %>% 
-  setNames(c(76:126)) %>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_2 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_28.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_3 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_08.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_4 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_16.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_5 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_22.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_6 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_05.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_7 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_12.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_9 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_29.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_10 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_03.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_11 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_11.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-#nir_12 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_12.tif")) %>%
-#  st_set_dimensions(3, values = seq(1:425)) %>%
-#  filter(band %in% c(76:126)) %>%
-#  split(3) %>%
-#  setNames(c(76:126))
-
-nir_pc_13 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_17.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-nir_pc_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
-  st_set_dimensions(3, values = seq(1:425)) %>%
-  filter(band %in% c(76:126)) %>%
-  split(3) %>%
-  setNames(c(76:126))%>% 
-  as.data.frame() %>% 
-  drop_na() %>% 
-  prcomp()
-
-```
-
-
-## Applying PCs
-
-```{r}
-pc_1 <- predict(nir_1, nir_pc_1)
-
-pc_2 <- predict(nir_2, nir_pc_2)
-
-pc_3 <- predict(nir_3, nir_pc_3)
-
-pc_4 <- predict(nir_4, nir_pc_4)
-
-pc_5 <- predict(nir_5, nir_pc_5)
-
-pc_6 <- predict(nir_6, nir_pc_6)
-
-pc_7 <- predict(nir_7, nir_pc_7)
-
-pc_8 <- predict(nir_8, nir_pc_8)
-
-pc_9 <- predict(nir_9, nir_pc_9)
-
-pc_10 <- predict(nir_10, nir_pc_10)
-
-pc_11 <- predict(nir_11, nir_pc_11)
-
-pc_13 <- predict(nir_13, nir_pc_13)
-
-pc_14 <- predict(nir_14, nir_pc_14)
-```
-
-## Compling PCs
-
-```{r}
-merged_pc_1 <- merge(pc_1) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_2 <- merge(pc_2) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_3 <- merge(pc_3) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_4 <- merge(pc_4) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_5 <- merge(pc_5) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_6 <- merge(pc_6) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_7 <- merge(pc_7) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_8 <- merge(pc_8) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_9 <- merge(pc_9) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_10 <- merge(pc_10) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_11 <- merge(pc_11) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_13 <- merge(pc_13) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-merged_pc_14 <- merge(pc_14) %>% 
-  st_as_stars() %>% 
-  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
-  split()
-
-pc_all <- c(merged_pc_1, merged_pc_2, merged_pc_3, merged_pc_4, merged_pc_5, merged_pc_6, merged_pc_7, merged_pc_8, merged_pc_9, merged_pc_10, merged_pc_11, merged_pc_13, merged_pc_14, along = 3) %>%
-  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
-```
-
-## Adjusting elevation data
-
-```{r}
-mllw_all <- mllw_all %>% 
-  st_warp(dest = crsi_all) %>% 
-  setNames("elevation")
-
-```
-
-# Extracting Values based on week
-
-```{r}
-
-soils_extract <- data.frame()
-
-for (i in unique(lubridate::week(soils$paired_flight))){
-  ndvi_week <- ndvi_all %>% 
-    filter(lubridate::week(date) == i)
-  
-  mari_week <- mari_all %>% 
-    filter(lubridate::week(date) == i)
-
-  vssi_week <- vssi_all %>% 
-    filter(lubridate::week(date) == i)
-  
-  crsi_week <- crsi_all %>% 
-    filter(lubridate::week(date) == i)
-  
-  nir_week <- nir_all %>% 
-    filter(lubridate::week(date) == i) %>% 
-    st_as_sf()
-  
-  pc_week <- pc_all %>% 
-    filter(lubridate::week(date) == i) %>% 
-    st_as_sf()
-  
-  soil_week <- soils %>% 
-    mutate(week = lubridate::week(paired_flight)) %>% 
-    filter(week == i)
-  
-  ndvi_extract <- ndvi_week %>% 
-    st_extract(soil_week)
-  
-  mari_extract <- mari_week %>% 
-    st_extract(soil_week)
-  
-  vssi_extract <- vssi_week %>% 
-    st_extract(soil_week)
-  
-  crsi_extract <- crsi_week %>% 
-    st_extract(soil_week)
-   
-  nir_extract <- soil_week %>% 
-    st_join(nir_week) %>% 
-    select("76":"126") %>% 
-    st_drop_geometry()
-  
-  pc_extract <- soil_week %>% 
-    st_join(pc_week) %>% 
-    select("PC3":"PC14") %>% 
-    st_drop_geometry()
-  
-  soils_week <- bind_cols(soil_week, ndvi_extract$ndvi, mari_extract$mari, vssi_extract$vssi, crsi_extract$crsi, nir_extract, pc_extract) %>% 
-    rename("ndvi" = "...12",
-           "mari" = "...13",
-           "vssi" = "...14",
-           "crsi" = "...15")
-    
-  soils_extract <- rbind(soils_extract, soils_week)
-}
-
-#write.csv(soils_extract, file = here("data", "extracted_soils.csv"))
-```
-
-# Spectral and Environmental Variables
-
-## Fitting the model to all variables
-
-```{r}
-set.seed(1234)
-
-fit_all <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
-
-
-### Evaluating Model
-
-```{r}
-# using caret
-fit_all_imp <- as.data.frame(fit_all$finalModel$importance)
-fit_all_imp_scaled <- predict(preProcess(fit_all_imp, method = c("range")), fit_all_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_all_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = `%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = `%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-  
-#ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-cor(fit_all$finalModel$y, fit_all$finalModel$predicted)
-```
-
-### Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted", linewidth = 1.5)+
-  geom_point(aes(y = fit_all$finalModel$y, x = fit_all$finalModel$predicted), color = "#E69512", size = 4)+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 28, hjust = 0.5, face = "bold"),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#B4AA98"),
-        axis.text = element_text(color = "#5b4f41", size = 18,),
-        axis.title = element_text(color = "#5b4f41", size = 22, hjust = 0.5, face = "bold"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41", linewidth = 1))
-
-#ggsave(filename = "all_plot_caret.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-all_corr <- cor(y= fit_all$finalModel$y, x = fit_all$finalModel$predicted)
-all_corr
-
-lm(fit_all$finalModel$y ~ fit_all$finalModel$predicted)
-```
-
-# Spectral Indices & PCs Only
-
-## Fitting the model to spectral Indices
-
-```{r}
-
-fit_si <- train(electro_cond_mS_per_cm ~ ndvi + mari + vssi + crsi + `PC3` + `PC4` + `PC5` + `PC6` + `PC7` + `PC8` + `PC9` + `PC10` + `PC11` + `PC12` + `PC13` + `PC14`, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
-
-### Evaluating Model
-
-```{r}
-
-fit_si_imp <- as.data.frame(fit_si$finalModel$importance)
-fit_si_imp_scaled <- predict(preProcess(fit_si_imp, method = c("range")), fit_si_imp) %>% 
-  rownames_to_column(var = "variable")
-
-
-ggplot(fit_si_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_si_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_si_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
- theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "si_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-cor(y = fit_si$finalModel$y, x= fit_si$finalModel$predicted)
-
-```
- 
-### Observed v Predicted Plot
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y= fit_si$finalModel$y, x = fit_si$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_si$finalModel$y, x = fit_si$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Spectral Indices and PCs")+#plot title
-theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-# Elevation prediction
- 
-## Random Forest regression of Soil salinity and elevation
-```{r}
-fit_ele <- train(electro_cond_mS_per_cm ~ elevation, data = soils, method = "rf", trControl = trainControl(method = "cv", number = 10), importance = T)#random forest fitting of the data with stated equation
-```
-
-### Correlation
-
-```{r}
-elevation_cor <- cor(y = fit_ele$finalModel$y, x = fit_ele$finalModel$predicted)#calculate correlation coefficient
-elevation_cor#call/print correlation value
-```
-
-
-### Observed v Predicted
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted", linewidth = 1.5)+
-  geom_point(aes(y = fit_ele$finalModel$y, x = fit_ele$finalModel$predicted), color = "#E69512", size = 3)+#data to make points from
-  geom_smooth(method = "lm", aes(y = fit_ele$finalModel$y, x = fit_ele$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 28, hjust = 0.5, face = "bold"),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#B4AA98"),
-        axis.text = element_text(color = "#5b4f41", size = 18,),
-        axis.title = element_text(color = "#5b4f41", size = 22, hjust = 0.5, face = "bold"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41", linewidth = 1))
-
-#ggsave(filename = "ele_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
- 
-# Compiling all raster data
- 
-```{r}
-raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all)
-
-``` 
-
-# Predicting values
-
-```{r}
-all_pred <- predict(raster_all, fit_all, drop_dimensions = F)
-
-```
-
-# Making a Map
-
-```{r}
-all_pred_feb <- all_pred %>% 
-  filter(date == "2022-02-24") %>% 
-  st_crop(y = boundary, crop = TRUE, as_points = FALSE)
-
-ggplot()+
-  geom_stars(data = all_pred_feb, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 2, type = "continuous")))+
-  coord_sf(crs = 32116)+
-  labs(y = "Northing",#labels
-       x = "Easting",
-       fill = "Electrical 
-Conductivity 
-(mS/cm)")+
-  ggtitle("February 24, 2022")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"))
-```
-
-# Interactive Map
-
-```{r}
-mapview::mapview(all_pred_feb)
-```
-
-
-
-# Predicting values
-
-```{r}
-fit_si <- train(electro_cond_mS_per_cm ~ ndvi + mari + vssi + crsi, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-si_pred <- predict(raster_all, fit_si, drop_dimensions = F)
-
-```
-
-# Making a Map
-
-```{r}
-si_pred_feb <- si_pred %>% 
-  filter(date == "2022-05-17") %>% 
-  st_crop(y = boundary, crop = TRUE, as_points = FALSE)
-
-
-ggplot()+
-  geom_stars(data = si_pred_feb, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 2, type = "continuous")))+
-  coord_sf(crs = 32116)+
-  labs(y = "Northing",#labels
-       x = "Easting",
-       fill = "Electrical 
-Conductivity 
-(mS/cm)")+
-  ggtitle("May 24, 2022")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"))
-```
-
-# Predicting values
-
-```{r}
-ele_pred <- predict(raster_all, fit_ele, drop_dimensions = F)
-
-```
-
-# Making a Map
-
-```{r}
-ele_pred_feb <- ele_pred %>% 
-  filter(date == "2022-05-17") %>% 
-  st_crop(y = boundary, crop = TRUE, as_points = FALSE)
-
-ggplot()+
-  geom_stars(data = ele_pred_feb, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 2, type = "continuous")))+
-  coord_sf(crs = 32116)+
-  labs(y = "Northing",#labels
-       x = "Easting",
-       fill = "Electrical 
-Conductivity 
-(mS/cm)")+
-  ggtitle("May 17, 2022")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"))
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
-
-
-
-
-
-
-
-
-# TESTING COLLINEARITY AND ALTERATIVE MODEL FITS
-
-## Collinearity
-
-```{r}
-model <- lm(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, data = soils_extract)
-
-car::vif(model)
-
-```
-
-Based on the VIF collinearity data, CRSI is highly correlated with the other variables and should potentially be removed from the model, NDVI and mARI seem to have moderate collinearity as well, potential removal of ndvi may be a possible solution. 
-
-```{r}
-model <- lm(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi, data = soils_extract)
-
-car::vif(model)
-```
-
-With CRSI removed, VIF values for mARI and NDVI are reduced, but they seem to be the two collinear values. Might be worth testing model fits between a model excluding CRSI and NDVI and just excluding CRSI.
-
-```{r}
-model <- lm(electro_cond_mS_per_cm ~ elevation + mari + vssi, data = soils_extract)
-
-car::vif(model)
-```
-
-## Testing Exclusion of Spectral Indices (due to collinearity)
-
-```{r}
-set.seed(1234)
-
-fit_all_nc <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
-
-
-### Evaluating Model
-
-```{r}
-# using caret
-fit_all_nc_imp <- as.data.frame(fit_all_nc$finalModel$importance)
-fit_all_nc_imp_scaled <- predict(preProcess(fit_all_nc_imp, method = c("range")), fit_all_nc_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_all_nc_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_all_nc_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_all_nc_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-  
-#ggsave(filename = "all_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-cor(fit_all_nc$finalModel$y, fit_all_nc$finalModel$predicted)
-```
-
-### Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted", linewidth = 1.5)+
-  geom_point(aes(y = fit_all_nc$finalModel$y, x = fit_all_nc$finalModel$predicted), color = "#E69512", size = 4)+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_all_nc$finalModel$y, x = fit_all_nc$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 28, hjust = 0.5, face = "bold"),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#B4AA98"),
-        axis.text = element_text(color = "#5b4f41", size = 18,),
-        axis.title = element_text(color = "#5b4f41", size = 22, hjust = 0.5, face = "bold"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41", linewidth = 1))
-
-#ggsave(filename = "all_plot_nc.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-all_corr <- cor(y= fit_all_nc$finalModel$y, x = fit_all_nc$finalModel$predicted)
-all_corr
-
-lm(fit_all_nc$finalModel$y ~ fit_all_nc$finalModel$predicted)
-```
-
-
-
-```{r}
-all_pred_nc <- predict(raster_all, fit_all_nc, drop_dimensions = F, na.action = na.omit)
-```
-
-
-```{r}
-all_pred_crop <- all_pred_nc  %>% 
-  st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
-  filter(date == "2022-02-24")
-
-ggplot()+
-  geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "desert", n = 10, type = "continuous")))+
-  coord_sf(crs = 32116)+
-  labs(y = "Northing",#labels
-       x = "Easting",
-       fill = "Electrical 
-Conductivity 
-(mS/cm)")+
-  ggtitle("February 24, 2022")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"))
-```
-
-```{r}
-mapview(all_pred_crop)
-```
-
-
-########################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
-
-
-
-## Including PCs
-
-```{r}
-
-fit_pc <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi + `PC3` + `PC4` + `PC5` + `PC6` + `PC7` + `PC8` + `PC9` + `PC10` + `PC11` + `PC12` + `PC13` + `PC14`, 
-                 data = soils_extract, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-```
-
-### Evaluating Model
-
-```{r}
-# using caret
-fit_pc_imp <- as.data.frame(fit_pc$finalModel$importance)
-fit_pc_imp_scaled <- predict(preProcess(fit_pc_imp, method = c("range")), fit_pc_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_pc_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_pc_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_pc_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "all_si_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-cor(fit_pc$finalModel$y, fit_pc$finalModel$predicted)
-```
-
-### Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_pc$finalModel$y, x = fit_pc$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_pc$finalModel$y, x = fit_pc$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 11)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation, Indices, and PC")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "all_si_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-
-```
-
-
-
-
-
-
-####################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
-
-
-
-
-
-
-
-
-
-# Comparing which variables are most important by landcover type
-
-## Bare soil
-
-```{r}
-
-soils_soils <- soils_extract %>% 
-  filter(landcover == "soil")
-
-
-fit_soil <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
-                 data = soils_soils, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-
-```
-
-
-### Evaluating Model
-
-```{r}
-# using caret
-fit_soil_imp <- as.data.frame(fit_soil$finalModel$importance)
-fit_soil_imp_scaled <- predict(preProcess(fit_soil_imp, method = c("range")), fit_soil_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_soil_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_soil_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_soil_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "bare_soil_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-### Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_soil$finalModel$y, x = fit_soil$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_soil$finalModel$y, x = fit_soil$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(3, 14)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(3, 14))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-cor(fit_soil$finalModel$y, fit_soil$finalModel$predicted)
-
-#ggsave(filename = "bare_soil_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-
-## Vegetated
-
-```{r}
-
-soils_veg <- soils_extract %>% 
-  filter(landcover == "vegetated")
-
-
-fit_veg <- train(electro_cond_mS_per_cm ~ elevation + ndvi + mari + vssi + crsi, 
-                 data = soils_veg, 
-                 method = "rf", 
-                 trControl = trainControl(method = "cv", number = 10), 
-                 importance = TRUE)
-
-
-```
-
-### Evaluating Model
-
-```{r}
-# using caret
-fit_veg_imp <- as.data.frame(fit_veg$finalModel$importance)
-fit_veg_imp_scaled <- predict(preProcess(fit_veg_imp, method = c("range")), fit_veg_imp) %>% 
-  rownames_to_column(var = "variable")
-
-ggplot(fit_veg_imp_scaled) +
-  geom_point(aes(x = IncNodePurity, y = variable), color = "#E69512")+
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = IncNodePurity), color = "#E69512", size = 1.2)+
-  geom_point(aes(x = fit_veg_imp_scaled$`%IncMSE`, y = variable), color ="#3A5D3D")+ 
-  geom_segment(aes(y= variable, x = 0, yend = variable, xend = fit_veg_imp_scaled$`%IncMSE`), color = "#3A5D3D", linetype = "dashed")+
-   labs(y = "Variables",#labels
-       x = "Importance (Scaled)")+
-  ggtitle("Random Forest Variable Importance")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-#ggsave(filename = "veg_imp.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
-
-### Ploting Model Fit
-
-```{r}
-ggplot()+#ggplot object
-  geom_abline(slope = 1, intercept = 0, linetype = "dotted")+
-  geom_point(aes(y = fit_veg$finalModel$y, x = fit_veg$finalModel$predicted), color = "#E69512")+#data to make points from
-  geom_smooth(method = "lm", aes(y= fit_veg$finalModel$y, x = fit_veg$finalModel$predicted), color =  "#3A5D3D")+#smooth line data
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 12)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 12))+
-  labs(y = "Actual Electrical Conductivity (mS/cm)",#labels
-       x = "Predicted Electrical conductivity (mS/cm)")+
-  ggtitle("Elevation and Indices")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 24, hjust = 0.5),#plot themes
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41", size = 16),
-        axis.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"))
-
-cor(fit_veg$finalModel$y, fit_veg$finalModel$predicted)
-
-#ggsave(filename = "veg_plot.png", plot = last_plot(), width = 12, height = 8, device = "png", dpi = 500) #write an image of the plot
-```
 

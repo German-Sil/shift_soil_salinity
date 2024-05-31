@@ -1,0 +1,362 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-02-16"
+---
+
+
+```{r setup, include=FALSE, message=FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
+
+# visualization
+library(mapview)
+library(calecopal)
+
+# significance tests and data exploration
+library(tidyverse)
+library(here)
+library(kableExtra)
+library(ggbeeswarm)
+library(broom)
+library(randomForest)
+library(randomForestExplainer)
+library(caret)
+library(ggfortify)
+
+# spatial analysis
+library(sf)
+library(tmap)
+library(gstat)
+library(stars)
+library(terra)
+library(SpatialKDE)
+
+set.seed(1234)
+```
+
+
+# Compiling NIR Bands
+
+```{r}
+nir_1 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_24.tif")) %>% 
+  st_set_dimensions(3, values = seq(1:425)) %>% 
+  filter(band %in% c(76:126)) %>% 
+  split(3) %>% 
+  setNames(c(76:126))
+
+nir_2 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_28.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_3 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_08.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_4 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_16.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_5 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_22.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_6 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_05.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_7 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_12.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_9 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_29.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_10 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_03.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_11 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_11.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+#nir_12 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_12.tif")) %>%
+#  st_set_dimensions(3, values = seq(1:425)) %>%
+#  filter(band %in% c(76:126)) %>%
+#  split(3) %>%
+#  setNames(c(76:126))
+
+nir_13 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_17.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))
+
+nir_all <- c(nir_1, nir_2, nir_3, nir_4, nir_5, nir_6, nir_7, nir_8, nir_9, nir_10, nir_11, nir_13, nir_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date") %>% 
+  st_warp(dest = crsi_all) 
+```
+
+
+# Principle Component Genertation
+
+## Calculating PCs
+
+```{r}
+nir_pc_1 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_24.tif")) %>% 
+  st_set_dimensions(3, values = seq(1:425)) %>% 
+  filter(band %in% c(76:126)) %>% 
+  split(3) %>% 
+  setNames(c(76:126)) %>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_2 <- read_stars(here("imagery", "subset_images", "rfl_2022_02_28.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_3 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_08.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_4 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_16.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_5 <- read_stars(here("imagery", "subset_images", "rfl_2022_03_22.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_6 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_05.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_7 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_12.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_8 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_20.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_9 <- read_stars(here("imagery", "subset_images", "rfl_2022_04_29.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_10 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_03.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_11 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_11.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+#nir_12 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_12.tif")) %>%
+#  st_set_dimensions(3, values = seq(1:425)) %>%
+#  filter(band %in% c(76:126)) %>%
+#  split(3) %>%
+#  setNames(c(76:126))
+
+nir_pc_13 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_17.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+nir_pc_14 <- read_stars(here("imagery", "subset_images", "rfl_2022_05_29.tif")) %>%
+  st_set_dimensions(3, values = seq(1:425)) %>%
+  filter(band %in% c(76:126)) %>%
+  split(3) %>%
+  setNames(c(76:126))%>% 
+  as.data.frame() %>% 
+  drop_na() %>% 
+  prcomp()
+
+```
+
+
+## Applying PCs
+
+```{r}
+pc_1 <- predict(nir_1, nir_pc_1)
+
+pc_2 <- predict(nir_2, nir_pc_2)
+
+pc_3 <- predict(nir_3, nir_pc_3)
+
+pc_4 <- predict(nir_4, nir_pc_4)
+
+pc_5 <- predict(nir_5, nir_pc_5)
+
+pc_6 <- predict(nir_6, nir_pc_6)
+
+pc_7 <- predict(nir_7, nir_pc_7)
+
+pc_8 <- predict(nir_8, nir_pc_8)
+
+pc_9 <- predict(nir_9, nir_pc_9)
+
+pc_10 <- predict(nir_10, nir_pc_10)
+
+pc_11 <- predict(nir_11, nir_pc_11)
+
+pc_13 <- predict(nir_13, nir_pc_13)
+
+pc_14 <- predict(nir_14, nir_pc_14)
+```
+
+## Compling PCs
+
+```{r}
+merged_pc_1 <- merge(pc_1) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_2 <- merge(pc_2) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_3 <- merge(pc_3) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_4 <- merge(pc_4) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_5 <- merge(pc_5) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_6 <- merge(pc_6) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_7 <- merge(pc_7) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_8 <- merge(pc_8) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_9 <- merge(pc_9) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_10 <- merge(pc_10) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_11 <- merge(pc_11) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_13 <- merge(pc_13) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+merged_pc_14 <- merge(pc_14) %>% 
+  st_as_stars() %>% 
+  filter(attributes %in% c("PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14")) %>% 
+  split()
+
+pc_all <- c(merged_pc_1, merged_pc_2, merged_pc_3, merged_pc_4, merged_pc_5, merged_pc_6, merged_pc_7, merged_pc_8, merged_pc_9, merged_pc_10, merged_pc_11, merged_pc_13, merged_pc_14, along = 3) %>%
+  st_set_dimensions(3, values = lubridate::ymd(c("2022_02_24", "2022_02_28", "2022_03_08", "2022_03_16", "2022_03_22", "2022_04_05", "2022_04_12", "2022_04_20", "2022_04_29", "2022_05_03", "2022_05_11", "2022_05_17", "2022_05_29")), names = "date")
+```
