@@ -156,13 +156,14 @@ soils <- cbind(soils, mllw_extract$dem.tif) %>% #bind extracted values to the so
 ```{r}
 #make descriptive stat table
 soils %>% # to soils
-  group_by(transect) %>%# group by transect  
-  summarize(min = min(electro_cond_mS_per_cm),#calculate mins
-            max = max(electro_cond_mS_per_cm),#calculate max
-            mean = mean(electro_cond_mS_per_cm),#calculate mean
-            median = median(electro_cond_mS_per_cm),
-            dev = sd(electro_cond_mS_per_cm),#obtain standard dev
-            variance = var(electro_cond_mS_per_cm)) %>% # calculate variance
+  group_by(transect) %>%# group by transect 
+  st_drop_geometry() %>% 
+  summarize(Min = min(electro_cond_mS_per_cm),#calculate mins
+            Max = max(electro_cond_mS_per_cm),#calculate max
+            Mean = mean(electro_cond_mS_per_cm),#calculate mean
+            Median = median(electro_cond_mS_per_cm),
+            St_Dev = sd(electro_cond_mS_per_cm),#obtain standard dev
+            Variance = var(electro_cond_mS_per_cm)) %>% # calculate variance
   kableExtra::kable() %>% # create a table format
   kableExtra::kable_classic(lightable_options = "striped")#theme the table
 
@@ -185,7 +186,7 @@ ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) 
   #theme(legend.position = "none")+#no legend theme
   guides(color = guide_legend(title = "Transect ID"))+#changing legend title
   ggtitle("Soil Electrical Conductivity Across Elevations")+# title of plot
-  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
+  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = -0.5),# plot theming
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
@@ -231,78 +232,100 @@ ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) 
 
 ```{r}
 soil_sum <- soils %>% 
-  group_by(transect, paired_flight) %>% 
+  group_by(transect, date) %>% 
   summarise(avg_ec = mean(electro_cond_mS_per_cm),
             max_ec = max(electro_cond_mS_per_cm),
             min_ec = min(electro_cond_mS_per_cm),
             med_ec = median(electro_cond_mS_per_cm))
 
+precip_shift <- precip_d_2022 %>% 
+  mutate(month = month(date),
+         week = week(date)) %>% 
+  filter(week %in% c(8:22))
 
-ggplot(soils, aes(x = paired_flight, y = electro_cond_mS_per_cm, color = transect))+
-  geom_point()+# point geometry
-  geom_smooth()+
+ggplot()+
+  geom_line(data = precip_shift, aes(x = date, y = daily_precip * 0.394), color = "#356575")+
+  geom_point(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+# point geometry
+  geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  scale_y_continuous(name = "Electrical Conductivity mS/cm",
+                     sec.axis = sec_axis(trans = ~.*2.54, name = "Percipitation (mm)"))+
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
   labs(x = "Date",#labels
        y = "Electrical conductivity (mS/cm)")+
   guides(color = guide_legend(title = "Transect ID"))+#legend title
-  ggtitle("Soil Electrical Conductivity by Date")+#plot title
+  ggtitle("Soil Electrical Conductivity by Date w/ Daily Precip.")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
         axis.text = element_text(color = "#5b4f41"),
         axis.title = element_text(color = "#5b4f41"),
+        axis.line.y.right = element_line(color =  "#356575"), 
+        axis.ticks.y.right = element_line(color = "#356575"),
+        axis.text.y.right = element_text(color = "#356575"), 
+        axis.title.y.right = element_text(color = "#356575"),
         strip.background = element_rect("#f8f8f8"),
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"),
         legend.text = element_text(color = "#5b4f41"),
         legend.title = element_text(color = "#5b4f41"))
 
-ggplot(soil_sum, aes(x = paired_flight, y = avg_ec, color = transect))+
-  geom_point()+# point geometry
-  geom_smooth()+
+ggplot()+
+  geom_line(data = precip_shift, aes(x = date, y = daily_precip * 0.394), color = "#356575")+
+  geom_point(data = soil_sum, aes(x = date, y = avg_ec, color = transect))+# point geometry
+  geom_smooth(data = soil_sum, aes(x = date, y = avg_ec, color = transect))+
+   scale_y_continuous(name = "Electrical Conductivity mS/cm",
+                     sec.axis = sec_axis(trans = ~.*2.54, name = "Percipitation (mm)"))+
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
   labs(x = "Date",#labels
        y = "Electrical conductivity (mS/cm)")+
   guides(color = guide_legend(title = "Transect ID"))+#legend title
-  ggtitle("Average Soil Electrical Conductivity by Transect and Date")+#plot title
+  ggtitle("Average Soil Electrical Conductivity by Date w/ Daily Precip.")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
         axis.text = element_text(color = "#5b4f41"),
         axis.title = element_text(color = "#5b4f41"),
+        axis.line.y.right = element_line(color =  "#356575"), 
+        axis.ticks.y.right = element_line(color = "#356575"),
+        axis.text.y.right = element_text(color = "#356575"), 
+        axis.title.y.right = element_text(color = "#356575"),
         strip.background = element_rect("#f8f8f8"),
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"),
         legend.text = element_text(color = "#5b4f41"),
         legend.title = element_text(color = "#5b4f41"))
 
-ggplot(soil_sum, aes(x = paired_flight, y = max_ec, color = transect))+
-  geom_point()+# point geometry
-  geom_smooth()+
-  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
-  facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
-  theme(legend.position = "none")+# legend theme
-  labs(x = "Date",#labels
-       y = "Electrical conductivity (mS/cm)")+
-  guides(color = guide_legend(title = "Transect ID"))+#legend title
-  ggtitle("Max. Soil Electrical Conductivity by Transect and Date")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"))
+# ggplot()+
+#   geom_point(data = soil_sum, aes(x = paired_flight, y = max_ec, color = transect))+# point geometry
+#   geom_smooth(data = soil_sum, aes(x = paired_flight, y = max_ec, color = transect))+
+#   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+#   geom_vline(xintercept = lubridate::ymd("2022_03_20"), alpha = 0.20)+
+#   geom_vline(xintercept = lubridate::ymd("2022_03_28"), alpha = 0.45)+
+#    geom_vline(xintercept = lubridate::ymd("2022_03_29"), alpha = 0.0)+
+#    geom_vline(xintercept = lubridate::ymd("2022_04_22"), alpha = 0.45)+
+#   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
+#   theme(legend.position = "none")+# legend theme
+#   labs(x = "Date",#labels
+#        y = "Electrical conductivity (mS/cm)")+
+#   guides(color = guide_legend(title = "Transect ID"))+#legend title
+#   ggtitle("Max. Soil Electrical Conductivity by Transect and Date")+#plot title
+#   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
+#         plot.background = element_rect("white"),
+#         panel.background = element_rect("#faf7f2"),
+#         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+#         axis.text = element_text(color = "#5b4f41"),
+#         axis.title = element_text(color = "#5b4f41"),
+#         strip.background = element_rect("#f8f8f8"),
+#         strip.text = element_text(color = "#5b4f41"),
+#         axis.line = element_line(color = "#5b4f41"),
+#         legend.text = element_text(color = "#5b4f41"),
+#         legend.title = element_text(color = "#5b4f41"))
 ```
 
 

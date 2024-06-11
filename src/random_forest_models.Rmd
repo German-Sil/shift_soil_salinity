@@ -58,7 +58,7 @@ soils_sf <- read_sf(here("data", "soil_w_elevation.shp")) %>% # read in sf file
 
 bbox <- read_sf(here("data", "bbox.shp")) #read in bounding box file
 
-boundary <- read_sf(here("data", "marsh_boundary.shp")) %>% 
+boundary <- read_sf(here("data", "boundary.shp")) %>% 
   st_transform(crs = 32611)
 
 dem <- read_stars(here("data", "dem.tif")) %>% # read in dem 
