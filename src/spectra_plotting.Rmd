@@ -1,0 +1,142 @@
+---
+title: "spectra plotting"
+author: "Germán Silva"
+date: "2024-06-13"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
+
+# visualization
+library(calecopal)
+
+# significance tests and data exploration
+library(tidyverse)
+library(here)
+library(broom)
+library(ggfortify)
+
+
+set.seed(1234)
+```
+
+
+```{r}
+
+copr_spec <- read_csv(here("data", "example_spectra", "copr_2_ns_04_20.csv")) %>% 
+  pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
+  filter(Band %in% c(3:194, 210:286, 314:420)) %>% 
+  mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
+
+ggplot(copr_spec)+
+  geom_line(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
+  labs(x = "Wavelength (nm))",#labels
+       y = "Reflectance",
+       color = "Relative 
+Elevation")+
+  ggtitle("COPR 2 NS Transect Spectra")+# title of plot
+   theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 14),
+        axis.title = element_text(color = "#5b4f41", size = 16),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41", size = 12),
+        legend.title = element_text(color = "#5b4f41", size = 14))
+
+
+```
+
+```{r}
+
+ncos_1_spec <- read_csv(here("data", "example_spectra", "ncos_1_04_20.csv")) %>% 
+  pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
+  filter(Band %in% c(3:194, 210:286, 314:420)) %>% 
+  mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
+
+ggplot(ncos_1_spec)+
+  geom_line(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
+  labs(x = "Wavelength (nm))",#labels
+       y = "Reflectance",
+       color = "Relative 
+Elevation")+
+  ggtitle("NCOS 1 Transect Spectra")+# title of plot
+  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 14),
+        axis.title = element_text(color = "#5b4f41", size = 16),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41", size = 12),
+        legend.title = element_text(color = "#5b4f41", size = 14))
+
+```
+
+
+```{r}
+
+ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ns_04_20.csv")) %>% 
+  pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
+  filter(Band %in% c(3:194, 210:286, 314:420)) %>% 
+  mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
+
+ggplot(ncos_1_spec)+
+  geom_line(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
+  labs(x = "Wavelength (nm))",#labels
+       y = "Reflectance",
+       color = "Relative 
+Elevation")+
+  ggtitle("NCOS 2 NS Transect Spectra")+# title of plot
+   theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 14),
+        axis.title = element_text(color = "#5b4f41", size = 16),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41", size = 12),
+        legend.title = element_text(color = "#5b4f41", size = 14))
+
+```
+
+
+```{r}
+
+ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ew_04_20.csv")) %>% 
+  pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
+  filter(Band %in% c(3:194, 210:286, 314:420)) %>% 
+  mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
+
+ggplot(ncos_1_spec)+
+  geom_line(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
+  labs(x = "Wavelength (nm))",#labels
+       y = "Reflectance",
+       color = "Relative 
+Elevation")+
+  ggtitle("NCOS 2 EW Transect Spectra")+# title of plot
+   theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 14),
+        axis.title = element_text(color = "#5b4f41", size = 16),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41", size = 12),
+        legend.title = element_text(color = "#5b4f41", size = 14))
+
+```
