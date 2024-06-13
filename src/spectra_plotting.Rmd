@@ -26,10 +26,13 @@ set.seed(1234)
 
 copr_spec <- read_csv(here("data", "example_spectra", "copr_2_ns_04_20.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
-  filter(Band %in% c(3:194, 210:286, 314:420)) %>% 
+  filter(Band %in% c(3:195, 210:285, 313:325, 327:420)) %>% 
   mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
 
 ggplot(copr_spec)+
+  geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 760, xmax = 880, ymin = 0, ymax = Inf), alpha = 0.0040)+
   geom_line(aes(x = Wavelength, y = reflectance, color = location))+
   scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
   labs(x = "Wavelength (nm))",#labels
@@ -56,10 +59,13 @@ Elevation")+
 
 ncos_1_spec <- read_csv(here("data", "example_spectra", "ncos_1_04_20.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
-  filter(Band %in% c(3:194, 210:286, 314:420)) %>% 
+  filter(Band %in% c(3:195, 210:285, 313:325, 327:420)) %>%
   mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
 
 ggplot(ncos_1_spec)+
+  geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 760, xmax = 880, ymin = 0, ymax = Inf), alpha = 0.0040)+
   geom_line(aes(x = Wavelength, y = reflectance, color = location))+
   scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
   labs(x = "Wavelength (nm))",#labels
@@ -86,10 +92,13 @@ Elevation")+
 
 ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ns_04_20.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
-  filter(Band %in% c(3:194, 210:286, 314:420)) %>% 
+  filter(Band %in% c(3:195, 210:285, 313:325, 327:420)) %>%
   mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
 
 ggplot(ncos_1_spec)+
+  geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 760, xmax = 880, ymin = 0, ymax = Inf), alpha = 0.0040)+
   geom_line(aes(x = Wavelength, y = reflectance, color = location))+
   scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
   labs(x = "Wavelength (nm))",#labels
@@ -116,10 +125,13 @@ Elevation")+
 
 ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ew_04_20.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
-  filter(Band %in% c(3:194, 210:286, 314:420)) %>% 
+  filter(Band %in% c(3:195, 210:285, 313:325, 327:420)) %>%
   mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
 
 ggplot(ncos_1_spec)+
+  geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 760, xmax = 880, ymin = 0, ymax = Inf), alpha = 0.0040)+
   geom_line(aes(x = Wavelength, y = reflectance, color = location))+
   scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
   labs(x = "Wavelength (nm))",#labels
