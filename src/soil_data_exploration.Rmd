@@ -249,7 +249,7 @@ ggplot()+
   geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
   scale_y_continuous(name = "Electrical Conductivity mS/cm",
-                     sec.axis = sec_axis(trans = ~.*2.54, name = "Percipitation (mm)"))+
+                     sec.axis = sec_axis(trans = ~.*2.54, name = "Precipitation (mm)"))+
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
   labs(x = "Date",#labels
@@ -272,34 +272,36 @@ ggplot()+
         legend.text = element_text(color = "#5b4f41"),
         legend.title = element_text(color = "#5b4f41"))
 
-ggplot()+
-  geom_line(data = precip_shift, aes(x = date, y = daily_precip * 0.394), color = "#356575")+
-  geom_point(data = soil_sum, aes(x = date, y = avg_ec, color = transect))+# point geometry
-  geom_smooth(data = soil_sum, aes(x = date, y = avg_ec, color = transect))+
-   scale_y_continuous(name = "Electrical Conductivity mS/cm",
-                     sec.axis = sec_axis(trans = ~.*2.54, name = "Percipitation (mm)"))+
-  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
-  facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
-  theme(legend.position = "none")+# legend theme
-  labs(x = "Date",#labels
-       y = "Electrical conductivity (mS/cm)")+
-  guides(color = guide_legend(title = "Transect ID"))+#legend title
-  ggtitle("Average Soil Electrical Conductivity by Date w/ Daily Precip.")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
-        plot.background = element_rect("white"),
-        panel.background = element_rect("#faf7f2"),
-        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
-        axis.text = element_text(color = "#5b4f41"),
-        axis.title = element_text(color = "#5b4f41"),
-        axis.line.y.right = element_line(color =  "#356575"), 
-        axis.ticks.y.right = element_line(color = "#356575"),
-        axis.text.y.right = element_text(color = "#356575"), 
-        axis.title.y.right = element_text(color = "#356575"),
-        strip.background = element_rect("#f8f8f8"),
-        strip.text = element_text(color = "#5b4f41"),
-        axis.line = element_line(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"))
+ggsave(filename = "ec_precip_ts.jpg", dpi = 600)
+
+# ggplot()+
+#   geom_line(data = precip_shift, aes(x = date, y = daily_precip * 0.394), color = "#356575")+
+#   geom_point(data = soil_sum, aes(x = date, y = avg_ec, color = transect))+# point geometry
+#   geom_smooth(data = soil_sum, aes(x = date, y = avg_ec, color = transect))+
+#    scale_y_continuous(name = "Electrical Conductivity mS/cm",
+#                      sec.axis = sec_axis(trans = ~.*2.54, name = "Percipitation (mm)"))+
+#   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+#   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
+#   theme(legend.position = "none")+# legend theme
+#   labs(x = "Date",#labels
+#        y = "Electrical conductivity (mS/cm)")+
+#   guides(color = guide_legend(title = "Transect ID"))+#legend title
+#   ggtitle("Average Soil Electrical Conductivity by Date w/ Daily Precip.")+#plot title
+#   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
+#         plot.background = element_rect("white"),
+#         panel.background = element_rect("#faf7f2"),
+#         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+#         axis.text = element_text(color = "#5b4f41"),
+#         axis.title = element_text(color = "#5b4f41"),
+#         axis.line.y.right = element_line(color =  "#356575"), 
+#         axis.ticks.y.right = element_line(color = "#356575"),
+#         axis.text.y.right = element_text(color = "#356575"), 
+#         axis.title.y.right = element_text(color = "#356575"),
+#         strip.background = element_rect("#f8f8f8"),
+#         strip.text = element_text(color = "#5b4f41"),
+#         axis.line = element_line(color = "#5b4f41"),
+#         legend.text = element_text(color = "#5b4f41"),
+#         legend.title = element_text(color = "#5b4f41"))
 
 # ggplot()+
 #   geom_point(data = soil_sum, aes(x = paired_flight, y = max_ec, color = transect))+# point geometry
