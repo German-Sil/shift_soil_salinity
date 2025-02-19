@@ -24,22 +24,25 @@ set.seed(1234)
 
 ```{r}
 
-copr_spec <- read_csv(here("data", "example_spectra", "copr_2_ns_04_20.csv")) %>% 
+copr_spec <- read_csv(here("data", "example_spectra", "copr_2_ns_02.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
-  filter(Band %in% c(3:195, 210:285, 313:325, 327:420)) %>% 
+  mutate(Wavelength = case_when(
+    Band %in% c(3:195, 210:285, 313:325, 327:420) ~ Wavelength,
+    Band %in% c(1:2, 196:209, 286:312, 326, 421:25) ~ NA)) %>% 
   mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
 
 ggplot(copr_spec)+
   geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
   geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
-  geom_rect(aes(xmin = 760, xmax = 880, ymin = 0, ymax = Inf), alpha = 0.0040)+
-  geom_line(aes(x = Wavelength, y = reflectance, color = location))+
-  scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
-  labs(x = "Wavelength (nm))",#labels
+  geom_rect(aes(xmin = 760, xmax = 800, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_path(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D","#E69512", "#D3105C", "#6D4847"))+# colors to use
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.45))+
+  labs(x = "Wavelength (nm)",#labels
        y = "Reflectance",
        color = "Relative 
 Elevation")+
-  ggtitle("COPR 2 NS Transect Spectra")+# title of plot
+  ggtitle("COPR 2 NS Spectra Feb. 2022")+# title of plot
    theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -57,22 +60,63 @@ Elevation")+
 
 ```{r}
 
-ncos_1_spec <- read_csv(here("data", "example_spectra", "ncos_1_04_20.csv")) %>% 
+copr_spec <- read_csv(here("data", "example_spectra", "copr_2_ns_05.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
-  filter(Band %in% c(3:195, 210:285, 313:325, 327:420)) %>%
+   mutate(Wavelength = case_when(
+    Band %in% c(3:195, 210:285, 313:325, 327:420) ~ Wavelength,
+    Band %in% c(1:2, 196:209, 286:312, 326, 421:25) ~ NA)) %>%  
+  mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
+
+ggplot(copr_spec)+
+  geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 760, xmax = 800, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_path(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D","#E69512", "#D3105C", "#6D4847"))+# colors to use
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.45))+
+  labs(x = "Wavelength (nm)",#labels
+       y = "Reflectance",
+       color = "Relative 
+Elevation")+
+  ggtitle("COPR 2 NS Spectra May 2022")+# title of plot
+   theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 14),
+        axis.title = element_text(color = "#5b4f41", size = 16),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41", size = 12),
+        legend.title = element_text(color = "#5b4f41", size = 14))
+
+
+```
+
+
+
+```{r}
+
+ncos_1_spec <- read_csv(here("data", "example_spectra", "ncos_1_02.csv")) %>% 
+  pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
+   mutate(Wavelength = case_when(
+    Band %in% c(3:195, 210:285, 313:325, 327:420) ~ Wavelength,
+    Band %in% c(1:2, 196:209, 286:312, 326, 421:25) ~ NA)) %>% 
   mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
 
 ggplot(ncos_1_spec)+
   geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
   geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
-  geom_rect(aes(xmin = 760, xmax = 880, ymin = 0, ymax = Inf), alpha = 0.0040)+
-  geom_line(aes(x = Wavelength, y = reflectance, color = location))+
-  scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
-  labs(x = "Wavelength (nm))",#labels
+  geom_rect(aes(xmin = 760, xmax = 800, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_path(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D","#E69512", "#D3105C", "#6D4847"))+# colors to use
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.45))+
+  labs(x = "Wavelength (nm)",#labels
        y = "Reflectance",
        color = "Relative 
 Elevation")+
-  ggtitle("NCOS 1 Transect Spectra")+# title of plot
+  ggtitle("NCOS 1 NS Spectra Feb. 2022")+# title of plot
   theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -90,22 +134,64 @@ Elevation")+
 
 ```{r}
 
-ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ns_04_20.csv")) %>% 
+ncos_1_spec <- read_csv(here("data", "example_spectra", "ncos_1_05.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
-  filter(Band %in% c(3:195, 210:285, 313:325, 327:420)) %>%
+   mutate(Wavelength = case_when(
+    Band %in% c(3:195, 210:285, 313:325, 327:420) ~ Wavelength,
+    Band %in% c(1:2, 196:209, 286:312, 326, 421:25) ~ NA)) %>% 
   mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
 
 ggplot(ncos_1_spec)+
   geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
   geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
-  geom_rect(aes(xmin = 760, xmax = 880, ymin = 0, ymax = Inf), alpha = 0.0040)+
-  geom_line(aes(x = Wavelength, y = reflectance, color = location))+
-  scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
-  labs(x = "Wavelength (nm))",#labels
+  geom_rect(aes(xmin = 760, xmax = 800, ymin = 0, ymax = Inf), alpha = 0.0040)+
+   geom_path(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D","#E69512", "#D3105C", "#6D4847"))+# colors to use
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.45))+
+  labs(x = "Wavelength (nm)",#labels
        y = "Reflectance",
        color = "Relative 
 Elevation")+
-  ggtitle("NCOS 2 NS Transect Spectra")+# title of plot
+  ggtitle("NCOS 1 NS Spectra May 2022")+# title of plot
+  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41", size = 14),
+        axis.title = element_text(color = "#5b4f41", size = 16),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41", size = 12),
+        legend.title = element_text(color = "#5b4f41", size = 14))
+
+```
+
+
+
+
+
+```{r}
+
+ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ew_02.csv")) %>% 
+  pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
+   mutate(Wavelength = case_when(
+    Band %in% c(3:195, 210:285, 313:325, 327:420) ~ Wavelength,
+    Band %in% c(1:2, 196:209, 286:312, 326, 421:25) ~ NA)) %>% 
+  mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
+
+ggplot(ncos_2_spec)+
+  geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_rect(aes(xmin = 760, xmax = 800, ymin = 0, ymax = Inf), alpha = 0.0040)+
+   geom_path(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D","#E69512", "#D3105C", "#6D4847"))+# colors to use
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.45))+
+  labs(x = "Wavelength (nm)",#labels
+       y = "Reflectance",
+       color = "Relative 
+Elevation")+
+  ggtitle("NCOS 2 EW Spectra Feb. 2022")+# title of plot
    theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -123,22 +209,25 @@ Elevation")+
 
 ```{r}
 
-ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ew_04_20.csv")) %>% 
+ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ew_05.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
-  filter(Band %in% c(3:195, 210:285, 313:325, 327:420)) %>%
+   mutate(Wavelength = case_when(
+    Band %in% c(3:195, 210:285, 313:325, 327:420) ~ Wavelength,
+    Band %in% c(1:2, 196:209, 286:312, 326, 421:25) ~ NA)) %>% 
   mutate(location = factor(location, levels = c("High", "Mid 1", "Mid 2", "Low")))
 
-ggplot(ncos_1_spec)+
+ggplot(ncos_2_spec)+
   geom_rect(aes(xmin = 540, xmax = 560, ymin = 0, ymax = Inf), alpha = 0.0040)+
   geom_rect(aes(xmin = 690, xmax = 710, ymin = 0, ymax = Inf), alpha = 0.0040)+
-  geom_rect(aes(xmin = 760, xmax = 880, ymin = 0, ymax = Inf), alpha = 0.0040)+
-  geom_line(aes(x = Wavelength, y = reflectance, color = location))+
-  scale_color_manual(values = c("#3A5D3D", "#3B4F8E", "#E69512", "#D3105C"))+# colors to use
-  labs(x = "Wavelength (nm))",#labels
+  geom_rect(aes(xmin = 760, xmax = 800, ymin = 0, ymax = Inf), alpha = 0.0040)+
+  geom_path(aes(x = Wavelength, y = reflectance, color = location))+
+  scale_color_manual(values = c("#3A5D3D","#E69512", "#D3105C", "#6D4847"))+# colors to use
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.45))+
+  labs(x = "Wavelength (nm)",#labels
        y = "Reflectance",
        color = "Relative 
 Elevation")+
-  ggtitle("NCOS 2 EW Transect Spectra")+# title of plot
+  ggtitle("NCOS 2 EW Spectra May 2022")+# title of plot
    theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),

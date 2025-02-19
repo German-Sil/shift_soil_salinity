@@ -678,6 +678,40 @@ Conductivity
         legend.text = element_text(color = "#5b4f41"))
 ```
 
+
+
+
+```{r}
+all_pred_crop <- all_pred_savi %>% 
+  st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
+  filter(date == "2022-02-24") %>% 
+  st_warp(cellsize = 30, crs = 32611)
+
+
+ggplot()+
+  geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
+  scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
+  coord_sf(crs = 32611)+
+  labs(y = "Latitude",#labels
+       x = "Longitude",
+       fill = "Electrical 
+Conductivity 
+(mS/cm)")+
+  ggtitle("February 24, 2022")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+        plot.background = element_rect("white"),
+        panel.background = element_rect("#faf7f2"),
+        panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
+        axis.text = element_text(color = "#5b4f41"),
+        axis.title = element_text(color = "#5b4f41"),
+        strip.background = element_rect("#f8f8f8"),
+        strip.text = element_text(color = "#5b4f41"),
+        axis.line = element_line(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"),
+        legend.text = element_text(color = "#5b4f41"))
+```
+
+
 ###############################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
 
 
