@@ -264,6 +264,9 @@ spectral_angle <- spectra_wider %>%
   mutate(A_B = (High * `Mid 1`),
          A_C = (High * `Mid 2`),
          A_D = (High * Low),
+         B_C = (`Mid 1` * `Mid 2`),
+         B_D = (`Mid 1` * `Low`),
+         C_D = (`Mid 2` * Low),
          A_sq = (High * High),
          B_sq = (`Mid 1` * `Mid 1`),
          C_sq = (`Mid 2` * `Mid 2`),
@@ -272,6 +275,9 @@ spectral_angle <- spectra_wider %>%
   summarize(ab = sum(A_B),
              ac = sum(A_C),
              ad = sum(A_D),
+            bc = sum(B_C),
+            bd = sum(B_D),
+            cd = sum(C_D),
             a_sq = sum(A_sq),
             b_sq = sum(B_sq),
             c_sq = sum(C_sq),
@@ -279,6 +285,13 @@ spectral_angle <- spectra_wider %>%
   ungroup() %>% 
   mutate(angle_ab = acos((ab)/(sqrt(a_sq)* sqrt(b_sq)))* (180/pi),
          angle_ac = acos((ac)/(sqrt(a_sq)* sqrt(c_sq)))* (180/pi),
-         angle_ad = acos((ad)/(sqrt(a_sq)* sqrt(d_sq)))* (180/pi))
+         angle_ad = acos((ad)/(sqrt(a_sq)* sqrt(d_sq)))* (180/pi),
+         angle_bc = acos((bc)/(sqrt(b_sq)* sqrt(c_sq)))* (180/pi),
+         angle_bd = acos((bd)/(sqrt(b_sq)* sqrt(d_sq)))* (180/pi),
+         angle_cd = acos((cd)/(sqrt(c_sq)* sqrt(d_sq)))* (180/pi))
+
+avg_angle_diff <- spectral_angle %>% 
+  group_by(transect, date) %>% 
+  summarize(mean_angle = mean(angle_ab:angle_cd))
 ```
 
