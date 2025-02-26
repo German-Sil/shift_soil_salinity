@@ -241,3 +241,44 @@ Elevation")+
         legend.title = element_text(color = "#5b4f41", size = 14))
 
 ```
+
+
+
+# Spectral ANOVA
+
+```{r}
+spectra <- read.csv(here("data", "example_spectra", "example_spectra.csv")) %>% 
+  filter(band %in% c(3:195, 210:285, 313:325, 327:420))
+
+
+summary(aov(reflectance ~ transect*date, data = spectra))
+
+TukeyHSD(aov(reflectance ~ transect*date, data = spectra))
+```
+
+```{r}
+spectra_wider <- spectra %>% 
+  pivot_wider(names_from = elevation, values_from = reflectance)
+
+spectral_angle <- spectra_wider %>% 
+  mutate(A_B = (High * `Mid 1`),
+         A_C = (High * `Mid 2`),
+         A_D = (High * Low),
+         A_sq = (High * High),
+         B_sq = (`Mid 1` * `Mid 1`),
+         C_sq = (`Mid 2` * `Mid 2`),
+         D_sq = (Low * Low)) %>% 
+  group_by(transect, date) %>% 
+  summarize(ab = sum(A_B),
+             ac = sum(A_C),
+             ad = sum(A_D),
+            a_sq = sum(A_sq),
+            b_sq = sum(B_sq),
+            c_sq = sum(C_sq),
+            d_sq = sum(D_sq)) %>% 
+  ungroup() %>% 
+  mutate(angle_ab = acos((ab)/(sqrt(a_sq)* sqrt(b_sq)))* (180/pi),
+         angle_ac = acos((ac)/(sqrt(a_sq)* sqrt(c_sq)))* (180/pi),
+         angle_ad = acos((ad)/(sqrt(a_sq)* sqrt(d_sq)))* (180/pi))
+```
+
