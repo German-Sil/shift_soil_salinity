@@ -39,7 +39,7 @@ set.seed(1234)
 
 ## Open and explore precip data:
 
-```{r}
+```{r, dpi=600}
 precip <- read_csv(here("data", "precip_data", "copr_all.txt")) %>% 
   janitor::clean_names() %>% 
   mutate(date = as.Date(timestamp)) %>% 
@@ -181,7 +181,7 @@ TukeyHSD(aov(electro_cond_mS_per_cm ~ transect, data = soils))
 ```
 
 ## Plot salinity v elevation
-```{r}
+```{r, dpi=600}
 ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) +#ggplot of soils/dem data
   geom_point()+#geometry of the plot
   scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+# colors to use
@@ -234,7 +234,7 @@ ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) 
         legend.title = element_text(color = "#5b4f41"))
 ```
 
-```{r}
+```{r, dpi=600}
 soil_sum <- soils %>% 
   group_by(transect, date) %>% 
   summarise(avg_ec = mean(electro_cond_mS_per_cm),
