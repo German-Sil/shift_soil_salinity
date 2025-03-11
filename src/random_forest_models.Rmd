@@ -582,6 +582,26 @@ ggplot() +#ggplot object
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #####################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
 
 
@@ -679,26 +699,57 @@ Conductivity
 ```
 
 
+```{r}
+salinity_extract <- data.frame()
 
+for (i in unique(lubridate::week(soils_subset$paired_flight))){
+  pred_week <- all_pred_savi %>% 
+    filter(lubridate::week(date) == i)
+  
+  
+  soil_week <- soils %>% 
+    mutate(week = lubridate::week(paired_flight)) %>% 
+    filter(week == i)
+  
+  pred_extract <- pred_week %>% 
+    st_extract(soil_week)
+  
+  soils_week <- bind_cols(soil_week, pred_extract$prediction) %>% 
+    rename("ec_pred" = "...12")
+    
+  salinity_extract <- rbind(salinity_extract, soils_week)
+}
+
+```
 
 ```{r}
-all_pred_crop <- all_pred_savi %>% 
-  st_crop(y = boundary, crop = TRUE, as_points = FALSE) %>% 
-  filter(date == "2022-02-24") %>% 
-  st_warp(cellsize = 30, crs = 32611)
+strip_labels <- c("COPR_1_EW" = "COPR 1 EW",#create better formated labels for facet wrap strips
+                  "COPR_2_EW" = "COPR 2 EW",
+                  "COPR_2_NS" = "COPR 2 NS",
+                  "NCOS_1_NS" = "NCOS 1 NS",
+                  "NCOS_2_EW" = "NCOS 2 EW",
+                  "NCOS_2_NS" = "NCOS 2 NS")
+
+
+salinity_mean <- salinity_extract %>% 
+  group_by(transect, date) %>% 
+  summarize(mean_ec = mean(ec_pred))
 
 
 ggplot()+
-  geom_stars(data = all_pred_crop, aes(x = x, y = y, fill = prediction), na.action = na.omit) +
-  scale_fill_gradientn(colors = rev(cal_palette(name = "kelp1", n = 4, type = "continuous")))+
-  coord_sf(crs = 32611)+
-  labs(y = "Latitude",#labels
-       x = "Longitude",
-       fill = "Electrical 
-Conductivity 
-(mS/cm)")+
-  ggtitle("February 24, 2022")+#plot title
-  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot themes
+  geom_point(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+# point geometry
+  geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+
+  geom_point(data = salinity_extract, aes(x = date, y = ec_pred), shape = "triangle", alpha = 0.5)+
+  geom_line(data = salinity_mean, aes(x = date, y = mean_ec), linetype = "dashed", linewidth = 1, alpha = 0.5)+
+  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  scale_y_continuous(name = "Electrical Conductivity mS/cm")+
+  facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
+  theme(legend.position = "none")+# legend theme
+  labs(x = "Date",#labels
+       y = "Electrical conductivity (mS/cm)")+
+  guides(color = guide_legend(title = "Transect ID"))+#legend title
+  ggtitle("Soil Electrical Conductivity by Date w/ Modeled Mean")+#plot title
+  theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
@@ -707,8 +758,21 @@ Conductivity
         strip.background = element_rect("#f8f8f8"),
         strip.text = element_text(color = "#5b4f41"),
         axis.line = element_line(color = "#5b4f41"),
-        legend.title = element_text(color = "#5b4f41"),
-        legend.text = element_text(color = "#5b4f41"))
+        legend.text = element_text(color = "#5b4f41"),
+        legend.title = element_text(color = "#5b4f41"))
+```
+
+
+```{r}
+
+t.test(salinity_extract$electro_cond_mS_per_cm, salinity_extract$ec_pred, alternative = "two.sided", paired = F)
+
+salinity_filt <- salinity_extract %>% 
+  filter(transect != "NCOS_2_NS")
+  
+t.test(salinity_filt$electro_cond_mS_per_cm, salinity_filt$ec_pred, alternative = "two.sided", paired = F)
+
+
 ```
 
 
