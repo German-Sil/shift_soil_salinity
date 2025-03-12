@@ -643,6 +643,16 @@ all_pred_savi <- predict(raster_all, fit_all_savi, drop_dimensions = F, na.actio
 write_stars(all_pred_savi, dsn = here("data", "prediction_savi.tif"))
 ```
 
+
+
+```{r}
+raster_all <- c(crsi_all, ndvi_all, vssi_all, mari_all, mllw_all, savi_all)
+
+all_pred_ele <- predict(raster_all, fit_all_ele, drop_dimensions = F, na.action = na.omit)
+
+write_stars(all_pred_ele, dsn = here("data", "prediction_ele.tif"))
+```
+
 # Making a Map
 
 ```{r}
