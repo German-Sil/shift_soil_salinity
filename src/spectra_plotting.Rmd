@@ -22,7 +22,7 @@ set.seed(1234)
 ```
 
 
-```{r}
+```{r, dpi=600}
 
 copr_spec <- read_csv(here("data", "example_spectra", "copr_2_ns_02.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
@@ -58,7 +58,7 @@ Elevation")+
 
 ```
 
-```{r}
+```{r, dpi = 600}
 
 copr_spec <- read_csv(here("data", "example_spectra", "copr_2_ns_05.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
@@ -96,7 +96,7 @@ Elevation")+
 
 
 
-```{r}
+```{r, dpi = 600}
 
 ncos_1_spec <- read_csv(here("data", "example_spectra", "ncos_1_02.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
@@ -132,7 +132,7 @@ Elevation")+
 ```
 
 
-```{r}
+```{r, dpi = 600}
 
 ncos_1_spec <- read_csv(here("data", "example_spectra", "ncos_1_05.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
@@ -171,7 +171,7 @@ Elevation")+
 
 
 
-```{r}
+```{r, dpi = 600}
 
 ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ew_02.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
@@ -207,7 +207,7 @@ Elevation")+
 ```
 
 
-```{r}
+```{r, dpi = 600}
 
 ncos_2_spec <- read_csv(here("data", "example_spectra", "ncos_2_ew_05.csv")) %>% 
   pivot_longer(cols = c(High:Low), names_to = "location", values_to = "reflectance") %>% 
