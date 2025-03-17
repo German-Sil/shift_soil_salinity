@@ -183,8 +183,8 @@ TukeyHSD(aov(electro_cond_mS_per_cm ~ transect, data = soils))
 ## Plot salinity v elevation
 ```{r, dpi=600}
 ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) +#ggplot of soils/dem data
-  geom_point()+#geometry of the plot
-  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+# colors to use
+  geom_point(size = 2.25)+#geometry of the plot
+  scale_color_manual(values = calecopal::cal_palette(name = "kelp1", n =6, type = "discrete"))+# colors to use
   labs(x = "Elevation (m)",#labels
        y = "Electrical conductivity (mS/cm)")+
   #theme(legend.position = "none")+#no legend theme
@@ -214,7 +214,7 @@ strip_labels <- c("COPR_1_EW" = "COPR 1 EW",#create better formated labels for f
 
 ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) +#start ggplot
   geom_jitter()+# point geometry
-  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  scale_color_manual(values = calecopal::cal_palette(name = "chaparral1", n =6, type = "discrete"))+#colors
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
   labs(x = "Elevation (m)",#labels
@@ -249,9 +249,9 @@ precip_shift <- precip_d_2022 %>%
 
 ggplot()+
   geom_line(data = precip_shift, aes(x = date, y = daily_precip * 0.394), color = "#356575")+
-  geom_point(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+# point geometry
-  geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+
-  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  geom_point(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect), size = 2)+# point geometry
+  geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect), linewidth = 1)+
+  scale_color_manual(values = calecopal::cal_palette(name = "kelp1", n =6, type = "discrete"))+#colors
   scale_y_continuous(name = "Electrical Conductivity mS/cm",
                      sec.axis = sec_axis(trans = ~.*2.54, name = "Precipitation (mm)"))+
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect

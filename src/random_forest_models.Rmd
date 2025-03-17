@@ -722,11 +722,11 @@ salinity_mean <- salinity_extract %>%
 
 
 ggplot()+
-  geom_point(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+# point geometry
-  geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect))+
-  geom_point(data = salinity_extract, aes(x = date, y = ec_pred), shape = "triangle", alpha = 0.5)+
+  geom_point(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect), size = 2)+# point geometry
+  geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect), linewidth = 1)+
+  geom_point(data = salinity_extract, aes(x = date, y = ec_pred), shape = "triangle", alpha = 0.5, size = 2)+
   geom_line(data = salinity_mean, aes(x = date, y = mean_ec), linetype = "dashed", linewidth = 1, alpha = 0.5)+
-  scale_color_manual(values = calecopal::cal_palette(name = "superbloom3", n =6, type = "discrete"))+#colors
+  scale_color_manual(values = calecopal::cal_palette(name = "kelp1", n =6, type = "discrete"))+#colors
   scale_y_continuous(name = "Electrical Conductivity mS/cm")+
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
