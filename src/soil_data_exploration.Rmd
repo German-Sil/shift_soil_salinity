@@ -186,7 +186,7 @@ ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) 
   geom_point(size = 2.25)+#geometry of the plot
   scale_color_manual(values = calecopal::cal_palette(name = "kelp1", n =6, type = "discrete"))+# colors to use
   labs(x = "Elevation (m)",#labels
-       y = "Electrical conductivity (mS/cm)")+
+       y = "Electrical Conductivity (mS/cm)")+
   #theme(legend.position = "none")+#no legend theme
   guides(color = guide_legend(title = "Transect ID"))+#changing legend title
   ggtitle("Soil Electrical Conductivity Across Elevations")+# title of plot
@@ -252,7 +252,7 @@ ggplot()+
   geom_point(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect), size = 2)+# point geometry
   geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect), linewidth = 1)+
   scale_color_manual(values = calecopal::cal_palette(name = "kelp1", n =6, type = "discrete"))+#colors
-  scale_y_continuous(name = "Electrical Conductivity mS/cm",
+  scale_y_continuous(name = "Electrical Conductivity (mS/cm)",
                      sec.axis = sec_axis(trans = ~.*2.54, name = "Precipitation (mm)"))+
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme

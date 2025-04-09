@@ -727,7 +727,7 @@ ggplot()+
   geom_point(data = salinity_extract, aes(x = date, y = ec_pred), shape = "triangle", alpha = 0.5, size = 2)+
   geom_line(data = salinity_mean, aes(x = date, y = mean_ec), linetype = "dashed", linewidth = 1, alpha = 0.5)+
   scale_color_manual(values = calecopal::cal_palette(name = "kelp1", n =6, type = "discrete"))+#colors
-  scale_y_continuous(name = "Electrical Conductivity mS/cm")+
+  scale_y_continuous(name = "Electrical Conductivity (mS/cm)")+
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
   labs(x = "Date",#labels
