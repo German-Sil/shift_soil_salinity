@@ -76,19 +76,17 @@ precip_data <- merge(precip_avg, precip_2022) %>%
   mutate(month = factor(month.abb[month], levels = month.abb))
 
 
-colors <- c("Monthly Avg." = "#8f96a6", '2022 Monthly' = "#356575")
+colors <- c("Average Monthly" = "#8f96a6", '2022 Monthly' = "#356575")
 
 ggplot(data = precip_data)+
-  geom_col(aes(x = month, y = month_avg, fill = "Monthly Avg."), alpha = 0.75)+
+  geom_col(aes(x = month, y = month_avg, fill = "Average Monthly"), alpha = 0.75)+
   geom_col(aes(x = month, y = precip_2022, fill = "2022 Monthly"), alpha = 0.85)+
   geom_rect(aes(xmin = "Feb", xmax = "May", ymin = 0, ymax = Inf), alpha = 0.0070)+
   labs(x = "Month",#labels
        y = "Precipitation (mm)",
-       fill = "Legend",
-       title = "Monthly Rainfall at Devereux Slough")+
+       fill = "Legend")+
   scale_fill_manual(values = colors)+
-  theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = 0.5),# plot theming
-        plot.background = element_rect("white"),
+  theme(plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
         panel.grid = element_line(linetype= "longdash", color = "#f0ece1"),
         axis.text = element_text(color = "#5b4f41", size = 14),
@@ -185,11 +183,10 @@ TukeyHSD(aov(electro_cond_mS_per_cm ~ transect, data = soils))
 ggplot(soils, aes(x = elevation, y = electro_cond_mS_per_cm, color = transect)) +#ggplot of soils/dem data
   geom_point(size = 2.25)+#geometry of the plot
   scale_color_manual(values = calecopal::cal_palette(name = "kelp1", n =6, type = "discrete"))+# colors to use
-  labs(x = "Elevation (m)",#labels
+  labs(x = "Elevation Relative to MLLW (m)",#labels
        y = "Electrical Conductivity (mS/cm)")+
   #theme(legend.position = "none")+#no legend theme
   guides(color = guide_legend(title = "Transect ID"))+#changing legend title
-  ggtitle("Soil Electrical Conductivity Across Elevations")+# title of plot
   theme(plot.title = element_text(color = "#5b4f41", size = 20, hjust = -0.5),# plot theming
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
@@ -253,13 +250,12 @@ ggplot()+
   geom_smooth(data = soils, aes(x = date, y = electro_cond_mS_per_cm, color = transect), linewidth = 1)+
   scale_color_manual(values = calecopal::cal_palette(name = "kelp1", n =6, type = "discrete"))+#colors
   scale_y_continuous(name = "Electrical Conductivity (mS/cm)",
-                     sec.axis = sec_axis(trans = ~.*2.54, name = "Precipitation (mm)"))+
+                     sec.axis = sec_axis(trans = ~.*2.54, name = "Daily Precipitation (mm)"))+
   facet_wrap(~transect, labeller = as_labeller(strip_labels))+#subplots based on transect
   theme(legend.position = "none")+# legend theme
   labs(x = "Date",#labels
        y = "Electrical conductivity (mS/cm)")+
   guides(color = guide_legend(title = "Transect ID"))+#legend title
-  ggtitle("Soil Electrical Conductivity by Date w/ Daily Precip.")+#plot title
   theme(plot.title = element_text(color = "#5b4f41", size = 16, hjust = 0.5),#plot theme
         plot.background = element_rect("white"),
         panel.background = element_rect("#faf7f2"),
